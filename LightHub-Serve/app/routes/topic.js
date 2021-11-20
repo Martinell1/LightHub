@@ -1,0 +1,13 @@
+const Router = require('koa-router');
+const { topic } = require('../controller');
+
+const router = new Router();
+router.prefix('/topic')
+      .get("/list",topic.list)
+      .post("/add",topic.add)
+      .post("/update",topic.update)
+      .post("/remove",topic.remove)
+
+      
+
+module.exports = router;  
