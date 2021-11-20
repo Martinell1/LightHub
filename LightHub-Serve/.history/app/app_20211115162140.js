@@ -6,4 +6,4 @@ const app = new Koa();
 
 app.use(compose(MD));
 
-app.listen(3001);
+app.listen(3000);
