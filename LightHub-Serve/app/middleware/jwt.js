@@ -6,6 +6,7 @@ const { SECRET } = require('../config/jwt')
 const mKoaJWT = koajwt({ secret: SECRET }).unless({
   // 设置login、register接口，可以不需要认证访问
   path: [
+    /^\/api/,
     /^\/api\/user\/login/ ,// 注册
     /^\/api\/user\/register/ // 注册
   ]

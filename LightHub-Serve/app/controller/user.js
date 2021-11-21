@@ -5,6 +5,7 @@ const {getToken} = require('../utils/getToken')
 const bcrypt = require('bcryptjs')
 
 const login = async ctx => {
+  console.log(ctx)
   let body = ctx.request.body;
   let user = await us.findOne({"account":body.account})
   if(!user){
@@ -19,11 +20,15 @@ const login = async ctx => {
 }
 
 const register = async ctx => {
-  let user = ctx.request.body;
+  let body = ctx.request.body;
+  let user = await us.findOne({"account":body.account})
+  if(user){
+    return ctx.body = ResultFactory.buildFailResult("用户已存在")
+  }
   const salt = await bcrypt.genSalt(10);
-  const newPassWord = await bcrypt.hash(user.password, salt)
-  user.password = newPassWord;
-  let result = await us.add(user)
+  const newPassWord = await bcrypt.hash(body.password, salt)
+  body.password = newPassWord;
+  let result = await us.add(body)
   return ctx.body =  result
 }
 
