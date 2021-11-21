@@ -12,10 +12,10 @@
       />
     </div>
 
-    <div
-      :class="{ 'sign-in-wrap': true, 'sign-in-wrap-login': isLogin, 'sign-in-wrap-register': !isLogin }"
-    >
-      <div class="sign-in-form login-form" v-show="isLogin">
+    <div class="sign-in-wrap">
+      <div
+        :class="{ 'sign-in-form': true, 'login-form': true, 'hide-form': !isLogin, 'appear-form': isLogin }"
+      >
         <div class="sign-in-form-item">
           <input class="input" placeholder="请输入用户名" />
         </div>
@@ -27,9 +27,14 @@
           <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toRegister()">注册</div>
         </label>
       </div>
-      <div class="sign-in-form register-form" v-show="!isLogin">
+      <div
+        :class="{ 'sign-in-form': true, 'register-form': true, 'hide-form': isLogin, 'appear-form': !isLogin }"
+      >
         <div class="sign-in-form-item">
           <input v-model="account" class="input" placeholder="请输入用户名" />
+        </div>
+        <div class="sign-in-form-item">
+          <input v-model="password" class="input" placeholder="请输入密码" />
         </div>
         <div class="sign-in-form-item">
           <input v-model="password" class="input" placeholder="请输入密码" />
@@ -46,7 +51,11 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { login, register, test } from '../api/axios';
-const isLogin = ref(false);
+const isLogin = ref(true);
+const userInfo = reactive({
+  account: ref(),
+  password: ref(),
+})
 const account = ref();
 const password = ref();
 const toLogin = () => {
@@ -78,75 +87,78 @@ const registerSubmit = async () => {
   width: 100vw;
   height: 100vh;
   background-color: #f4f5f5;
+  overflow: hidden;
 
-  .circle {
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    height: 100vw;
-    border-radius: 50%;
-    z-index: 5;
-    background-color: rgba($color: #005ce6, $alpha: 1);
-  }
+  .sign-in-decorate {
+    .circle {
+      position: absolute;
 
-  .circle-login {
-    transform: translate(50%, -60%);
-    transition: transform 1.8s;
-    transition-timing-function: ease-in-out;
-  }
+      border-radius: 50%;
+      z-index: 5;
+      background-color: rgba($color: #005ce6, $alpha: 1);
+      overflow: hidden;
+    }
 
-  .circle-register {
-    transform: translate(-50%, -60%);
-    transition: transform 1.8s;
-    transition-timing-function: ease-in-out;
-  }
+    .circle-login {
+      transform: translate(-50%, -60%);
+      transition: transform 1.8s;
+      transition-timing-function: ease-in-out;
+    }
 
-  .sign-in-pic {
-    position: absolute;
-    width: 20%;
-    top: 50%;
-    z-index: 6;
-  }
+    .circle-register {
+      transform: translate(50%, -60%);
+      transition: transform 1.8s;
+      transition-timing-function: ease-in-out;
+    }
 
-  .sign-in-pic-login {
-    transform: translateX(-18vw);
-    transition: transform 0.9s;
-    transition-delay: 0.6s;
-    transition-timing-function: ease-in-out;
-  }
+    .sign-in-pic {
+      position: absolute;
+      width: 20%;
+      min-width: 300px;
+      top: 50%;
+      z-index: 6;
+    }
 
-  .sign-in-pic-login-act {
-    transition: transform 0.9s;
-    transform: translateX(15vw);
-    transition-delay: 0.6s;
-    transition-timing-function: ease-in-out;
-  }
+    .sign-in-pic-login {
+      transform: translateX(200px);
+      transition: transform 0.9s;
+      transition-delay: 0.6s;
+      transition-timing-function: ease-in-out;
+    }
 
-  .sign-in-pic-register {
-    transform: translateX(95vw);
-    transition: transform 0.9s;
-    transition-delay: 0.6s;
-    transition-timing-function: ease-in-out;
-  }
+    .sign-in-pic-login-act {
+      transition: transform 0.9s;
+      transform: translateX(-200px);
+      transition-delay: 0.6s;
+      transition-timing-function: ease-in-out;
+    }
 
-  .sign-in-pic-register-act {
-    transform: translateX(60vw);
-    transition: transform 0.9s;
-    transition-delay: 0.6s;
-    transition-timing-function: ease-in-out;
+    .sign-in-pic-register {
+      transform: translateX(1300px);
+      transition: transform 0.9s;
+      transition-delay: 0.6s;
+      transition-timing-function: ease-in-out;
+    }
+
+    .sign-in-pic-register-act {
+      transform: translateX(1700px);
+      transition: transform 0.9s;
+      transition-delay: 0.6s;
+      transition-timing-function: ease-in-out;
+    }
   }
 
   .sign-in-wrap {
     position: relative;
     top: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    padding: 12px 24px;
-    border-radius: 2px;
-    border: 1px solid black;
-    background-color: rgba($color: #ffffff, $alpha: 0.5);
 
     .sign-in-form {
+      width: 400px;
+      transform: translate(-50%, -50%);
+      padding: 12px 24px;
+      border-radius: 2px;
+      border: 1px solid black;
+      background-color: rgba($color: #ffffff, $alpha: 0.5);
       .sign-in-form-item {
         padding: 12px 0;
 
@@ -174,20 +186,46 @@ const registerSubmit = async () => {
         background-color: white;
       }
     }
-  }
 
-  .sign-in-wrap-login {
-    left: 25%;
-    transition: all 0.7s;
-    transition-delay: 1s;
-    transition-timing-function: ease-in-out;
-  }
+    .login-form {
+      position: absolute;
+      left: 75%;
+    }
 
-  .sign-in-wrap-register {
-    left: 75%;
-    transition: all 0.7s;
-    transition-delay: 1s;
-    transition-timing-function: ease-in-out;
+    .register-form {
+      position: absolute;
+      left: 25%;
+    }
+
+    .hide-form {
+      opacity: 0;
+      transition: all 0.7s;
+      transition-delay: 1s;
+      transition-timing-function: ease-in-out;
+    }
+
+    .appear-form {
+      opacity: 1;
+      transition: all 0.7s;
+      transition-delay: 1s;
+      transition-timing-function: ease-in-out;
+    }
+  }
+}
+@media screen and (orientation: landscape) {
+  .circle {
+    width: 100vw;
+    height: 100vw;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .circle {
+    width: 100vh;
+    height: 100vh;
+  }
+  .sign-in-pic {
+    display: none;
   }
 }
 </style>

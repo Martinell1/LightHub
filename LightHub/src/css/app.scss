@@ -33,10 +33,13 @@ s,i,em{font-style:normal;text-decoration:none;}
 
 ::-webkit-scrollbar {
   width: 0 !important;
+  height: 0 !important;
 }
-::-webkit-scrollbar {
-  width: 0 !important;height: 0;
+
+html {
+  scrollbar-width: none;
 }
+
 
 *{
   box-sizing: border-box;
