@@ -29,7 +29,11 @@ const register = async ctx => {
   const newPassWord = await bcrypt.hash(body.password, salt)
   body.password = newPassWord;
   let result = await us.add(body)
-  return ctx.body =  result
+  if(result){
+    return ctx.body = ResultFactory.buildSuccessResult("注册成功");
+  }else{
+    return ctx.body = ResultFactory.buildFailResult("注册失败");
+  }
 }
 
 const list = async ctx => {

@@ -34,15 +34,14 @@
           <input v-model="account" class="input" placeholder="请输入用户名" />
         </div>
         <div class="sign-in-form-item">
-          <input v-model="password" class="input" placeholder="请输入密码" />
+          <input v-model="password" class="input" type="password" placeholder="请输入密码" />
         </div>
         <div class="sign-in-form-item">
           <input v-model="password" class="input" placeholder="请输入密码" />
         </div>
         <div class="sign-in-form-btn" @click="registerSubmit()">注册</div>
-        <label for="round">
-          <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toLogin()">登录</div>
-        </label>
+
+        <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toLogin()">登录</div>
       </div>
     </div>
   </div>
