@@ -7,5 +7,5 @@
 </script>
 
 <style lang="scss">
-@import "../src/css/app.scss";
+// @import "../src/css/app.scss";
 </style>

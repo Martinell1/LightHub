@@ -1,62 +1,36 @@
 <template>
-  <div class="sign-in-page">
-    <div class="sign-in-decorate">
-      <div :class="{ 'circle': true, 'circle-login': isLogin, 'circle-register': !isLogin }"></div>
-      <img
-        :class="{ 'sign-in-pic': true, 'sign-in-pic-login': isLogin, 'sign-in-pic-login-act': !isLogin, }"
-        src="../assets/log.svg"
-      />
-      <img
-        :class="{ 'sign-in-pic': true, 'sign-in-pic-register': !isLogin, 'sign-in-pic-register-act': isLogin, }"
-        src="../assets/register.svg"
-      />
+  <div class="relative w-screen h-screen overflow-hidden">
+    <div
+      class="absolute bottom-1/4 w-2000 h-2000 rounded-full bg-blue-500 z-10"
+      :class="{ 'bg-login': isLogin, 'bg-register': !isLogin }"
+    ></div>
+    <img
+      class="bg-pic"
+      :class="{ 'bg-pic-login': isLogin, 'bg-pic-login-left': !isLogin }"
+      src="../assets/log.svg"
+    />
+    <img
+      class="bg-pic"
+      :class="{ 'bg-pic-register': !isLogin, 'bg-pic-register-left': isLogin }"
+      src="../assets/register.svg"
+    />
+    <div class="form-wrap left-1/4" :class="{ 'hide': isLogin, 'appear': !isLogin }">
+      <form class>
+        <input class="input" placeholder="请输入用户名" />
+        <input class="input" type="password" />
+        <input class="input" type="password" />
+        <div class="btn btn-primary">注册</div>
+        <div class="btn btn-second" @click="toLogin()">登录</div>
+      </form>
     </div>
 
-    <div class="sign-in-wrap">
-      <div
-        :class="{ 'sign-in-form': true, 'login-form': true, 'hide-form': !isLogin, 'appear-form': isLogin }"
-      >
-        <form>
-          <div class="sign-in-form-item">
-            <input v-model="userInfo.account" class="input" placeholder="请输入用户名" />
-          </div>
-          <div class="sign-in-form-item">
-            <input v-model="userInfo.password" class="input" type="password" placeholder="请输入密码" />
-          </div>
-          <div class="sign-in-form-btn" @click="loginSubmit()">登录</div>
-
-          <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toRegister()">注册</div>
-        </form>
-      </div>
-      <div
-        :class="{ 'sign-in-form': true, 'register-form': true, 'hide-form': isLogin, 'appear-form': !isLogin }"
-      >
-        <form>
-          <div class="sign-in-form-item">
-            <input
-              v-model="userInfo.account"
-              class="input"
-              autocomplete="username"
-              placeholder="请输入用户名"
-            />
-          </div>
-          <div class="sign-in-form-item">
-            <input
-              v-model="userInfo.password"
-              class="input"
-              type="password"
-              autocomplete="current-password"
-              placeholder="请输入密码"
-            />
-          </div>
-          <div class="sign-in-form-item">
-            <input v-model="userInfo.password" class="input" placeholder="请输入密码" />
-          </div>
-          <div class="sign-in-form-btn" @click="registerSubmit()">注册</div>
-
-          <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toLogin()">登录</div>
-        </form>
-      </div>
+    <div class="form-wrap right-1/4" :class="{ 'hide': !isLogin, 'appear': isLogin }">
+      <form class>
+        <input class="input" placeholder="请输入用户名" v-model="userInfo.account" />
+        <input class="input" type="password" v-model="userInfo.password" />
+        <div class="btn btn-primary">登录</div>
+        <div class="btn btn-second" @click="toRegister()">注册</div>
+      </form>
     </div>
   </div>
 </template>
@@ -105,153 +79,62 @@ const registerSubmit = async () => {
 onMounted(() => {
   console.log('Component is mounted!')
 })
-
 </script>
-<style lang='scss' scoped>
-.sign-in-page {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background-color: #f4f5f5;
-  overflow: hidden;
-
-  .sign-in-decorate {
-    .circle {
-      position: absolute;
-
-      border-radius: 50%;
-      z-index: 5;
-      background-color: rgba($color: #005ce6, $alpha: 1);
-      overflow: hidden;
-    }
-
-    .circle-login {
-      transform: translate(-50%, -60%);
-      transition: transform 1.8s;
-      transition-timing-function: ease-in-out;
-    }
-
-    .circle-register {
-      transform: translate(50%, -60%);
-      transition: transform 1.8s;
-      transition-timing-function: ease-in-out;
-    }
-
-    .sign-in-pic {
-      position: absolute;
-      width: 20%;
-      min-width: 300px;
-      top: 50%;
-      z-index: 6;
-    }
-
-    .sign-in-pic-login {
-      transform: translateX(200px);
-      transition: transform 0.9s;
-      transition-delay: 0.6s;
-      transition-timing-function: ease-in-out;
-    }
-
-    .sign-in-pic-login-act {
-      transition: transform 0.9s;
-      transform: translateX(-200px);
-      transition-delay: 0.6s;
-      transition-timing-function: ease-in-out;
-    }
-
-    .sign-in-pic-register {
-      transform: translateX(1300px);
-      transition: transform 0.9s;
-      transition-delay: 0.6s;
-      transition-timing-function: ease-in-out;
-    }
-
-    .sign-in-pic-register-act {
-      transform: translateX(1700px);
-      transition: transform 0.9s;
-      transition-delay: 0.6s;
-      transition-timing-function: ease-in-out;
-    }
-  }
-
-  .sign-in-wrap {
-    position: relative;
-    top: 50%;
-
-    .sign-in-form {
-      width: 400px;
-      transform: translate(-50%, -50%);
-      padding: 12px 24px;
-      border-radius: 2px;
-      border: 1px solid black;
-      background-color: rgba($color: #ffffff, $alpha: 0.5);
-      .sign-in-form-item {
-        padding: 12px 0;
-
-        input {
-          width: 100%;
-          line-height: 24px;
-          height: 24px;
-          background: transparent;
-        }
-        border-bottom: 1px solid black;
-      }
-
-      .sign-in-form-btn {
-        margin: 12px 0;
-        height: 36px;
-        line-height: 36px;
-        text-align: center;
-        color: white;
-        background-color: #005ce6;
-        border-radius: 2px;
-        cursor: pointer;
-      }
-      .sign-in-form-btn-shift {
-        color: #005ce6;
-        background-color: white;
-      }
-    }
-
-    .login-form {
-      position: absolute;
-      left: 75%;
-    }
-
-    .register-form {
-      position: absolute;
-      left: 25%;
-    }
-
-    .hide-form {
-      opacity: 0;
-      transition: all 0.7s;
-      transition-delay: 1s;
-      transition-timing-function: ease-in-out;
-    }
-
-    .appear-form {
-      opacity: 1;
-      transition: all 0.7s;
-      transition-delay: 1s;
-      transition-timing-function: ease-in-out;
-    }
-  }
-}
-@media screen and (orientation: landscape) {
-  .circle {
-    width: 100vw;
-    height: 100vw;
-  }
+<style scoped>
+.bg-login {
+  @apply transition-transform duration-3600 ease-in-out transform -translate-x-1/2;
 }
 
-@media screen and (orientation: portrait) {
-  .circle {
-    width: 100vh;
-    height: 100vh;
-  }
-  .sign-in-pic {
-    display: none;
-  }
+.bg-register {
+  @apply transition-transform duration-3600 ease-in-out transform translate-x-1/2;
+}
+
+.bg-pic {
+  @apply absolute w-96 top-1/2 z-20;
+}
+.bg-pic-login {
+  @apply transform translate-x-80 transition-transform duration-1000 delay-700 ease-in-out;
+}
+
+.bg-pic-login-left {
+  @apply transform -translate-x-60 transition-transform duration-1000 delay-700 ease-in-out;
+}
+
+.bg-pic-register-left {
+  @apply transition-transform duration-1000 delay-700 ease-in-out;
+  transform: translateX(calc(100vw - 10rem));
+}
+.bg-pic-register {
+  @apply transition-transform duration-1000 delay-700 ease-in-out;
+  transform: translateX(75rem);
+}
+
+.form-wrap {
+  @apply w-96 rounded border-2 absolute top-1/2 px-12 py-6 transform -translate-y-1/2;
+}
+
+.hide {
+  @apply opacity-0 transition-opacity duration-1400 delay-1000 ease-in-out;
+}
+
+.appear {
+  @apply opacity-100 transition-opacity duration-1400 delay-1000 ease-in-out;
+}
+
+.input {
+  @apply mb-3 w-full h-10 leading-6 rounded-full border-2 bg-blue-800 text-blue-50;
+  text-indent: 1rem;
+}
+
+.btn {
+  @apply my-3 leading-8 text-center border-2 rounded cursor-pointer;
+}
+
+.btn-primary {
+  @apply bg-blue-400 text-blue-100;
+}
+
+.btn-second {
+  @apply bg-blue-100 text-blue-400 mb-0;
 }
 </style>
