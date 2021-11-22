@@ -16,47 +16,59 @@
       <div
         :class="{ 'sign-in-form': true, 'login-form': true, 'hide-form': !isLogin, 'appear-form': isLogin }"
       >
-        <div class="sign-in-form-item">
-          <input class="input" placeholder="请输入用户名" />
-        </div>
-        <div class="sign-in-form-item">
-          <input class="input" placeholder="请输入密码" />
-        </div>
-        <div class="sign-in-form-btn" @click="loginSubmit()">登录</div>
-        <label for="round">
+        <form>
+          <div class="sign-in-form-item">
+            <input v-model="userInfo.account" class="input" placeholder="请输入用户名" />
+          </div>
+          <div class="sign-in-form-item">
+            <input v-model="userInfo.password" class="input" type="password" placeholder="请输入密码" />
+          </div>
+          <div class="sign-in-form-btn" @click="loginSubmit()">登录</div>
+
           <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toRegister()">注册</div>
-        </label>
+        </form>
       </div>
       <div
         :class="{ 'sign-in-form': true, 'register-form': true, 'hide-form': isLogin, 'appear-form': !isLogin }"
       >
-        <div class="sign-in-form-item">
-          <input v-model="account" class="input" placeholder="请输入用户名" />
-        </div>
-        <div class="sign-in-form-item">
-          <input v-model="password" class="input" type="password" placeholder="请输入密码" />
-        </div>
-        <div class="sign-in-form-item">
-          <input v-model="password" class="input" placeholder="请输入密码" />
-        </div>
-        <div class="sign-in-form-btn" @click="registerSubmit()">注册</div>
+        <form>
+          <div class="sign-in-form-item">
+            <input
+              v-model="userInfo.account"
+              class="input"
+              autocomplete="username"
+              placeholder="请输入用户名"
+            />
+          </div>
+          <div class="sign-in-form-item">
+            <input
+              v-model="userInfo.password"
+              class="input"
+              type="password"
+              autocomplete="current-password"
+              placeholder="请输入密码"
+            />
+          </div>
+          <div class="sign-in-form-item">
+            <input v-model="userInfo.password" class="input" placeholder="请输入密码" />
+          </div>
+          <div class="sign-in-form-btn" @click="registerSubmit()">注册</div>
 
-        <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toLogin()">登录</div>
+          <div class="sign-in-form-btn sign-in-form-btn-shift" @click="toLogin()">登录</div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
-import { login, register, test } from '../api/axios';
+import { ref, reactive, onMounted } from 'vue';
+import { login, register } from '../api/axios';
 const isLogin = ref(true);
 const userInfo = reactive({
   account: ref(),
   password: ref(),
 })
-const account = ref();
-const password = ref();
 const toLogin = () => {
   isLogin.value = true
 }
@@ -65,19 +77,34 @@ const toRegister = () => {
 }
 const loginSubmit = async () => {
   let params = new FormData();
-  params.append("account", account.value);
-  params.append("password", password.value);
-  let result = await login(params);
-  console.log(result);
+  params.append("account", userInfo.account);
+  params.append("password", userInfo.password);
+  console.log(params);
+  let { data: result } = await login(params);
+  if (result.code === 200) {
+    alert("登录成功")
+    localStorage.setItem("token", result.token);
+    localStorage.setItem("nickname", result.nickname);
+    localStorage.setItem("avater", result.avater);
+  } else {
+    alert("登录失败")
+  }
+
 }
 const registerSubmit = async () => {
   let params = new FormData();
-  params.append("account", account.value);
-  params.append("password", password.value);
-  let result = await register(params);
-  console.log(result.data);
+  params.append("account", userInfo.account);
+  params.append("password", userInfo.password);
+  let { data: result } = await register(params);
+  if (result.code === 200) {
+    alert("注册成功")
+  } else {
+    alert("注册失败")
+  }
 }
-
+onMounted(() => {
+  console.log('Component is mounted!')
+})
 
 </script>
 <style lang='scss' scoped>

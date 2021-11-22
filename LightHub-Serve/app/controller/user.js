@@ -5,9 +5,10 @@ const {getToken} = require('../utils/getToken')
 const bcrypt = require('bcryptjs')
 
 const login = async ctx => {
-  console.log(ctx)
   let body = ctx.request.body;
+  console.log(body);
   let user = await us.findOne({"account":body.account})
+  console.log(user);
   if(!user){
     return ctx.body = ResultFactory.buildFailResult("用户不存在")
   }
