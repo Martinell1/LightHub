@@ -1,48 +1,67 @@
 <template>
   <div class="relative w-screen h-screen overflow-hidden">
-    <div
-      class="absolute bottom-1/4 w-2000 h-2000 rounded-full bg-blue-500 z-10"
-      :class="{ 'bg-login': isLogin, 'bg-register': !isLogin }"
-    ></div>
-    <img
-      class="bg-pic"
-      :class="{ 'bg-pic-login': isLogin, 'bg-pic-login-left': !isLogin }"
-      src="../assets/log.svg"
-    />
-    <img
-      class="bg-pic"
-      :class="{ 'bg-pic-register': !isLogin, 'bg-pic-register-left': isLogin }"
-      src="../assets/register.svg"
-    />
-    <div class="form-wrap left-1/4" :class="{ 'hide': isLogin, 'appear': !isLogin }">
-      <form class>
-        <input class="input" placeholder="请输入用户名" />
-        <input class="input" type="password" />
-        <input class="input" type="password" />
-        <div class="btn btn-primary">注册</div>
-        <div class="btn btn-second" @click="toLogin()">登录</div>
-      </form>
+    <div class="invisible xl:visible">
+      <div
+        class="absolute bottom-1/4 w-2000 h-2000 rounded-full bg-blue-500 z-10"
+        :class="{ 'bg-login': isLogin, 'bg-register': !isLogin }"
+      ></div>
+      <img
+        class="bg-pic"
+        :class="{ 'bg-pic-login': isLogin, 'bg-pic-login-left': !isLogin }"
+        src="../assets/log.svg"
+      />
+      <img
+        class="bg-pic"
+        :class="{ 'bg-pic-register': !isLogin, 'bg-pic-register-left': isLogin }"
+        src="../assets/register.svg"
+      />
     </div>
 
-    <div class="form-wrap right-1/4" :class="{ 'hide': !isLogin, 'appear': isLogin }">
-      <form class>
-        <input class="input" placeholder="请输入用户名" v-model="userInfo.account" />
-        <input class="input" type="password" v-model="userInfo.password" />
-        <div class="btn btn-primary">登录</div>
-        <div class="btn btn-second" @click="toRegister()">注册</div>
-      </form>
+    <div class="realtive" :class="{ 'hide': isLogin, 'appear': !isLogin }">
+      <div class="form-title left-1/4 ml-20">
+        <p class="my-8 text-5xl">LightHub</p>
+        <p class="text-3xl">注册</p>
+      </div>
+      <div class="form-wrap left-1/4">
+        <form class="form">
+          <input class="input" placeholder="请输入用户名" />
+          <input class="input" type="password" />
+          <input class="input" type="password" />
+          <div class="btn btn-primary" @click="registerSubmit()">注册</div>
+          <div class="btn btn-second" @click="toLogin()">已有账号？请登录</div>
+        </form>
+      </div>
+    </div>
+
+    <div class="realtive" :class="{ 'hide': !isLogin, 'appear': isLogin }">
+      <div class="form-title right-1/4 mr-20">
+        <p class="my-8 text-5xl">LightHub</p>
+        <p class="text-3xl">登录</p>
+      </div>
+      <div class="form-wrap right-1/4">
+        <form class="form">
+          <input class="input" placeholder="请输入用户名" v-model="userInfo.account" />
+          <input class="input" type="password" v-model="userInfo.password" />
+          <div class="btn btn-primary" @click="loginSubmit()">登录</div>
+          <div class="btn btn-second" @click="toRegister()">尚未拥有账号？请注册</div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
-import { login, register } from '../api/axios';
+import { useStore } from "vuex";
+import { useRouter } from 'vue-router';
+import { login, register, getUserInfo } from '../api/axios';
 const isLogin = ref(true);
 const userInfo = reactive({
-  account: ref(),
-  password: ref(),
+  account: ref("admin"),
+  password: ref("123456"),
 })
+const store = useStore();
+const router = useRouter();
 const toLogin = () => {
   isLogin.value = true
 }
@@ -53,18 +72,27 @@ const loginSubmit = async () => {
   let params = new FormData();
   params.append("account", userInfo.account);
   params.append("password", userInfo.password);
-  console.log(params);
   let { data: result } = await login(params);
   if (result.code === 200) {
-    alert("登录成功")
-    localStorage.setItem("token", result.token);
-    localStorage.setItem("nickname", result.nickname);
-    localStorage.setItem("avater", result.avater);
+    const token = result.data;
+    localStorage.setItem("token", token);
+    let { data: res } = await getUserInfo(token);
+    if (res.code === 200) {
+      let nickname = res.data.nickname;
+      let avater = res.data.avater;
+      localStorage.setItem("nickname", nickname);
+      localStorage.setItem("avater", avater);
+      store.commit('updateUserInfo', { 'nickname': nickname, 'avater': avater })
+      alert("登录成功")
+      router.push({
+        path: '/'
+      })
+    }
   } else {
     alert("登录失败")
   }
-
 }
+
 const registerSubmit = async () => {
   let params = new FormData();
   params.append("account", userInfo.account);
@@ -76,9 +104,11 @@ const registerSubmit = async () => {
     alert("注册失败")
   }
 }
+
 onMounted(() => {
   console.log('Component is mounted!')
 })
+
 </script>
 <style scoped>
 .bg-login {
@@ -109,8 +139,16 @@ onMounted(() => {
   transform: translateX(75rem);
 }
 
+.form-title {
+  @apply text-blue-700 font-bold transform -translate-y-1/2 top-1/5 absolute;
+}
+
 .form-wrap {
-  @apply w-96 rounded border-2 absolute top-1/2 px-12 py-6 transform -translate-y-1/2;
+  @apply absolute top-1/2 transform -translate-y-1/2;
+}
+
+.form {
+  @apply w-96 rounded border-2 px-12 py-6;
 }
 
 .hide {

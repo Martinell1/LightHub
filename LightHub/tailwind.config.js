@@ -14,6 +14,9 @@ module.exports = {
       serif: ['Merriweather', 'serif'],
     },
     extend: {
+      inset:{
+        '1/5': '20%',
+      },
       width:{
         '2000':'2000px'
       },

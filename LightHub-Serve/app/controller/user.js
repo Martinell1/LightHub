@@ -1,14 +1,12 @@
 const userService = require("../service/user")
 const ResultFactory = require('../result')
 const us = new userService();
-const {getToken} = require('../utils/getToken')
+const {getToken,verify} = require('../utils/getToken')
 const bcrypt = require('bcryptjs')
 
 const login = async ctx => {
   let body = ctx.request.body;
-  console.log(body);
   let user = await us.findOne({"account":body.account})
-  console.log(user);
   if(!user){
     return ctx.body = ResultFactory.buildFailResult("用户不存在")
   }
@@ -34,6 +32,15 @@ const register = async ctx => {
     return ctx.body = ResultFactory.buildSuccessResult("注册成功");
   }else{
     return ctx.body = ResultFactory.buildFailResult("注册失败");
+  }
+}
+
+const info = async ctx => {
+  const token = ctx.query.token;
+  const id = verify(token).id;
+  let result = await us.findOne({"_id":id})
+  if(result){
+    return ctx.body = ResultFactory.buildSuccessResult(result);
   }
 }
 
@@ -63,5 +70,6 @@ module.exports = {
   remove,
   update,
   register,
-  login
+  login,
+  info
 }

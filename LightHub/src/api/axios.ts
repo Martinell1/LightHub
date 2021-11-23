@@ -10,12 +10,13 @@ const login: Function = async (user: Object) => {
   return await axios.post("user/login", user);
 }
 
-const test: Function = async () => {
-  return await axios.get("user/list");
+const getUserInfo: Function = async (token: String) => {
+  return await axios.get("user/info?token=" + token)
 }
+
 
 export {
   register,
   login,
-  test
+  getUserInfo
 }

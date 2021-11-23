@@ -2,12 +2,10 @@ import { createStore } from 'vuex'
 
 
 export default createStore({
-  state() {
-    return {
-      userInfo: {
-        nickname: localStorage.getItem("nickname"),
-        avater: localStorage.getItem("avater"),
-      },
+  state: {
+    userInfo: {
+      nickname: localStorage.getItem("nickname"),
+      avater: localStorage.getItem("avater"),
     }
   },
   mutations: {
@@ -25,6 +23,9 @@ export default createStore({
 
   },
   actions: {
+    asyncUpdateUserInfo(context, userInfo) {
+      context.commit("updateUserInfo", userInfo);
+    }
   },
   modules: {
   }
