@@ -1,11 +1,12 @@
 <template>
-  <router-view></router-view>
+  <div class="bg-gray-100 min-h-screen">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script setup lang="ts">
 
 </script>
 
-<style lang="scss">
-// @import "../src/css/app.scss";
+<style>
 </style>

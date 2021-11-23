@@ -9,10 +9,8 @@
 import MainHeader from '../components/MainHeader.vue';
 
 </script>
-<style lang='scss' scoped>
+<style scoped>
 .main_layout {
-  width: 1080px;
-  margin: 0 auto;
-  background-color: lightblue;
+  @apply w-1000 m-auto;
 }
 </style>

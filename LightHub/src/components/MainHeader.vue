@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 h-16">
+  <div class="bg-gray-100 h-16 shadow">
     <div class="m-auto w-1200 flex justify-between">
       <ul class="flex">
         <li class="flex mr-4">
