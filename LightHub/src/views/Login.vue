@@ -55,13 +55,13 @@ import { ref, reactive, onMounted } from 'vue';
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router';
 import { login, register, getUserInfo } from '../api/axios';
+const store = useStore();
+const router = useRouter();
 const isLogin = ref(true);
 const userInfo = reactive({
   account: ref("admin"),
   password: ref("123456"),
 })
-const store = useStore();
-const router = useRouter();
 const toLogin = () => {
   isLogin.value = true
 }
