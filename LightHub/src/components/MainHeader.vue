@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 h-16 shadow">
+  <nav class="bg-gray-50 h-16 border-b-2 border-gray-100">
     <div class="m-auto w-1200 flex justify-between">
       <ul class="flex">
         <li class="flex mr-4">
@@ -13,7 +13,7 @@
       </ul>
       <div class="flex w-100 overflow-hidden">
         <input
-          class="m-auto mx-2 w-48 h-8 bg-gray-200 text-sm rounded-sm outline-none pl-4 ring-1 ring-blue-500 flex-shrink-0"
+          class="m-auto mx-2 w-48 h-8 bg-gray-100 text-sm rounded-sm outline-none pl-4 ring-1 ring-blue-500 flex-shrink-0"
           :class="{ 'input-focus': isSearch, 'input': !isSearch }"
           type="text"
           @focus="focusOnSearch()"
@@ -27,11 +27,13 @@
         <img class="w-10 h-10 rounded-full m-3 cursor-pointer" src="../assets/images/login-bg.jpg" />
       </div>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
+import { useStore } from "vuex";
+const store = useStore();
 let isSearch = ref(false);
 const focusOnSearch = () => {
   isSearch.value = true;
@@ -39,10 +41,16 @@ const focusOnSearch = () => {
 const focusOnElse = () => {
   isSearch.value = false;
 }
+const userInfo = store.state.userInfo;
+
+onMounted(() => {
+  console.log(userInfo);
+})
+
 </script>
 <style scoped>
 .nav-list-item {
-  @apply text-base leading-16 h-16 mx-4 cursor-pointer text-gray-500 hover:text-blue-800;
+  @apply text-base leading-16 h-16 mx-4 cursor-pointer text-gray-500 hover:text-blue-500;
 }
 
 .input {
@@ -54,7 +62,7 @@ const focusOnElse = () => {
 }
 
 .btn {
-  @apply rounded-sm w-20 h-9 my-auto mx-2 bg-blue-600 text-gray-100 text-center leading-8 text-sm cursor-pointer;
+  @apply rounded-sm w-20 h-9 my-auto mx-2 bg-blue-500 text-gray-50 text-center leading-8 text-sm cursor-pointer;
 }
 
 .btn-focus {

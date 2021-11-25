@@ -10,7 +10,4 @@ import MainHeader from '../components/MainHeader.vue';
 
 </script>
 <style scoped>
-.main_layout {
-  @apply w-1000 m-auto;
-}
 </style>

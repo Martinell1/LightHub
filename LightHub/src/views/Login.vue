@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive } from 'vue';
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router';
 import { login, register, getUserInfo } from '../api/axios';
@@ -78,11 +78,11 @@ const loginSubmit = async () => {
     localStorage.setItem("token", token);
     let { data: res } = await getUserInfo(token);
     if (res.code === 200) {
-      let nickname = res.data.nickname;
-      let avater = res.data.avater;
-      localStorage.setItem("nickname", nickname);
-      localStorage.setItem("avater", avater);
-      store.commit('updateUserInfo', { 'nickname': nickname, 'avater': avater })
+      let userInfo = res.data;
+      localStorage.setItem("id", userInfo._id);
+      localStorage.setItem("nickname", userInfo.nickname);
+      localStorage.setItem("avater", userInfo.avater);
+      store.commit('updateUserInfo', { "id": userInfo.id, "nickname": userInfo.nickname, "avater": userInfo.avater })
       alert("登录成功")
       router.push({
         path: '/'
@@ -105,9 +105,7 @@ const registerSubmit = async () => {
   }
 }
 
-onMounted(() => {
-  console.log('Component is mounted!')
-})
+
 
 </script>
 <style scoped>

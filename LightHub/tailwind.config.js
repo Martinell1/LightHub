@@ -22,6 +22,8 @@ module.exports = {
         '112':'28rem',
         '120':'30rem',
         '140':'35rem',
+        '260':'260px',
+        '280':'280px',
         '700':'700px',
         '1000':'1000px',
         '1200':'1200px',
@@ -32,6 +34,15 @@ module.exports = {
       },
       maxWidth:{
         'screen':'100vw'
+      },
+      margin:{
+        '19':'76px',
+        '20p':'20px',
+        '100':'25rem',
+        '112':'28rem',
+      },
+      padding:{
+        '19':'76px',
       },
       transitionDuration: {
         '0': '0ms',

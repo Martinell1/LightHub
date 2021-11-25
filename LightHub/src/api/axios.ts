@@ -14,9 +14,14 @@ const getUserInfo: Function = async (token: String) => {
   return await axios.get("user/info?token=" + token)
 }
 
+const getChannelList: Function = async () => {
+  return await axios.get("channel/list")
+}
+
 
 export {
   register,
   login,
-  getUserInfo
+  getUserInfo,
+  getChannelList
 }
