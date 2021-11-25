@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="mt-2 ml-2">
+    <div class="mx-2 ml-2">
       <ul class="text-sm leading-10">
         <li class="sidebar-item">
           收藏集
@@ -42,6 +42,6 @@
 }
 
 .sidebar-item {
-  @apply flex justify-between border-b-2 py-2;
+  @apply flex justify-between border-b-2 py-1;
 }
 </style>
