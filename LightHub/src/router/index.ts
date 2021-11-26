@@ -14,15 +14,26 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/',
         name: 'Home',
-        component: () => import('../views/Home.vue'),
+        components: {
+          default: () => import('../views/Home.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        },
       },
       {
-        path: '/user',
+        path: '/user/:id',
         name: 'User',
         component: () => import('../views/User.vue'),
-      }
+      },
+      {
+        path: '/editor',
+        name: 'Editor',
+        components: {
+          default: () => import('../views/Editor.vue'),
+          header: () => import('../components/EditCompoents/EditorHeader.vue'),
+        }
+      },
     ]
-  }
+  },
 ]
 
 const router = createRouter({

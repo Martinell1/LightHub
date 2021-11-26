@@ -1,3 +1,4 @@
+import { stat } from 'fs';
 import { createStore } from 'vuex'
 
 
@@ -7,7 +8,8 @@ export default createStore({
       id: localStorage.getItem("id"),
       nickname: localStorage.getItem("nickname"),
       avater: localStorage.getItem("avater"),
-    }
+    },
+    articleText: "",
   },
   mutations: {
     updateUserInfo(state, userInfo) {
@@ -23,6 +25,10 @@ export default createStore({
         avater: '',
       }
     },
+
+    updateArticleText(state, articleText) {
+      state.articleText = articleText
+    }
 
   },
   actions: {

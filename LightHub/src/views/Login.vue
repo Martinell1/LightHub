@@ -54,7 +54,7 @@
 import { ref, reactive } from 'vue';
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router';
-import { login, register, getUserInfo } from '../api/axios';
+import { login, register, getOneByToken } from '../api/axios';
 const store = useStore();
 const router = useRouter();
 const isLogin = ref(true);
@@ -76,7 +76,7 @@ const loginSubmit = async () => {
   if (result.code === 200) {
     const token = result.data;
     localStorage.setItem("token", token);
-    let { data: res } = await getUserInfo(token);
+    let { data: res } = await getOneByToken(token);
     if (res.code === 200) {
       let userInfo = res.data;
       localStorage.setItem("id", userInfo._id);

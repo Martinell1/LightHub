@@ -2,6 +2,7 @@
   <ChannelNav></ChannelNav>
   <div class="home_layout">
     <main>
+      <div>{{ userInfo }}</div>
       <TopicCard></TopicCard>
     </main>
     <HomeAside></HomeAside>
@@ -9,10 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import HomeAside from '../components/HomeAside.vue';
-import ChannelNav from '../components/ChannelNav.vue';
-import TopicCard from '../components/TopicCard.vue';
-
+import ChannelNav from '../components/HoneCompoents/ChannelNav.vue';
+import TopicCard from '../components/HoneCompoents/TopicCard.vue';
+import HomeAside from '../components/HoneCompoents/HomeAside.vue';
+import { inject } from 'vue';
+const userInfo = inject('userInfo')
+console.log("Inject接受", userInfo);
 </script>
 <style scoped>
 .home_layout {

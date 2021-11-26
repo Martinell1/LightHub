@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { getChannelList } from '../api/axios';
+import { getChannelList } from '../../api/axios';
 const channelList = ref();
 
 const loadChannelList = async () => {

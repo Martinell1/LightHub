@@ -10,8 +10,12 @@ const login: Function = async (user: Object) => {
   return await axios.post("user/login", user);
 }
 
-const getUserInfo: Function = async (token: String) => {
+const getOneByToken: Function = async (token: String) => {
   return await axios.get("user/info?token=" + token)
+}
+
+const getOneById: Function = async (id: String) => {
+  return await axios.get("user/info?id=" + id)
 }
 
 const getChannelList: Function = async () => {
@@ -22,6 +26,7 @@ const getChannelList: Function = async () => {
 export {
   register,
   login,
-  getUserInfo,
+  getOneByToken,
+  getOneById,
   getChannelList
 }

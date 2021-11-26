@@ -36,11 +36,19 @@ const register = async ctx => {
 }
 
 const info = async ctx => {
-  const token = ctx.query.token;
-  const id = verify(token).id;
-  let result = await us.findOne({"_id":id})
-  if(result){
-    return ctx.body = ResultFactory.buildSuccessResult(result);
+  if(ctx.query.id){
+    const id = ctx.query.id;
+    let result = await us.findOne({"_id":id})
+    if(result){
+      return ctx.body = ResultFactory.buildSuccessResult(result);
+    }
+  }else{
+    const token = ctx.query.token;
+    const id = verify(token).id;
+    let result = await us.findOne({"_id":id})
+    if(result){
+      return ctx.body = ResultFactory.buildSuccessResult(result);
+    }
   }
 }
 

@@ -18,7 +18,7 @@
             <div>27</div>
           </div>
         </div>
-        <img class="w-32 h-20" src="../assets/images/login-bg.jpg" />
+        <img class="w-32 h-20" src="../../assets/images/login-bg.jpg" />
       </div>
       <div class="border-b-2"></div>
     </div>

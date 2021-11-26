@@ -6,7 +6,7 @@
     </div>
     <div class="flex px-4 py-2 mt-2 justify-between">
       <div class="flex">
-        <img class="w-11 h-11 rounded-full" src="../assets/images/login-bg.jpg" />
+        <img class="w-11 h-11 rounded-full" src="../../assets/images/login-bg.jpg" />
         <div class="flex flex-col ml-4">
           <span class="font-semibold">Kaijin</span>
           <span class="text-gray-500 text-sm">某南极贱畜</span>
@@ -21,7 +21,7 @@
         <div
           class="text-sm text-gray-500"
         >虽说现在关系型数据库还是主流，但是面对某些需求的时候，需要非关系型数据库来补充它，学习一个主流的NoSQL数据库还是很有必要的。MongoDB是一个功能丰富的NoSQL数据库，本文整理了它最常用的部分形成了这篇入门教程，</div>
-        <img class="w-16 h-16 mx-4 rounded" src="../assets/images/login-bg.jpg" />
+        <img class="w-16 h-16 mx-4 rounded" src="../../assets/images/login-bg.jpg" />
       </div>
     </div>
 

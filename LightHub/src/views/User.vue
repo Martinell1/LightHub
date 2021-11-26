@@ -12,11 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import ProfileHeader from '../components/ProfileHeader.vue';
-import ActivityList from '../components/ActivityList.vue';
-import MomentCard from '../components/MomentCard.vue';
-import UserAside from '../components/UserAside.vue';
-
+import ProfileHeader from '../components/UserComponents/ProfileHeader.vue';
+import ActivityList from '../components/UserComponents/ActivityList.vue';
+import MomentCard from '../components/UserComponents/MomentCard.vue';
+import UserAside from '../components/UserComponents/UserAside.vue';
 </script>
 <style scoped>
 .user_layout {

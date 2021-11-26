@@ -3,7 +3,7 @@
     <div class="h-32 bg-gray-300 rounded-t-md"></div>
     <div class="h-32 bg-gray-50 rounded-b-md flex">
       <div class="w-40 h-40 bg-gray-50 rounded-lg transform -translate-y-1/3 ml-4">
-        <img class="p-1 w-full h-full rounded-full" src="../assets/images/login-bg.jpg" />
+        <img class="p-1 w-full h-full rounded-full" src="../../assets/images/login-bg.jpg" />
       </div>
       <div class="flex flex-col ml-4">
         <div class="flex mt-2">
