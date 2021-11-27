@@ -1,21 +1,41 @@
-const {article} = require("../service")
-
+const articleService = require("../service/article")
+const ResultFactory = require('../result')
+const ObjectId = require('mongoose').Types.ObjectId
+const as = new articleService();
 
 const list = async ctx => {
-  // const result = 
-  // await articleService.findAll().then((result)=>{
-  //   ctx.body = '路由改造后的结果' + result
-  // })
-  let result = await article.findAll()
-  ctx.body = '路由改造后的结果\n' + result
+  let result = await as.list()
+  ctx.body = ResultFactory.buildSuccessResult(result)
 }
 
-const b = async ctx => {
-  ctx.body = "b"
+const add = async ctx => {
+  let article = ctx.request.body
+  console.log(article);
+  let result = await as.add(article)
+  if(result){
+    return  ctx.body = ResultFactory.buildSuccessResult(result)
+  }
 }
 
+const remove = async ctx => {
+  const id = ctx.request.body
+  let result = await as.remove(id);
+  if(result.modifiedCount === 0){
+    ctx.body =  ResultFactory.buildFailResult("删除失败")
+  }else{
+    ctx.body =  ResultFactory.buildSuccessResult("删除成功")
+  }
+}
+
+const update = async ctx => {
+  let article = ctx.request.body
+  let result = await as.update(article)
+  ctx.body = ResultFactory.buildSuccessResult(result);
+}
 
 module.exports = {
   list,
-  b
+  add,
+  remove,
+  update,
 }

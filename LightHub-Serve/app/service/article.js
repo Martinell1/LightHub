@@ -1,39 +1,10 @@
 const {article} = require('../model')
+const Service = require('./')
 
-const findAll = () => {
-  return article.find({})
+class articleService extends Service{
+  constructor(){
+    super(article)
+  }
 }
 
-// const newArticle = {
-//   name:"Insert"
-// }
-
-// Article.create(newArticle,(err,res) => {
-//   if(err) {
-// 		console.log(err);
-// 		return;
-// 	}
-// 	console.log(res);
-// })
-
-// Article.updateOne({name:"Update2"},
-//   { $set: { name: "UpdateOn" + Date.now() } },
-//   (err,res) => {
-//   if(err) {
-// 		console.log(err);
-// 		return;
-// 	}
-// 	console.log(res);
-// })
-
-// Article.remove({name:"Insert"},(err,res) => {
-//   if(err) {
-// 		console.log(err);
-// 		return;
-// 	}
-// 	console.log(res);
-// })
-
-module.exports = {
-  findAll
-};
+module.exports = articleService;

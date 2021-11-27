@@ -22,11 +22,16 @@ const getChannelList: Function = async () => {
   return await axios.get("channel/list")
 }
 
+const addArticle: Function = async (article: Object) => {
+  return await axios.post("article/add", article)
+}
+
 
 export {
   register,
   login,
   getOneByToken,
   getOneById,
-  getChannelList
+  getChannelList,
+  addArticle
 }

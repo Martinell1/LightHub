@@ -12,7 +12,7 @@ const add = async ctx => {
   let channel = ctx.request.body
   let result = await cs.add(channel)
   ctx.body =  result
-}
+} 
 
 const remove = async ctx => {
   const id = ctx.request.body
@@ -29,8 +29,6 @@ const update = async ctx => {
   let result = await cs.update(channel)
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
-
-
 
 
 module.exports = {

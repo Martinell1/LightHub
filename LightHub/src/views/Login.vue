@@ -82,7 +82,7 @@ const loginSubmit = async () => {
       localStorage.setItem("id", userInfo._id);
       localStorage.setItem("nickname", userInfo.nickname);
       localStorage.setItem("avater", userInfo.avater);
-      store.commit('updateUserInfo', { "id": userInfo.id, "nickname": userInfo.nickname, "avater": userInfo.avater })
+      store.commit('updateUserInfo', { "id": userInfo._id, "nickname": userInfo.nickname, "avater": userInfo.avater })
       alert("登录成功")
       router.push({
         path: '/'

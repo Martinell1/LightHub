@@ -24,11 +24,13 @@ const commentSchema = new Schema({
   },
   status:{
     type:Number,
-    require:true
+    require:true,
+    default:1,
   },
   create_time:{
     type:Date,
     require:true,
+    default:Date.now()
   }
 },{versionKey:false})
 

@@ -29,11 +29,17 @@ module.exports = {
         '1200':'1200px',
         '2000':'2000px'
       },
-      height:{
-        '2000':'2000px'
+      maxWidth:{
+        '180':'45rem'
       },
       maxWidth:{
         'screen':'100vw'
+      },
+      minHeight:{
+        '60':'15rem',
+      },
+      height:{
+        '2000':'2000px'
       },
       margin:{
         '19':'76px',

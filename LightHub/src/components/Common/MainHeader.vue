@@ -21,14 +21,17 @@
         />
 
         <div class="btn" :class="{ 'btn-focus': isSearch }">搜索</div>
-        <div class="btn" :class="{ 'btn-focus': isSearch }">提问</div>
+        <div class="btn" :class="{ 'btn-focus': isSearch }" @click="preAskQuestion()">提问</div>
       </div>
-      <div class="relative">
+      <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
         <img
           class="w-10 h-10 rounded-full m-3 cursor-pointer"
           src="../../assets/images/login-bg.jpg"
         />
-        <ul class="absolute bg-gray-50 -ml-24 text-gray-500 ring-2 ring-gray-200 text-sm">
+        <ul
+          v-show="clickAvater"
+          class="absolute rounded bg-gray-50 -ml-24 text-gray-500 ring-2 ring-gray-200 text-sm"
+        >
           <li class="user-opt-item">
             <router-link to="/editor">写文章</router-link>
           </li>
@@ -42,13 +45,18 @@
       </div>
     </div>
   </nav>
+  <AskQuestionDialog v-if="showDialog" @close="closeDialog()"></AskQuestionDialog>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
 import { useStore } from "vuex";
+import AskQuestionDialog from './AskQuestionDialog.vue';
 const store = useStore();
 let isSearch = ref(false);
+let clickAvater = ref(false);
+let showDialog = ref(false)
+
 const focusOnSearch = () => {
   isSearch.value = true;
 }
@@ -56,6 +64,14 @@ const focusOnElse = () => {
   isSearch.value = false;
 }
 const userInfo = store.state.userInfo;
+
+const preAskQuestion = () => {
+  showDialog.value = true
+}
+
+const closeDialog = () => {
+  showDialog.value = false
+}
 
 onMounted(() => {
 

@@ -22,7 +22,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/user/:id',
         name: 'User',
-        component: () => import('../views/User.vue'),
+        components: {
+          default: () => import('../views/User.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        }
       },
       {
         path: '/editor',
