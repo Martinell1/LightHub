@@ -13,6 +13,9 @@ const topicSchema = new Schema({
     type:String,
     require:true
   },
+  channel_array:{
+    type:Array
+  },
   answer_list:{
     type:Array
   },

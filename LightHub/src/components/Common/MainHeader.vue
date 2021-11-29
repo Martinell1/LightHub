@@ -45,13 +45,14 @@
       </div>
     </div>
   </nav>
-  <AskQuestionDialog v-if="showDialog" @close="closeDialog()"></AskQuestionDialog>
+  <TopicDialog v-if="showDialog" @close="closeDialog()"></TopicDialog>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
 import { useStore } from "vuex";
 import AskQuestionDialog from './AskQuestionDialog.vue';
+import TopicDialog from './TopicDialog.vue';
 const store = useStore();
 let isSearch = ref(false);
 let clickAvater = ref(false);

@@ -26,6 +26,10 @@ const addArticle: Function = async (article: Object) => {
   return await axios.post("article/add", article)
 }
 
+const addTopic: Function = async (topic: Object) => {
+  return await axios.post("topic/add", topic)
+}
+
 
 export {
   register,
@@ -33,5 +37,6 @@ export {
   getOneByToken,
   getOneById,
   getChannelList,
+  addTopic,
   addArticle
 }

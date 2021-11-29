@@ -1,6 +1,5 @@
 const articleService = require("../service/article")
 const ResultFactory = require('../result')
-const ObjectId = require('mongoose').Types.ObjectId
 const as = new articleService();
 
 const list = async ctx => {

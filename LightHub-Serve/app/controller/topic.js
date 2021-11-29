@@ -12,7 +12,7 @@ const list = async ctx => {
 const add = async ctx => {
   let topic = ctx.request.body
   let result = await ts.add(topic)
-  ctx.body =  result
+  ctx.body =  ResultFactory.buildSuccessResult(result)
 }
 
 const remove = async ctx => {
