@@ -20,12 +20,30 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: '/user/:id',
+        path: 'user/:id',
         name: 'User',
         components: {
           default: () => import('../views/User.vue'),
           header: () => import('../components/Common/MainHeader.vue')
         }
+      },
+      {
+        path: 'channel/',
+        name: 'Channel',
+        components: {
+          default: () => import('../views/Channel.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        },
+        children: [
+          {
+            path: 'follow',
+            component: () => import('../components/ChannelComponents/ChannelList.vue')
+          },
+          {
+            path: 'all',
+            component: () => import('../components/ChannelComponents/ChannelList.vue')
+          },
+        ]
       },
       {
         path: '/editor',

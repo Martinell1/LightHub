@@ -6,25 +6,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, provide, onMounted } from 'vue'
+import { ref, provide, onMounted } from 'vue'
 import { useStore } from 'vuex';
-import { getOneById } from '../api/axios';
+import { getOneById, getChannelList } from '../api/axios';
+//提供用户信息
 const store = useStore();
 const id: String = store.state.userInfo.id;
-
-let userInfo = ref({});
+const userInfo: any = ref({});
 
 const loadUserInfo = async () => {
   let { data: result } = await getOneById(id);
   if (result.code === 200) {
     userInfo.value = result.data
+    userInfo.value.id = userInfo.value._id;
+  }
+}
+provide('userInfo', userInfo)
+
+//提供channel信息
+const channelList = ref([]);
+
+const loadChannelList = async () => {
+  let { data: result } = await getChannelList();
+  if (result.code === 200) {
+    channelList.value = result.data;
   }
 }
 
-provide('userInfo', userInfo)
+provide('channelList', channelList)
 
 onMounted(async () => {
   loadUserInfo()
+  loadChannelList()
+
 })
 
 

@@ -6,10 +6,19 @@
           <img src="../../assets/images/logo.png" class="w-14 h-14 m-1" />
           <div class="leading-16 h-16 text-xl font-semibold text-blue-900">LightHub</div>
         </li>
-        <li class="nav-list-item">首页</li>
-        <li class="nav-list-item">沸点</li>
-        <li class="nav-list-item">资讯</li>
-        <li class="nav-list-item">发现</li>
+
+        <li class="nav-list-item">
+          <router-link class="nav-list-item" to="/">首页</router-link>
+        </li>
+        <li class="nav-list-item">
+          <router-link class="nav-list-item" to="/">首页</router-link>
+        </li>
+        <li class="nav-list-item">
+          <router-link class="nav-list-item" to="/">首页</router-link>
+        </li>
+        <li class="nav-list-item">
+          <router-link class="nav-list-item" to="/">首页</router-link>
+        </li>
       </ul>
       <div class="flex w-100 overflow-hidden">
         <input
@@ -21,7 +30,7 @@
         />
 
         <div class="btn" :class="{ 'btn-focus': isSearch }">搜索</div>
-        <div class="btn" :class="{ 'btn-focus': isSearch }" @click="preAskQuestion()">提问</div>
+        <div class="btn" :class="{ 'btn-focus': isSearch }" @click="preTopicSubmit()">提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
         <img
@@ -37,7 +46,7 @@
           </li>
           <li class="user-opt-item border-b-2 border-gray-100">草稿箱</li>
           <li class="user-opt-item">
-            <router-link :to="{ name: 'User', params: { id: userInfo.id } }">我的主页</router-link>
+            <router-link :to="{ name: 'User', params: { 'id': userInfo.id } }">我的主页</router-link>
           </li>
           <li class="user-opt-item border-b-2 border-gray-100">我赞过的</li>
           <li class="user-opt-item">退出</li>
@@ -49,10 +58,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useStore } from "vuex";
 import TopicDialog from './TopicDialog.vue';
 const store = useStore();
+const userInfo = store.state.userInfo;
+
 let isSearch = ref(false);
 let clickAvater = ref(false);
 let showDialog = ref(false)
@@ -63,9 +74,9 @@ const focusOnSearch = () => {
 const focusOnElse = () => {
   isSearch.value = false;
 }
-const userInfo = store.state.userInfo;
 
-const preAskQuestion = () => {
+
+const preTopicSubmit = () => {
   showDialog.value = true
 }
 
@@ -80,7 +91,7 @@ onMounted(() => {
 </script>
 <style scoped>
 .nav-list-item {
-  @apply text-base leading-16 h-16 mx-4 cursor-pointer text-gray-500 hover:text-blue-500;
+  @apply text-base leading-16 h-16 mx-2 cursor-pointer text-gray-500 hover:text-blue-500;
 }
 
 .input {

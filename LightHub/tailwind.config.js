@@ -42,6 +42,7 @@ module.exports = {
         '2000':'2000px'
       },
       margin:{
+        '5px':'5px',
         '19':'76px',
         '20p':'20px',
         '100':'25rem',

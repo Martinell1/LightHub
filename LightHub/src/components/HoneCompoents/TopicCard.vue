@@ -44,28 +44,6 @@
       </div>
       <div class="border-b-2"></div>
     </div>
-
-    <div class="w-700 px-5 pt-4 hover:bg-gray-100">
-      <div class="flex mb-2 text-sm text-gray-600">
-        <div class="border-r-2 pr-2">Kaijin</div>
-        <div class="border-r-2 px-2">1天前</div>
-        <div class="px-2">前端</div>
-      </div>
-      <div class="flex justify-between">
-        <div class="flex flex-col">
-          <h1 class="text-xl text-gray-800 font-semibold">前端代码规范</h1>
-          <p
-            class="text-sm text-gray-500 truncate my-2"
-          >不用会直接抄京东凹凸实验室：guide.aotu.io/docs/html/t…腾讯互娱： tgideas.qq.com/doc/fronten…</p>
-          <div class="flex mb-2 text-sm">
-            <div>5371</div>
-            <div>73</div>
-            <div>27</div>
-          </div>
-        </div>
-      </div>
-      <div class="border-b-2"></div>
-    </div>
   </div>
 </template>
 
