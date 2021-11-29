@@ -168,7 +168,7 @@ const publishTopicSubmit = async () => {
   params.append('title', title.value);
   params.append('initiator', userInfo.value._id);
   params.append('introduce', content.value)
-  params.append('channel_array', currentChannelList.value.map((item) => { return item._id }))
+  params.append('channel_list', currentChannelList.value.map((item) => { return item._id }))
   let { data: result } = await addTopic(params);
   if (result.code === 200) {
     alert('提问成功')

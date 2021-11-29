@@ -51,7 +51,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
 import { useStore } from "vuex";
-import AskQuestionDialog from './AskQuestionDialog.vue';
 import TopicDialog from './TopicDialog.vue';
 const store = useStore();
 let isSearch = ref(false);

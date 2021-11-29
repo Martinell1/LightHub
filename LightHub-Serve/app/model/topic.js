@@ -13,7 +13,7 @@ const topicSchema = new Schema({
     type:String,
     require:true
   },
-  channel_array:{
+  channel_list:{
     type:Array
   },
   answer_list:{
@@ -22,10 +22,10 @@ const topicSchema = new Schema({
   view_count:{
     type:Number,
   },
-  up_array:{
+  up_list:{
     type:Array,
   },
-  step_array:{
+  step_list:{
     type:Array,
   },
   status:{

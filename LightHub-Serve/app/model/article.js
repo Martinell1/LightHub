@@ -20,10 +20,10 @@ const articleSchema = new Schema({
   comment_list:{
     type:Array
   },
-  up_array:{
+  up_list:{
     type:Array,
   },
-  step_array:{
+  step_list:{
     type:Array,
   },
   status:{

@@ -21,18 +21,15 @@ const store = useStore();
 const userInfo: any = inject('userInfo')
 
 
-const article = reactive({
-  title: '',
-  content: '',
-  author: userInfo.value._id
-})
-
+const title = ref('')
 const articleSubmit = async () => {
   console.log(userInfo.value);
 
-  article.content = store.state.articleText;
-  console.log(article);
-  let { data: result } = await addArticle(article);
+  const params = new FormData();
+  params.append('title', title.value);
+  params.append('content', store.state.articleText);
+  params.append('author', title.value);
+  let { data: result } = await addArticle(params);
   console.log(result);
 
 }

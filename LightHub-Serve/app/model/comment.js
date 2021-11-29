@@ -16,10 +16,10 @@ const commentSchema = new Schema({
     type:Object,
     require:true
   },
-  up_array:{
+  up_list:{
     type:Array,
   },
-  step_array:{
+  step_list:{
     type:Array,
   },
   status:{
