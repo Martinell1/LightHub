@@ -20,12 +20,23 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: 'user/:id',
-        name: 'User',
+        path: '/user/:id',
         components: {
           default: () => import('../views/User.vue'),
           header: () => import('../components/Common/MainHeader.vue')
-        }
+        },
+        children: [
+          {
+            path: '',
+            name: 'User',
+            component: () => import('../components/UserComponents/UserPage.vue'),
+          },
+          {
+            path: 'edit',
+            name: 'Edit',
+            component: () => import('../components/UserComponents/UserEdit.vue'),
+          }
+        ]
       },
       {
         path: 'channel/',

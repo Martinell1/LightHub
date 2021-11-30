@@ -18,6 +18,10 @@ const getOneById: Function = async (id: String) => {
   return await axios.get("user/info?id=" + id)
 }
 
+const updateUserInfo: Function = async (user: Object) => {
+  return await axios.post("user/update", user)
+}
+
 const getChannelList: Function = async () => {
   return await axios.get("channel/list")
 }
@@ -36,6 +40,7 @@ export {
   login,
   getOneByToken,
   getOneById,
+  updateUserInfo,
   getChannelList,
   addTopic,
   addArticle

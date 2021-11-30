@@ -59,8 +59,15 @@ const list = async ctx => {
 
 const update = async ctx => {
   let user = ctx.request.body
-  let result = await us.update(user)
-  ctx.body = ResultFactory.buildSuccessResult(result);
+  let result = await us.update(user);
+  console.log(user);
+  let res = await us.findOne({"_id":user._id})
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(res);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("更新失败");
+  }
+
 }
 
 const remove = async ctx => {

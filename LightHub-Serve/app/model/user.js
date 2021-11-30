@@ -36,6 +36,9 @@ const userSchema = new Schema({
   fans:{
     type:Array,
   },
+  gender:{
+    type:String
+  },
   phone:{
     type:String,
   },
@@ -43,9 +46,6 @@ const userSchema = new Schema({
     type:String,
   },
   education:{
-    type:String,
-  },
-  birthday:{
     type:String,
   },
   status:{

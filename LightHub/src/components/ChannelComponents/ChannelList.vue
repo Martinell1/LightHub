@@ -1,5 +1,9 @@
 <template>
   <div class="mt-4">
+    <div v-if="route.path === '/channel/all'" class="flex my-4 pl-2">
+      <input type="text" class="outline-none" />
+      <div>搜索</div>
+    </div>
     <ChannelCard v-for="channel in channelList" :data="channel"></ChannelCard>
   </div>
 </template>
