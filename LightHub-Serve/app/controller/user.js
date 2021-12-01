@@ -1,8 +1,11 @@
 const userService = require("../service/user")
+const articleService = require("../service/article");
 const ResultFactory = require('../result')
 const us = new userService();
+const as = new articleService();
 const {getToken,verify} = require('../utils/getToken')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+
 
 const login = async ctx => {
   let body = ctx.request.body;
@@ -58,12 +61,13 @@ const list = async ctx => {
 }
 
 const update = async ctx => {
-  let user = ctx.request.body
-  let result = await us.update(user);
-  console.log(user);
-  let res = await us.findOne({"_id":user._id})
-  if(result){
-    ctx.body = ResultFactory.buildSuccessResult(res);
+  let body = ctx.request.body
+  let result1 = await us.update(body);
+  let user = await us.findOne({"_id":body._id})
+  let result2 = await as.updates({"author_id":user._id},{"author_nickname":user.nickname});
+  
+  if(result1 && result2){
+    ctx.body = ResultFactory.buildSuccessResult(user);
   }else{
     ctx.body = ResultFactory.buildFailResult("更新失败");
   }

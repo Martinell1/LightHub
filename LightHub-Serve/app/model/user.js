@@ -31,10 +31,10 @@ const userSchema = new Schema({
     default:"user"
   },
   follows:{
-    type:Array,
+    type:JSON,
   },
   fans:{
-    type:Array,
+    type:JSON,
   },
   gender:{
     type:String

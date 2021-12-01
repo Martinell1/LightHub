@@ -14,10 +14,10 @@ const topicSchema = new Schema({
     require:true
   },
   channel_list:{
-    type:Array
+    type:JSON
   },
   answer_list:{
-    type:Array
+    type:JSON
   },
   view_count:{
     type:Number,

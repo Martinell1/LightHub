@@ -4,7 +4,7 @@
       <input type="text" class="outline-none" />
       <div>搜索</div>
     </div>
-    <ChannelCard v-for="channel in channelList" :data="channel"></ChannelCard>
+    <ChannelCard v-for="channel in channelList" :channel="channel"></ChannelCard>
   </div>
 </template>
 
@@ -15,7 +15,6 @@ import ChannelCard from './ChannelCard.vue';
 let channelList: any = inject('channelList')
 const route = useRoute();
 watch(route, () => {
-  console.log(route.path);
   if (route.path.indexOf('follow') > -1) {
     console.log(route.path.indexOf('follow'));
     channelList = []

@@ -27,6 +27,10 @@ class Service{
   update(obj){
     return this.model.updateOne({_id:obj._id},obj)
   }
+
+  updates(oldObj,newObj){
+    return this.model.update(oldObj,newObj)
+  }
 }
 
 module.exports = Service;

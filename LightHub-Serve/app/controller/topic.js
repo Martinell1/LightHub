@@ -10,9 +10,15 @@ const list = async ctx => {
 }
 
 const add = async ctx => {
-  let topic = ctx.request.body
-  let result = await ts.add(topic)
-  ctx.body =  ResultFactory.buildSuccessResult(result)
+  let body = ctx.request.body
+  console.log(body);
+  let result = await ts.add(body)
+  if(result){
+    ctx.body =  ResultFactory.buildSuccessResult(result)
+  }else{
+    ctx.body =  ResultFactory.buildFailResult(result)
+  }
+
 }
 
 const remove = async ctx => {

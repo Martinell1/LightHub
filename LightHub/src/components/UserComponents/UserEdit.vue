@@ -126,7 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, inject, nextTick } from 'vue'
+import { reactive, inject } from 'vue'
 import { updateUserInfo } from '../../api/axios'
 const userInfo: any = inject('userInfo');
 

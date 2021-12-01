@@ -4,13 +4,17 @@ const as = new articleService();
 
 const list = async ctx => {
   let result = await as.list()
-  ctx.body = ResultFactory.buildSuccessResult(result)
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult("获取信息失败")
+  }
+
 }
 
 const add = async ctx => {
-  let article = ctx.request.body
-  console.log(article);
-  let result = await as.add(article)
+  let body = ctx.request.body
+  let result = await as.add(body)
   if(result){
     return  ctx.body = ResultFactory.buildSuccessResult(result)
   }

@@ -9,7 +9,14 @@ const articleSchema = new Schema({
     type:String,
     require:true,
   },
-  author:{
+  cover:{
+    type:String
+  },
+  author_id:{
+    type:String,
+    require:true,
+  },
+  author_nickname:{
     type:String,
     require:true,
   },
@@ -17,8 +24,16 @@ const articleSchema = new Schema({
     type:String,
     require:true
   },
+  tag_list:{
+    type:JSON,
+  },
   comment_list:{
     type:Array
+  },
+  view_count:{
+    type:Number,
+    require:true,
+    default:0
   },
   up_list:{
     type:Array,
@@ -30,6 +45,11 @@ const articleSchema = new Schema({
     type:Number,
     require:true,
     default:1
+  },
+  update_time:{
+    type:Date,
+    require:true,
+    default:Date.now()
   },
   create_time:{
     type:Date,

@@ -14,7 +14,7 @@ const channelSchema = new Schema({
     require:true
   },
   topic_list:{
-    type:Array
+    type:JSON
   },
   fans:{
     type:Array,

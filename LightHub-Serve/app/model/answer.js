@@ -14,13 +14,13 @@ const answerSchema = new Schema({
     require:true
   },
   comment_list:{
-    type:Array
+    type:JSON
   },
   up_list:{
-    type:Array,
+    type:JSON,
   },
   step_list:{
-    type:Array,
+    type:JSON,
   },
   status:{
     type:Number,

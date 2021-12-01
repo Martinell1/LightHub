@@ -2,7 +2,7 @@
   <SecondNav type="channelList"></SecondNav>
   <div class="home_layout">
     <main>
-      <TopicCard></TopicCard>
+      <ArticleCard v-for="article in articleList" :article="article"></ArticleCard>
     </main>
     <HomeAside></HomeAside>
   </div>
@@ -10,9 +10,22 @@
 
 <script setup lang="ts">
 import SecondNav from '../components/Common/SecondNav.vue';
-import TopicCard from '../components/HoneCompoents/TopicCard.vue';
 import HomeAside from '../components/HoneCompoents/HomeAside.vue';
+import ArticleCard from '../components/HoneCompoents/ArticleCard.vue';
 
+import { ref, onMounted } from 'vue'
+import { getArticleList } from '../api/axios';
+let articleList = ref([])
+const loadArticleList = async () => {
+  let { data: result } = await getArticleList();
+  if (result.code === 200) {
+    articleList.value = result.data
+  }
+}
+
+onMounted(async () => {
+  loadArticleList()
+})
 
 </script>
 <style scoped>

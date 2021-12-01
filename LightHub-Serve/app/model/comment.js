@@ -17,10 +17,10 @@ const commentSchema = new Schema({
     require:true
   },
   up_list:{
-    type:Array,
+    type:JSON,
   },
   step_list:{
-    type:Array,
+    type:JSON,
   },
   status:{
     type:Number,
