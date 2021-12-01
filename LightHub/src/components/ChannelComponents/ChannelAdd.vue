@@ -99,7 +99,6 @@ watch(() => [...currentChannelList.value], (newValue, oldValue) => {
 //返回数据给上层组件
 const emit = defineEmits(['collection'])
 const channelSubmit = () => {
-  //currentChannelList.value.map((item) => { return item._id })
   emit('collection', currentChannelList.value)
 }
 

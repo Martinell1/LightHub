@@ -65,13 +65,21 @@ const update = async ctx => {
   let result1 = await us.update(body);
   let user = await us.findOne({"_id":body._id})
   let result2 = await as.updates({"author_id":user._id},{"author_nickname":user.nickname});
-  
   if(result1 && result2){
     ctx.body = ResultFactory.buildSuccessResult(user);
   }else{
     ctx.body = ResultFactory.buildFailResult("更新失败");
   }
+}
 
+const follow = async ctx => {
+  let body = ctx.request.body;
+  let result = await us.update({"_id":body._id,"follows":JSON.parse(body.follows)});
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult("修改成功");
+  }else{
+    ctx.body = ResultFactory.buildFailResult("修改失败");
+  }
 }
 
 const remove = async ctx => {
@@ -90,5 +98,6 @@ module.exports = {
   update,
   register,
   login,
-  info
+  info,
+  follow
 }

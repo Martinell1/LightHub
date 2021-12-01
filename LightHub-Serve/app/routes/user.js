@@ -8,6 +8,7 @@ router.prefix('/user')
       .post("/login",user.login)
       .post("/register",user.register)
       .post("/update",user.update)
+      .post("/follow",user.follow)
       .post("/remove",user.remove)
 
 

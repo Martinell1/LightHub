@@ -11,15 +11,13 @@
       </div>
     </div>
 
-    <div v-if="props.type === 'channelManage'" class="w-1000 m-auto flex justify-between">
-      <ul class="flex px-4">
-        <router-link to="/channel/follow">
-          <li class="channel-manage-item">已关注频道</li>
-        </router-link>
-        <router-link to="/channel/all">
-          <li class="channel-manage-item">全部频道</li>
-        </router-link>
-      </ul>
+    <div v-if="props.type === 'channelManage'" class="w-1000 m-auto flex">
+      <router-link
+        to="/channel/follow"
+        class="channel-manage-item"
+        active-class="border-blue-500"
+      >已关注频道</router-link>
+      <router-link to="/channel/all" class="channel-manage-item" active-class="border-blue-500">全部频道</router-link>
     </div>
   </nav>
 </template>
@@ -41,6 +39,6 @@ const channelList: any = inject('channelList')
 }
 
 .channel-manage-item {
-  @apply mr-6 px-4 text-sm leading-12 cursor-pointer font-semibold text-blue-500 border-b-2 hover:border-blue-500;
+  @apply px-6 text-sm leading-12 cursor-pointer font-semibold text-blue-500 border-b-2 hover:border-blue-500;
 }
 </style>

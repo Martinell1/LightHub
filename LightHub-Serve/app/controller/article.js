@@ -14,6 +14,7 @@ const list = async ctx => {
 
 const add = async ctx => {
   let body = ctx.request.body
+  body.tag_list = JSON.parse(body.tag_list)
   let result = await as.add(body)
   if(result){
     return  ctx.body = ResultFactory.buildSuccessResult(result)

@@ -29,7 +29,7 @@ class Service{
   }
 
   updates(oldObj,newObj){
-    return this.model.update(oldObj,newObj)
+    return this.model.updateMany(oldObj,newObj)
   }
 }
 

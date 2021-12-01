@@ -17,7 +17,7 @@ const channelSchema = new Schema({
     type:JSON
   },
   fans:{
-    type:Array,
+    type:JSON,
   },
   status:{
     type:Number,
