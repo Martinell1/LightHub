@@ -7,17 +7,21 @@ const channelSchema = new Schema({
   },
   introduce:{
     type:String,
-    require:true
+    require:true,
+    default:""
   },
   icon:{
     type:String,
-    require:true
+    require:true,
+    default:""
   },
   topic_list:{
-    type:JSON
+    type:Array,
+    default:[]
   },
   fans:{
-    type:JSON,
+    type:Array,
+    default:[]
   },
   status:{
     type:Number,

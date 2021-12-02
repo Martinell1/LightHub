@@ -3,8 +3,8 @@
     <div class="flex mb-2 text-sm text-gray-600">
       <div class="border-r-2 pr-2">
         <router-link
-          :to="{ name: 'User', params: { 'id': props.article.author_id } }"
-        >{{ props.article.author_nickname }}</router-link>
+          :to="{ name: 'User', params: { 'id': props.article.author._id } }"
+        >{{ props.article.author.nickname }}</router-link>
       </div>
       <div class="border-r-2 px-2">{{ fmt4Time() }}</div>
       <div class="tag-list" v-for="tag in props.article.tag_list">{{ tag }}</div>

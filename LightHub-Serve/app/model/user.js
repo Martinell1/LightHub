@@ -13,17 +13,21 @@ const userSchema = new Schema({
   salt:{
     type:String,
     require:true
+
   },
   nickname:{
     type:String,
-    require:true
+    require:true,
+    default:"",
   },
   avater:{
     type:String,
-    require:true
+    require:true,
+    default:"",
   },
   introduce:{
     type:String,
+    default:"",
   },
   role:{
     type:String,
@@ -45,18 +49,27 @@ const userSchema = new Schema({
   },
   collection_list:{
     type:Array,
+
   },
   gender:{
-    type:String
+    type:String,
+    default:"",
   },
   phone:{
     type:String,
+    default:"",
   },
   email:{
     type:String,
+    default:"",
   },
   education:{
-    type:String,
+    type:Object,
+    default:{
+      school:"",
+      major:"",
+      edu:"",
+    }
   },
   status:{
     type:Number,

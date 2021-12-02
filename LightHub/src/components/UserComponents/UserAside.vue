@@ -4,11 +4,11 @@
       <div class="flex justify-between">
         <div class="follow-item border-r-2">
           <div>关注了</div>
-          <div class="font-semibold">3</div>
+          <div class="font-semibold">{{ userInfo.follows.length }}</div>
         </div>
         <div class="follow-item">
           <div>关注者</div>
-          <div class="font-semibold">4</div>
+          <div class="font-semibold">{{ userInfo.fans.length }}</div>
         </div>
       </div>
     </div>
@@ -17,15 +17,15 @@
       <ul class="text-sm leading-10">
         <li class="sidebar-item">
           收藏集
-          <div>0</div>
+          <div>{{ userInfo.collection_list.length }}</div>
         </li>
         <li class="sidebar-item">
           关注标签
-          <div>0</div>
+          <div>{{ userInfo.tag_list.length }}</div>
         </li>
         <li class="sidebar-item">
           加入于
-          <div>0</div>
+          <div>{{ userInfo.create_time }}</div>
         </li>
       </ul>
     </div>
@@ -33,6 +33,8 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from 'vue'
+const userInfo: any = inject('userInfo');
 
 </script>
 <style scoped>

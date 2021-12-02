@@ -10,11 +10,18 @@
           <h1 class="font-bold text-2xl tracking-wide">{{ currentUserInfo.nickname }}</h1>
           <span class="m-auto ml-4 text-md">{{ currentUserInfo.inrtodece }}</span>
         </div>
-        <div class="text-sm font-semibold my-2">{{ currentUserInfo.education }}</div>
+        <div v-if="currentUserInfo.education" class="flex">
+          <div class="text-sm font-semibold my-2">{{ currentUserInfo.education.school }}</div>
+          <span class="text-sm font-semibold my-2 mx-2">·</span>
+          <div class="text-sm font-semibold my-2">{{ currentUserInfo.education.major }}</div>
+          <span class="text-sm font-semibold my-2 mx-2">·</span>
+          <div class="text-sm font-semibold my-2">{{ currentUserInfo.education.edu }}</div>
+        </div>
+
         <router-link
           v-if="identify()"
           :to="{ 'name': 'Edit' }"
-          class="cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1"
+          class="cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1 w-32"
         >编辑个人信息</router-link>
         <div
           class="cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1"
@@ -47,7 +54,25 @@ const identify = () => {
 }
 
 //加载用户信息
-const currentUserInfo: any = ref({})
+const currentUserInfo: any = ref({
+  _id: "",
+  account: "",
+  nickname: "",
+  avater: "",
+  introduce: "",
+  follows: [],
+  fans: [],
+  tag_list: [],
+  collection_list: [],
+  gender: "",
+  phone: "",
+  email: "",
+  education: {
+    school: "",
+    major: "",
+    edu: ""
+  },
+})
 const loadUserInfo = async () => {
   let { data: result } = await getOneById(route.params.id);
   if (result.code === 200) {

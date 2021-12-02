@@ -7,20 +7,24 @@ const answerSchema = new Schema({
   },
   answerer:{
     type:Object,
-    require:true
+    require:true,
+    default:{}
   },
   content:{
     type:String,
-    require:true
+    require:true,
   },
   comment_list:{
-    type:Array
+    type:Array,
+    default:[]
   },
   up_list:{
     type:Array,
+    default:[]
   },
   step_list:{
     type:Array,
+    default:[]
   },
   status:{
     type:Number,

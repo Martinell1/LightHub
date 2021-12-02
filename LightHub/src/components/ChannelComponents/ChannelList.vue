@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue'
+import { ref, inject } from 'vue'
 import { useRoute } from 'vue-router';
 import ChannelCard from './ChannelCard.vue';
 import _ from 'lodash'

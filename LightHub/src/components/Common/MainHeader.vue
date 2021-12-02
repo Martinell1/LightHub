@@ -58,12 +58,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
 import TopicDialog from './TopicDialog.vue';
 const store = useStore();
 const userInfo = store.state.userInfo;
+// const userInfo: any = inject('userInfo')
 
 let isSearch = ref(false);
 let clickAvater = ref(false);

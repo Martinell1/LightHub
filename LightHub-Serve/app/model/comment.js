@@ -10,17 +10,21 @@ const commentSchema = new Schema({
   },
   content:{
     type:String,
-    require:true
+    require:true,
+    default:""
   },
   commenter:{
     type:Object,
-    require:true
+    require:true,
+    default:{}
   },
   up_list:{
-    type:JSON,
+    type:Array,
+    default:[]
   },
   step_list:{
-    type:JSON,
+    type:Array,
+    default:[]
   },
   status:{
     type:Number,

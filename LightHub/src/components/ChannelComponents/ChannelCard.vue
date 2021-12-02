@@ -55,7 +55,12 @@ const followSubmit = async (channel) => {
 
 //获取当前channel在用户关注中的下标，用于删除
 const getIndex = (name) => {
-  return userInfo.value.tag_list.indexOf(name);
+  let index = -1
+  try {
+    index = userInfo.value.tag_list.indexOf(name);
+  } finally {
+    return index;
+  }
 }
 
 const isFollow = (name) => {

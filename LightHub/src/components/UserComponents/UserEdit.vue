@@ -73,28 +73,32 @@
         <div class="form-label">教育经历</div>
         <div v-if="!showFormItem.education" class="flex justify-between">
           <div class="flex">
-            <div>{{ education.school }}</div>
+            <div>{{ userInfo.education.school }}</div>
             <span class="mx-2">·</span>
-            <div>{{ education.major }}</div>
+            <div>{{ userInfo.education.major }}</div>
             <span class="mx-2">·</span>
-            <div>{{ education.edu }}</div>
+            <div>{{ userInfo.education.edu }}</div>
           </div>
           <div class="btn-change" @click="showFormItem.education = true">修改</div>
         </div>
         <div v-if="showFormItem.education">
           <input
-            v-model="education.school"
+            v-model="userInfo.education.school"
             type="text"
             class="form-education-input"
             placeholder="就读的学校"
           />
           <input
-            v-model="education.major"
+            v-model="userInfo.education.major"
             type="text"
             class="form-education-input"
             placeholder="专业方向"
           />
-          <select v-model="education.edu" placeholder="学历" class="form-education-input w-44">
+          <select
+            v-model="userInfo.education.edu"
+            placeholder="学历"
+            class="form-education-input w-44"
+          >
             <option class="form-education-option">高中及以下</option>
             <option class="form-education-option">专科</option>
             <option class="form-education-option">本科</option>
@@ -139,20 +143,8 @@ const showFormItem: any = reactive({
   education: false,
 })
 
-const education = reactive({
-  school: '',
-  major: '',
-  edu: '',
-})
-
-setTimeout(() => {
-  education.school = userInfo.value.education.split('·')[0];
-  education.major = userInfo.value.education.split('·')[1];
-  education.edu = userInfo.value.education.split('·')[2];
-}, 100);
 
 const updateUserInfoSubmit = async () => {
-  userInfo.value.education = education.school + '·' + education.major + '·' + education.edu
   const params = new FormData();
   params.append('_id', userInfo.value._id)
   params.append('nickname', userInfo.value.nickname)
@@ -160,7 +152,7 @@ const updateUserInfoSubmit = async () => {
   params.append('gender', userInfo.value.gender)
   params.append('phone', userInfo.value.phone)
   params.append('email', userInfo.value.email)
-  params.append('education', userInfo.value.education)
+  params.append('education', JSON.stringify(userInfo.value.education))
 
   let { data: result } = await updateUserInfo(params);
   if (result.code === 200) {

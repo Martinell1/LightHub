@@ -40,9 +40,8 @@ const articleSubmit = async () => {
   const params = new FormData();
   params.append('title', title.value);
   params.append('content', store.state.articleText);
-  params.append('author_id', userInfo.value._id);
-  params.append('author_nickname', userInfo.value.nickname);
-  params.append('tag_list', currentChannelList.value);
+  params.append('author', JSON.stringify(userInfo.value));
+  params.append('tag_list', JSON.stringify(currentChannelList.value));
 
   let { data: result } = await addArticle(params);
   if (result.code === 200) {

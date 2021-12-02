@@ -23,7 +23,6 @@ const login = async ctx => {
 
 const register = async ctx => {
   let body = ctx.request.body;
-  console.log(body);
   let user = await us.findOne({"account":body.account})
   if(user){
     return ctx.body = ResultFactory.buildFailResult("用户已存在")
@@ -62,9 +61,12 @@ const list = async ctx => {
 
 const update = async ctx => {
   let body = ctx.request.body
+  body.education = JSON.parse(body.education)
+  //修改用户信息
   let result1 = await us.update(body);
   let user = await us.findOne({"_id":body._id})
-  let result2 = await as.updates({"author_id":user._id},{"author_nickname":user.nickname});
+  //对应修改用户的文章，提问等信息
+  let result2 = await as.updates({"author":user});
   if(result1 && result2){
     ctx.body = ResultFactory.buildSuccessResult(user);
   }else{
@@ -84,7 +86,6 @@ const follow_tag = async ctx => {
 
 const follow_user = async ctx => {
   let body = ctx.request.body;
-  console.log(body);
   let result = await us.update({"_id":body._id,"follows":JSON.parse(body.follows)});
   if(result){
     ctx.body = ResultFactory.buildSuccessResult("修改成功");

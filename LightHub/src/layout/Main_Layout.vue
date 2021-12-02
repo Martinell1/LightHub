@@ -6,15 +6,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, onBeforeMount } from 'vue'
+import { ref, provide, onMounted } from 'vue'
 import { useStore } from 'vuex';
 import { getOneById, getChannelList } from '../api/axios';
 //提供用户信息
 const store = useStore();
 const id: String = store.state.userInfo.id;
-const userInfo: any = ref({});
 
-
+const userInfo: any = ref({
+  account: "",
+  nickname: "",
+  avater: "",
+  introduce: "",
+  follows: [],
+  fans: [],
+  tag_list: [],
+  collection_list: [],
+  gender: "",
+  phone: "",
+  email: "",
+  education: {
+    school: "",
+    major: "",
+    edu: ""
+  },
+});
 provide('userInfo', userInfo)
 
 const loadUserInfo = async () => {
@@ -38,7 +54,7 @@ const loadChannelList = async () => {
 
 provide('channelList', channelList)
 
-onBeforeMount(async () => {
+onMounted(async () => {
   await loadUserInfo()
   await loadChannelList()
 

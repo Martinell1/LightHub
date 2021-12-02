@@ -8,27 +8,29 @@ const articleSchema = new Schema({
   title:{
     type:String,
     require:true,
+    default:"",
   },
   cover:{
-    type:String
-  },
-  author_id:{
     type:String,
-    require:true,
+    default:"",
   },
-  author_nickname:{
-    type:String,
+  author:{
+    type:Object,
     require:true,
+    default:{},
   },
   content:{
     type:String,
-    require:true
+    require:true,
+    default:"",
   },
   tag_list:{
-    type:JSON,
+    type:Array,
+    default:[]
   },
   comment_list:{
-    type:Array
+    type:Array,
+    default:[]
   },
   view_count:{
     type:Number,
@@ -37,9 +39,11 @@ const articleSchema = new Schema({
   },
   up_list:{
     type:Array,
+    default:[]
   },
   step_list:{
     type:Array,
+    default:[]
   },
   status:{
     type:Number,

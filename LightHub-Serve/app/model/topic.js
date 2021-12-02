@@ -7,26 +7,33 @@ const topicSchema = new Schema({
   },
   initiator:{
     type:Object,
-    require:true
+    require:true,
+    default:{}
   },
   introduce:{
     type:String,
-    require:true
+    require:true,
+    default:""
   },
   channel_list:{
-    type:JSON
+    type:Array,
+    default:[]
   },
   answer_list:{
-    type:JSON
+    type:Array,
+    default:[]
   },
   view_count:{
     type:Number,
+    default:0
   },
   up_list:{
     type:Array,
+    default:[]
   },
   step_list:{
     type:Array,
+    default:[]
   },
   status:{
     type:Number,
