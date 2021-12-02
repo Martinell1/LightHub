@@ -7,7 +7,7 @@
         >{{ props.article.author_nickname }}</router-link>
       </div>
       <div class="border-r-2 px-2">{{ fmt4Time() }}</div>
-      <div class="tag-list" v-for="tag in props.article.tag_list">{{ tag.name }}</div>
+      <div class="tag-list" v-for="tag in props.article.tag_list">{{ tag }}</div>
     </div>
     <div class="flex justify-between">
       <div class="flex flex-col">
@@ -37,18 +37,6 @@ const fmt4Time = () => {
   const hours = Math.floor((Date.now() - articleTime) / (1000 * 60 * 60));
   return hours > 24 ? Math.floor(hours / 24) + "天前" : '1天内'
 }
-
-// const tag_list: any = ref([])
-// const fmt4Tag = () => {
-//   const data = props.article.tag_list;
-//   if (data) {
-//     tag_list.value = JSON.parse(data);
-//   }
-// }
-
-// onMounted(() => {
-//   fmt4Tag()
-// })
 
 
 </script>

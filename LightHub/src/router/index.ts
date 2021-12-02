@@ -12,12 +12,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../layout/Main_Layout.vue'),
     children: [
       {
-        path: '/',
-        name: 'Home',
+        path: '',
         components: {
           default: () => import('../views/Home.vue'),
           header: () => import('../components/Common/MainHeader.vue')
         },
+        children: [
+          {
+            path: '/:channel?',
+            name: 'Home',
+            component: () => import('../views/Home.vue'),
+          }
+        ]
       },
       {
         path: '/user/:id',
@@ -67,6 +73,7 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
 ]
+
 
 const router = createRouter({
   history: createWebHistory(),

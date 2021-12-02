@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="channel: any in props.channelList"
+      v-for="channel in props.channelList"
       class="w-60 h-60 py-5 border-2 inline-block mx-5px mb-3"
     >
       <div class="flex flex-col justify-center items-center my-4">
@@ -14,11 +14,11 @@
 
         <div
           class="bg-blue-500 text-gray-100 text-sm px-4 py-1 rounded my-2 cursor-pointer"
-          :class="{ 'bg-red-400': isFollow(channel._id) }"
+          :class="{ 'bg-red-400': isFollow(channel.name) }"
           @click="followSubmit(channel)"
         >
-          <div v-if="!isFollow(channel._id)">未关注</div>
-          <div v-if="isFollow(channel._id)">已关注</div>
+          <div v-if="!isFollow(channel.name)">未关注</div>
+          <div v-if="isFollow(channel.name)">已关注</div>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
-import { updateFollows } from '../../api/axios'
+import { updateFollowTag } from '../../api/axios'
 const props: any = defineProps({
   channelList: Array,
 })
@@ -35,31 +35,31 @@ const props: any = defineProps({
 const userInfo: any = inject('userInfo')
 
 const followSubmit = async (channel) => {
-  let opt = isFollow(channel._id)
+  let opt = isFollow(channel.name)
   if (opt) {
     //取关
-    let index = getIndex(channel._id);
-    userInfo.value.follows.splice(index, 1)
+    let index = getIndex(channel.name);
+    userInfo.value.tag_list.splice(index, 1)
   } else {
-    userInfo.value.follows.push(channel)
+    userInfo.value.tag_list.push(channel.name)
   }
 
   const params = new FormData();
   params.append('_id', userInfo.value._id);
-  params.append('follows', JSON.stringify(userInfo.value.follows));
-  let { data: result } = await updateFollows(params);
+  params.append('tag_list', JSON.stringify(userInfo.value.tag_list));
+  let { data: result } = await updateFollowTag(params);
   if (result.code === 200) {
     console.log(result.data);
   }
 }
 
 //获取当前channel在用户关注中的下标，用于删除
-const getIndex = (id) => {
-  return userInfo.value.follows.map((item) => { return item._id }).indexOf(id)
+const getIndex = (name) => {
+  return userInfo.value.tag_list.indexOf(name);
 }
 
-const isFollow = (id) => {
-  return getIndex(id) > -1 ? true : false
+const isFollow = (name) => {
+  return getIndex(name) > -1 ? true : false
 }
 
 

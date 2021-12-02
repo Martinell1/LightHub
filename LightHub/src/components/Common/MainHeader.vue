@@ -49,7 +49,7 @@
             <router-link :to="{ name: 'User', params: { 'id': userInfo.id } }">我的主页</router-link>
           </li>
           <li class="user-opt-item border-b-2 border-gray-100">我赞过的</li>
-          <li class="user-opt-item">退出</li>
+          <li class="user-opt-item" @click="exit()">退出</li>
         </ul>
       </div>
     </div>
@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
 import TopicDialog from './TopicDialog.vue';
 const store = useStore();
@@ -75,7 +76,6 @@ const focusOnElse = () => {
   isSearch.value = false;
 }
 
-
 const preTopicSubmit = () => {
   showDialog.value = true
 }
@@ -84,9 +84,15 @@ const closeDialog = () => {
   showDialog.value = false
 }
 
-onMounted(() => {
+const router = useRouter();
+const exit = () => {
+  store.commit('logOut')
+  router.push({
+    path: '/'
+  })
+  console.log('退出');
+}
 
-})
 
 </script>
 <style scoped>

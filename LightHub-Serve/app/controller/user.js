@@ -23,6 +23,7 @@ const login = async ctx => {
 
 const register = async ctx => {
   let body = ctx.request.body;
+  console.log(body);
   let user = await us.findOne({"account":body.account})
   if(user){
     return ctx.body = ResultFactory.buildFailResult("用户已存在")
@@ -47,8 +48,7 @@ const info = async ctx => {
     }
   }else{
     const token = ctx.query.token;
-    const id = verify(token).id;
-    let result = await us.findOne({"_id":id})
+    let result = await us.getInfoByToken(token);
     if(result){
       return ctx.body = ResultFactory.buildSuccessResult(result);
     }
@@ -72,8 +72,19 @@ const update = async ctx => {
   }
 }
 
-const follow = async ctx => {
+const follow_tag = async ctx => {
   let body = ctx.request.body;
+  let result = await us.update({"_id":body._id,"tag_list":JSON.parse(body.tag_list)});
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult("修改成功");
+  }else{
+    ctx.body = ResultFactory.buildFailResult("修改失败");
+  }
+}
+
+const follow_user = async ctx => {
+  let body = ctx.request.body;
+  console.log(body);
   let result = await us.update({"_id":body._id,"follows":JSON.parse(body.follows)});
   if(result){
     ctx.body = ResultFactory.buildSuccessResult("修改成功");
@@ -99,5 +110,6 @@ module.exports = {
   register,
   login,
   info,
-  follow
+  follow_tag,
+  follow_user
 }

@@ -1,11 +1,16 @@
 <template>
   <nav class="bg-gray-50 h-12 shadow-sm">
     <div v-if="props.type === 'channelList'" class="w-1000 m-auto flex justify-between">
-      <ul class="flex px-4">
-        <li class="channel-item">推荐</li>
-        <li class="channel-item">关注</li>
-        <li v-for="channel in channelList" class="channel-item">{{ channel.name }}</li>
-      </ul>
+      <div class="flex px-4">
+        <router-link :to="{ name: 'Home' }" class="channel-item">推荐</router-link>
+        <router-link :to="{ name: 'Home', params: { 'channel': 'follow' } }" class="channel-item">关注</router-link>
+        <router-link
+          v-for="channel in channelList"
+          :to="{ name: 'Home', params: { 'channel': channel.name } }"
+          class="channel-item"
+        >{{ channel.name }}</router-link>
+      </div>
+
       <div class="mr-4 text-sm leading-12 cursor-pointer text-gray-500 hover:text-blue-500">
         <router-link to="/channel/follow">标签管理</router-link>
       </div>

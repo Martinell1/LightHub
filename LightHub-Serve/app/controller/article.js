@@ -1,20 +1,34 @@
 const articleService = require("../service/article")
 const ResultFactory = require('../result')
 const as = new articleService();
+const userService = require("../service/user");
+const us = new userService();
+
+
 
 const list = async ctx => {
-  let result = await as.list()
+  let channel = ctx.query.channel;
+  let token = ctx.header.token;
+  let result = await as.list();
+  if(channel===''){
+
+  }else if(channel === 'follow'){
+    const userInfo = await us.getInfoByToken(token);
+    const tag_list = userInfo.tag_list;
+    result = await as.find({'tag_list':{ $in: tag_list}});
+  }else{
+    result = result.filter(article=>{return article.tag_list.includes(channel)})
+  }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(result)
   }else{
     ctx.body = ResultFactory.buildFailResult("获取信息失败")
   }
-
 }
 
 const add = async ctx => {
   let body = ctx.request.body
-  body.tag_list = JSON.parse(body.tag_list)
+  body.tag_list = body.tag_list.split(",")
   let result = await as.add(body)
   if(result){
     return  ctx.body = ResultFactory.buildSuccessResult(result)

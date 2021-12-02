@@ -32,8 +32,18 @@ const userSchema = new Schema({
   },
   follows:{
     type:Array,
+    require:true,
+    default:[],
   },
   fans:{
+    type:Array,
+  },
+  tag_list:{
+    type:Array,
+    require:true,
+    default:[],
+  },
+  collection_list:{
     type:Array,
   },
   gender:{

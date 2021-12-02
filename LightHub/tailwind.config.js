@@ -17,6 +17,9 @@ module.exports = {
       inset:{
         '1/5': '20%',
       },
+      minWidth:{
+        '700':'700px',
+      },
       width:{
         '100':'25rem',
         '112':'28rem',
@@ -25,14 +28,13 @@ module.exports = {
         '260':'260px',
         '280':'280px',
         '700':'700px',
+        '900':'900px',
         '1000':'1000px',
         '1200':'1200px',
         '2000':'2000px'
       },
       maxWidth:{
-        '180':'45rem'
-      },
-      maxWidth:{
+        '180':'45rem',
         'screen':'100vw'
       },
       minHeight:{

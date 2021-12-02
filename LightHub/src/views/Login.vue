@@ -24,9 +24,9 @@
       </div>
       <div class="form-wrap left-1/4">
         <form class="form">
-          <input class="input" placeholder="请输入用户名" />
-          <input class="input" type="password" />
-          <input class="input" type="password" />
+          <input class="input" placeholder="请输入用户名" v-model="userInfo.account" />
+          <input class="input" type="password" v-model="userInfo.password" />
+          <input class="input" type="password" v-model="userInfo.password" />
           <div class="btn btn-primary" @click="registerSubmit()">注册</div>
           <div class="btn btn-second" @click="toLogin()">已有账号？请登录</div>
         </form>

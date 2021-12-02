@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 w-1000 shadow">
+  <div v-if="userInfo" class="mt-4 w-1000 shadow">
     <div class="h-32 bg-gray-300 rounded-t-md"></div>
     <div class="h-32 bg-gray-50 rounded-b-md flex">
       <div class="w-40 h-40 bg-gray-50 rounded-lg transform -translate-y-1/3 ml-4">
@@ -7,18 +7,22 @@
       </div>
       <div class="flex flex-col ml-4">
         <div class="flex mt-2">
-          <h1 class="font-bold text-2xl tracking-wide">serenity</h1>
-          <span class="m-auto ml-4 text-md">这个人很懒，什么也没留下</span>
+          <h1 class="font-bold text-2xl tracking-wide">{{ currentUserInfo.nickname }}</h1>
+          <span class="m-auto ml-4 text-md">{{ currentUserInfo.inrtodece }}</span>
         </div>
-        <div class="text-sm font-semibold my-2">三明学院</div>
-        <div class="flex justify-between">
-          <div class="text-sm text-gray-500 cursor-pointer leading-7">查看详细资料</div>
-
-          <router-link :to="{ 'name': 'Edit' }">
-            <div
-              class="ml-148 cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1"
-            >编辑个人信息</div>
-          </router-link>
+        <div class="text-sm font-semibold my-2">{{ currentUserInfo.education }}</div>
+        <router-link
+          v-if="identify()"
+          :to="{ 'name': 'Edit' }"
+          class="cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1"
+        >编辑个人信息</router-link>
+        <div
+          class="cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1"
+          v-if="!identify()"
+          @click="followSubmit()"
+        >
+          <div v-if="!isFollow()">未关注</div>
+          <div v-if="isFollow()">已关注</div>
         </div>
       </div>
     </div>
@@ -26,6 +30,67 @@
 </template>
 
 <script setup lang="ts">
+import { ref, inject, onMounted } from 'vue'
+import { useRoute } from 'vue-router';
+import { getOneById, updateFollowUser } from '../../api/axios';
+
+const userInfo: any = inject('userInfo')
+
+const route = useRoute()
+
+//是否是本人
+const identify = () => {
+  if (route.params.id === userInfo.value._id) {
+    return true;
+  }
+  return false;
+}
+
+//加载用户信息
+const currentUserInfo: any = ref({})
+const loadUserInfo = async () => {
+  let { data: result } = await getOneById(route.params.id);
+  if (result.code === 200) {
+    currentUserInfo.value = result.data
+  }
+}
+
+const followSubmit = async () => {
+  let opt = isFollow()
+  if (opt) {
+    //取关
+    let index = getIndex();
+    userInfo.value.follows.splice(index, 1)
+  } else {
+    userInfo.value.follows.push(currentUserInfo.value._id)
+  }
+  const params = new FormData();
+  params.append('_id', userInfo.value._id);
+  params.append('follows', JSON.stringify(userInfo.value.follows));
+
+  let { data: result } = await updateFollowUser(params);
+  if (result.code === 200) {
+    console.log(result.data);
+  }
+}
+
+//获取当前item在用户关注中的下标，用于删除
+const getIndex = () => {
+  let index = -1
+  try {
+    index = userInfo.value.follows.indexOf(currentUserInfo.value._id)
+  } finally {
+    return index;
+  }
+}
+
+const isFollow = () => {
+  return getIndex() > -1 ? true : false
+}
+
+onMounted(async () => {
+  await loadUserInfo()
+})
 
 
 </script>
