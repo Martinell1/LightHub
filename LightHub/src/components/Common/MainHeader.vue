@@ -23,7 +23,7 @@
           @blur="focusOnElse()"
         />
 
-        <div class="btn" :class="{ 'btn-focus': isSearch }">搜索</div>
+        <div class="btn" :class="{ 'btn-focus': isSearch }" @click="Message()">搜索</div>
         <div class="btn" :class="{ 'btn-focus': isSearch }" @click="preTopicSubmit()">提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
@@ -86,6 +86,10 @@ const exit = () => {
     path: '/'
   })
   console.log('退出');
+}
+const msg: any = inject('Message');
+const Message = () => {
+  msg('成功')
 }
 
 
