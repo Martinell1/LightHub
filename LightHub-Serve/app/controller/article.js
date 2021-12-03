@@ -26,6 +26,16 @@ const list = async ctx => {
   }
 }
 
+const detail = async ctx => {
+  let id = ctx.query.id;
+  let result = await as.findOne({"_id":id})
+  if(result){
+     ctx.body = ResultFactory.buildSuccessResult(result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult("请求发生错误")
+  }
+}
+
 const add = async ctx => {
   let body = ctx.request.body
   body.tag_list = JSON.parse(body.tag_list)
@@ -54,6 +64,7 @@ const update = async ctx => {
 
 module.exports = {
   list,
+  detail,
   add,
   remove,
   update,

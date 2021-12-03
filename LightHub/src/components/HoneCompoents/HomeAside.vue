@@ -17,15 +17,15 @@
       <ul class="text-sm leading-10">
         <li class="sidebar-item">
           我的收藏
-          <div class="sidebar-item-count">0</div>
+          <div class="sidebar-item-count">{{ userInfo.collection_list.length }}</div>
         </li>
         <li class="sidebar-item">
           我关注的问题
-          <div class="sidebar-item-count">0</div>
+          <div class="sidebar-item-count">{{ userInfo.collection_list.length }}</div>
         </li>
         <li class="sidebar-item">
           我关注的人
-          <div class="sidebar-item-count">0</div>
+          <div class="sidebar-item-count">{{ userInfo.follows.length }}</div>
         </li>
       </ul>
     </div>
@@ -33,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-
+import { inject } from 'vue'
+const userInfo: any = inject('userInfo')
 
 </script>
 <style scoped>

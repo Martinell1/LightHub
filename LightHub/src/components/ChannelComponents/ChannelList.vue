@@ -16,7 +16,6 @@
 import { ref, inject } from 'vue'
 import { useRoute } from 'vue-router';
 import ChannelCard from './ChannelCard.vue';
-import _ from 'lodash'
 let channelList: any = inject('channelList')
 let userInfo: any = inject('userInfo')
 const route = useRoute();

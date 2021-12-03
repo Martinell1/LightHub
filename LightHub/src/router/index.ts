@@ -70,6 +70,14 @@ const routes: Array<RouteRecordRaw> = [
           header: () => import('../components/EditCompoents/EditorHeader.vue'),
         }
       },
+      {
+        path: '/article:id',
+        name: 'Article',
+        components: {
+          default: () => import('../views/Article.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        }
+      },
     ]
   },
 ]

@@ -11,8 +11,10 @@
     </div>
     <div class="flex justify-between">
       <div class="flex flex-col">
-        <h1 class="text-xl text-gray-800 font-semibold">{{ props.article.title }}</h1>
-        <p class="text-sm text-gray-500 truncate my-2 max-w-md">{{ props.article.content }}</p>
+        <router-link :to="{ name: 'Article', params: { id: props.article._id } }">
+          <h1 class="text-xl text-gray-800 font-semibold">{{ props.article.title }}</h1>
+          <p class="text-sm text-gray-500 truncate my-2 max-w-md">{{ props.article.content }}</p>
+        </router-link>
         <div class="flex mb-2 text-sm">
           <div>{{ props.article.view_count }}</div>
           <div>{{ props.article.up_list.length }}</div>

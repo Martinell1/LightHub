@@ -13,14 +13,6 @@ axios.interceptors.request.use(function (config: any) {
   return Promise.reject(error);
 });
 
-// // 添加响应拦截器
-// axios.interceptors.response.use(function (response) {
-//   // 对响应数据做点什么
-//   return response;
-// }, function (error) {
-//   // 对响应错误做点什么
-//   return Promise.reject(error);
-// });
 
 const register: Function = async (user: Object) => {
   return await axios.post("user/register", user);
@@ -58,6 +50,10 @@ const getArticleList: Function = async (channel: String) => {
   return await axios.get("article/list?channel=" + channel)
 }
 
+const getArticleById: Function = async (id: String) => {
+  return await axios.get("article/detail?id=" + id)
+}
+
 const addArticle: Function = async (article: Object) => {
   return await axios.post("article/add", article)
 }
@@ -78,5 +74,6 @@ export {
   getChannelList,
   addTopic,
   getArticleList,
+  getArticleById,
   addArticle
 }

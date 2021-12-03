@@ -38,6 +38,7 @@ module.exports = {
         'screen':'100vw'
       },
       minHeight:{
+        '36px':'36px',
         '60':'15rem',
       },
       height:{

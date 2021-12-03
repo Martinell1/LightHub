@@ -4,6 +4,7 @@ const { article } = require('../controller');
 const router = new Router();
 router.prefix('/article')
       .get("/list",article.list)
+      .get("/detail",article.detail)
       .post("/add",article.add)
       .post("/update",article.update)
       .post("/remove",article.remove)

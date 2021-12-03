@@ -10,11 +10,11 @@
           <h1 class="font-bold text-2xl tracking-wide">{{ currentUserInfo.nickname }}</h1>
           <span class="m-auto ml-4 text-md">{{ currentUserInfo.inrtodece }}</span>
         </div>
-        <div v-if="currentUserInfo.education" class="flex">
+        <div class="flex min-h-36px">
           <div class="text-sm font-semibold my-2">{{ currentUserInfo.education.school }}</div>
-          <span class="text-sm font-semibold my-2 mx-2">·</span>
+          <span v-show="currentUserInfo.education.school" class="text-sm font-semibold my-2 mx-2">·</span>
           <div class="text-sm font-semibold my-2">{{ currentUserInfo.education.major }}</div>
-          <span class="text-sm font-semibold my-2 mx-2">·</span>
+          <span v-show="currentUserInfo.education.major" class="text-sm font-semibold my-2 mx-2">·</span>
           <div class="text-sm font-semibold my-2">{{ currentUserInfo.education.edu }}</div>
         </div>
 

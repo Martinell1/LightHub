@@ -4,12 +4,12 @@
       <img class="p-1 w-full h-full rounded-full" src="../../assets/images/login-bg.jpg" />
     </div>
     <div class="flex flex-col px-8 ml-48">
-      <div class="edit-item justify-between">
-        <div v-if="!showFormItem.nickname" class="flex">
+      <div class="edit-item justshowy-between">
+        <div v-show="!showFormItem.nickname" class="flex">
           <h1 class="font-semibold text-2xl mr-4">{{ userInfo.nickname }}</h1>
           <div class="btn-change" @click="showFormItem.nickname = true">修改</div>
         </div>
-        <div v-if="showFormItem.nickname" class="flex">
+        <div v-show="showFormItem.nickname" class="flex">
           <h1 class="form-label">昵称</h1>
           <div>
             <input v-model="userInfo.nickname" type="text" class="outline-none border-2 w-100" />
@@ -26,11 +26,11 @@
       </div>
       <div class="edit-item">
         <div class="form-label">性别</div>
-        <div v-if="!showFormItem.gender" class="flex">
+        <div v-show="!showFormItem.gender" class="flex">
           <div>{{ userInfo.gender }}</div>
           <div class="btn-change" @click="showFormItem.gender = true">修改</div>
         </div>
-        <div v-if="showFormItem.gender">
+        <div v-show="showFormItem.gender">
           <div>
             <input type="radio" v-model="userInfo.gender" v-bind:value="'男'" />男
             <input type="radio" v-model="userInfo.gender" v-bind:value="'女'" />女
@@ -43,11 +43,11 @@
       </div>
       <div class="edit-item">
         <div class="form-label">手机号码</div>
-        <div v-if="!showFormItem.phone" class="flex">
+        <div v-show="!showFormItem.phone" class="flex">
           <div>{{ userInfo.phone }}</div>
           <div class="btn-change" @click="showFormItem.phone = true">修改</div>
         </div>
-        <div v-if="showFormItem.phone">
+        <div v-show="showFormItem.phone">
           <input v-model="userInfo.phone" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
             <div class="btn-save" @click="showFormItem.phone = false; updateUserInfoSubmit()">保存</div>
@@ -57,11 +57,11 @@
       </div>
       <div class="edit-item">
         <div class="form-label">邮箱</div>
-        <div v-if="!showFormItem.email" class="flex">
+        <div v-show="!showFormItem.email" class="flex">
           <div>{{ userInfo.email }}</div>
           <div class="btn-change" @click="showFormItem.email = true">修改</div>
         </div>
-        <div v-if="showFormItem.email">
+        <div v-show="showFormItem.email">
           <input v-model="userInfo.email" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
             <div class="btn-save" @click="showFormItem.email = false; updateUserInfoSubmit()">保存</div>
@@ -71,7 +71,7 @@
       </div>
       <div class="edit-item">
         <div class="form-label">教育经历</div>
-        <div v-if="!showFormItem.education" class="flex justify-between">
+        <div v-show="!showFormItem.education" class="flex justshowy-between">
           <div class="flex">
             <div>{{ userInfo.education.school }}</div>
             <span class="mx-2">·</span>
@@ -81,7 +81,7 @@
           </div>
           <div class="btn-change" @click="showFormItem.education = true">修改</div>
         </div>
-        <div v-if="showFormItem.education">
+        <div v-show="showFormItem.education">
           <input
             v-model="userInfo.education.school"
             type="text"
@@ -113,11 +113,11 @@
       </div>
       <div class="edit-item">
         <div class="form-label">一句话简介</div>
-        <div v-if="!showFormItem.introduce" class="flex justify-between">
+        <div v-show="!showFormItem.introduce" class="flex justshowy-between">
           <div>{{ userInfo.introduce }}</div>
           <div class="btn-change" @click="showFormItem.introduce = true">修改</div>
         </div>
-        <div v-if="showFormItem.introduce">
+        <div v-show="showFormItem.introduce">
           <input v-model="userInfo.introduce" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
             <div class="btn-save" @click="showFormItem.introduce = false; updateUserInfoSubmit()">保存</div>
