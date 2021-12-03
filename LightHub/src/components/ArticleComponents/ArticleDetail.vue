@@ -26,10 +26,11 @@
         >{{ tag }}</div>
       </div>
     </article>
-    <div class="pb-4">
+    <div class="pb-4 border-b-2">
       <div class="flex">
         <img class="w-10 h-10 rounded-full mr-4" src="../../assets/images/login-bg.jpg" />
         <textarea
+          v-model="comment.content"
           class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-blue-500"
           placeholder="输入评论"
         ></textarea>
@@ -37,27 +38,43 @@
       <div class="flex justify-between items-center">
         <div class="text-gray-500 ml-14 opacity-0">按Enter键发送</div>
         <div
-          class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-blue-500"
+          class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-blue-500 cursor-pointer"
           @click="commmentSubmit()"
         >发表评论</div>
       </div>
     </div>
+
+    <CommentList :aid="props.article._id" ref="child"></CommentList>
   </div>
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
+import { ref, reactive, inject } from 'vue'
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-const userInfo = inject('inject')
+import { updateArticleComment } from '../../api/axios';
+import CommentList from '../CommentComponents/CommentList.vue';
+const userInfo: any = inject('userInfo')
 const props: any = defineProps({
   article: Object
 })
 
-const commmentSubmit = () => {
-
+const comment = reactive({
+  target_id: "",
+  content: "",
+  commenter: {},
+})
+const commmentSubmit = async () => {
+  comment.target_id = props.article._id
+  comment.commenter = userInfo.value
+  const params = new FormData();
+  params.append("comment", JSON.stringify(comment))
+  let { data: result } = await updateArticleComment(params);
+  if (result.code === 200) {
+    alert("发布成功")
+  }
 }
 
-</script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </script>
 <style  scoped>
 </style>

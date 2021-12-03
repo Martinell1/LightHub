@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div>topic</div>
+</template>
 
 <script setup lang="ts">
 

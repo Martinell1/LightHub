@@ -79,7 +79,7 @@ const userSchema = new Schema({
   create_time:{
     type:Date,
     require:true,
-    default:Date.now()
+    default:new Date().toLocaleString()
   }
 },{versionKey:false})
 

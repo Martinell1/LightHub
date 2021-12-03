@@ -1,5 +1,5 @@
 const {comment} = require('../model')
-const Service = require('./')
+const Service = require('.')
 
 class commentService extends Service{
   constructor(){

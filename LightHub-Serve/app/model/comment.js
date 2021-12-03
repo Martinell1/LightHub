@@ -1,12 +1,8 @@
 const {Schema,model} = require("../config/db.js")
 
 const commentSchema = new Schema({
-  answer_id:{
+  targt_id:{
     type:String,
-    require:true
-  },
-  comment_id:{
-    type:String
   },
   content:{
     type:String,
@@ -17,6 +13,10 @@ const commentSchema = new Schema({
     type:Object,
     require:true,
     default:{}
+  },
+  reply_list:{
+    type:Array,
+    default:[]
   },
   up_list:{
     type:Array,
@@ -34,7 +34,7 @@ const commentSchema = new Schema({
   create_time:{
     type:Date,
     require:true,
-    default:Date.now()
+    default:new Date().toLocaleString()
   }
 },{versionKey:false})
 

@@ -78,6 +78,16 @@ const routes: Array<RouteRecordRaw> = [
           header: () => import('../components/Common/MainHeader.vue')
         }
       },
+      {
+        path: '/topic',
+        name: 'Topic',
+        components: {
+          default: () => import('../views/Topic.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        }
+      },
+
+
     ]
   },
 ]

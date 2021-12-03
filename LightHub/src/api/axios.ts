@@ -58,8 +58,24 @@ const addArticle: Function = async (article: Object) => {
   return await axios.post("article/add", article)
 }
 
+const updateArticleComment: Function = async (params: Object) => {
+  return await axios.post("article/comment", params)
+}
+
 const addTopic: Function = async (topic: Object) => {
   return await axios.post("topic/add", topic)
+}
+
+const getCommentList: Function = async (aid: String) => {
+  return await axios.get("comment/list?aid=" + aid)
+}
+
+const upComment: Function = async (params: Object) => {
+  return await axios.post("comment/up", params)
+}
+
+const replyComment: Function = async (params: Object) => {
+  return await axios.post("comment/reply", params)
 }
 
 
@@ -75,5 +91,9 @@ export {
   addTopic,
   getArticleList,
   getArticleById,
-  addArticle
+  addArticle,
+  updateArticleComment,
+  getCommentList,
+  upComment,
+  replyComment
 }

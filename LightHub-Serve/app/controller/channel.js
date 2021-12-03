@@ -4,7 +4,6 @@ const ObjectId = require('mongoose').Types.ObjectId
 const cs = new channelService();
 
 const list = async ctx => {
-  
   let result = await cs.list()
   ctx.body = ResultFactory.buildSuccessResult(result)
 }

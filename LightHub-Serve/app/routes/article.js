@@ -6,7 +6,7 @@ router.prefix('/article')
       .get("/list",article.list)
       .get("/detail",article.detail)
       .post("/add",article.add)
-      .post("/update",article.update)
+      .post("/comment",article.comment)
       .post("/remove",article.remove)
 
       

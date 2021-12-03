@@ -11,13 +11,7 @@
           <router-link class="nav-list-item" to="/">首页</router-link>
         </li>
         <li class="nav-list-item">
-          <router-link class="nav-list-item" to="/">首页</router-link>
-        </li>
-        <li class="nav-list-item">
-          <router-link class="nav-list-item" to="/">首页</router-link>
-        </li>
-        <li class="nav-list-item">
-          <router-link class="nav-list-item" to="/">首页</router-link>
+          <router-link class="nav-list-item" :to="{ name: 'Topic' }">讨论区</router-link>
         </li>
       </ul>
       <div class="flex w-100 overflow-hidden">
@@ -61,7 +55,7 @@
 import { ref, inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
-import TopicDialog from './TopicDialog.vue';
+import TopicDialog from '../TopicComponents/TopicDialog.vue';
 const store = useStore();
 const userInfo = store.state.userInfo;
 // const userInfo: any = inject('userInfo')

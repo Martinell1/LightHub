@@ -28,9 +28,9 @@ const articleSchema = new Schema({
     type:Array,
     default:[]
   },
-  comment_list:{
-    type:Array,
-    default:[]
+  comments:{
+    type:Number,
+    default:0
   },
   view_count:{
     type:Number,
@@ -58,7 +58,7 @@ const articleSchema = new Schema({
   create_time:{
     type:Date,
     require:true,
-    default:Date.now()
+    default:new Date().toLocaleString()
   }
 },{versionKey:false})
 

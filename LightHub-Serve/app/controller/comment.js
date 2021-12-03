@@ -4,8 +4,14 @@ const ObjectId = require('mongoose').Types.ObjectId
 const cs = new commentService();
 
 const list = async ctx => {
-  let result = await cs.list()
-  ctx.body = ResultFactory.buildSuccessResult(result)
+  const id = ctx.query.aid;
+  let result = await cs.list({"target_id":id})
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult(result)
+  }
+
 }
 
 const add = async ctx => {
@@ -30,6 +36,27 @@ const update = async ctx => {
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
 
+const up = async ctx => {
+  let body = ctx.request.body
+  body.up_list = JSON.parse(body.up_list);
+  let result = await cs.update(body)
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult("成功");
+  }else{
+    ctx.body = ResultFactory.buildFilResult("失败");
+  }
+}
+
+const reply = async ctx => {
+  let body = ctx.request.body
+  body.reply_list = JSON.parse(body.reply_list);
+  let result = await cs.update(body)
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult("成功");
+  }else{
+    ctx.body = ResultFactory.buildFilResult("失败");
+  }
+}
 
 
 
@@ -37,5 +64,7 @@ module.exports = {
   list,
   add,
   remove,
-  update
+  update,
+  up,
+  reply
 }

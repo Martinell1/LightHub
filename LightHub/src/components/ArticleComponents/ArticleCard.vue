@@ -18,7 +18,7 @@
         <div class="flex mb-2 text-sm">
           <div>{{ props.article.view_count }}</div>
           <div>{{ props.article.up_list.length }}</div>
-          <div>{{ props.article.comment_list.length }}</div>
+          <div>{{ props.article.comments }}</div>
         </div>
       </div>
       <img class="w-32 h-20" src="../../assets/images/login-bg.jpg" />

@@ -1,8 +1,10 @@
 const articleService = require("../service/article")
+const userService = require("../service/user");
+const commentService = require("../service/comment")
 const ResultFactory = require('../result')
 const as = new articleService();
-const userService = require("../service/user");
 const us = new userService();
+const cs = new commentService();
 
 
 
@@ -56,16 +58,21 @@ const remove = async ctx => {
   }
 }
 
-const update = async ctx => {
-  let article = ctx.request.body
-  let result = await as.update(article)
-  ctx.body = ResultFactory.buildSuccessResult(result);
+const comment = async ctx => {
+  let body = ctx.request.body
+  let result = await cs.add(JSON.parse(body.comment));
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult("评论成功");
+  }else{
+    ctx.body = ResultFactory.buildSuccessResult("评论失败");
+  }
 }
+
 
 module.exports = {
   list,
   detail,
   add,
   remove,
-  update,
+  comment,
 }

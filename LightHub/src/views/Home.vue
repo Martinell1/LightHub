@@ -10,11 +10,11 @@
 
 <script setup lang="ts">
 import SecondNav from '../components/Common/SecondNav.vue';
-import HomeAside from '../components/HoneCompoents/HomeAside.vue';
-import ArticleCard from '../components/HoneCompoents/ArticleCard.vue';
+import HomeAside from '../components/HoneComponents/HomeAside.vue';
+import ArticleCard from '../components/ArticleComponents/ArticleCard.vue';
 import { useRoute } from 'vue-router';
 import { ref, watch, onMounted } from 'vue'
-import { getArticleList } from '../api/axios';
+import { getArticleList } from '../api/axios'
 let articleList = ref([])
 const loadArticleList = async () => {
   let { data: result } = await getArticleList(route.params.channel === undefined ? '' : route.params.channel);
