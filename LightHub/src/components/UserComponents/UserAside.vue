@@ -25,7 +25,7 @@
         </li>
         <li class="sidebar-item">
           加入于
-          <div>{{ userInfo.create_time }}</div>
+          <div>{{ fmt4Time(userInfo.create_time) }}</div>
         </li>
       </ul>
     </div>
@@ -34,6 +34,7 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
+import { fmt4Time } from '../../util/fmt4Time.js'
 const userInfo: any = inject('userInfo');
 
 </script>

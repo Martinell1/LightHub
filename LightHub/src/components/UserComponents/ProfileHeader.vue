@@ -79,7 +79,7 @@ const loadUserInfo = async () => {
     currentUserInfo.value = result.data
   }
 }
-
+const msg: any = inject('Message')
 const followSubmit = async () => {
   let opt = isFollow()
   if (opt) {
@@ -95,7 +95,7 @@ const followSubmit = async () => {
 
   let { data: result } = await updateFollowUser(params);
   if (result.code === 200) {
-    console.log(result.data);
+    msg('success', '成功')
   }
 }
 

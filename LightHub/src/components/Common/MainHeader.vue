@@ -23,7 +23,7 @@
           @blur="focusOnElse()"
         />
 
-        <div class="btn" :class="{ 'btn-focus': isSearch }" @click="Message()">搜索</div>
+        <div class="btn" :class="{ 'btn-focus': isSearch }">搜索</div>
         <div class="btn" :class="{ 'btn-focus': isSearch }" @click="preTopicSubmit()">提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
@@ -52,6 +52,7 @@
 </template>
 
 <script setup lang="ts">
+import { setTimeout } from 'timers/promises';
 import { ref, inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
@@ -85,12 +86,9 @@ const exit = () => {
   router.push({
     path: '/'
   })
-  console.log('退出');
 }
-const msg: any = inject('Message');
-const Message = () => {
-  msg('成功')
-}
+
+
 
 
 </script>

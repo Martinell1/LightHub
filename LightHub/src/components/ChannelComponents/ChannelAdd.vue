@@ -68,6 +68,7 @@ watch(channelKey, () => {
 
 //将被选中的Channel加入当前List
 
+const msg: any = inject('Message')
 const currentChannelList: any = ref([])
 
 const appendList = (channel) => {
@@ -81,7 +82,8 @@ const appendList = (channel) => {
       isShow.input = false
     }
   } else {
-    alert('该分类您已添加过')
+
+    msg('fail', '该分类您你已添加')
   }
 }
 

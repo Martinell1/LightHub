@@ -1,10 +1,12 @@
 const articleService = require("../service/article")
 const userService = require("../service/user");
 const commentService = require("../service/comment")
+const channelService = require("../service/channel")
 const ResultFactory = require('../result')
 const as = new articleService();
 const us = new userService();
 const cs = new commentService();
+const cs2 = new channelService()
 
 
 
@@ -42,9 +44,12 @@ const add = async ctx => {
   let body = ctx.request.body
   body.tag_list = JSON.parse(body.tag_list)
   body.author = JSON.parse(body.author)
+  body.tag_list.forEach(async element => {
+    let tag = await cs2.findAndUpdate({'name':element},{$inc:{'article_count':1}})
+  });
   let result = await as.add(body)
   if(result){
-    return  ctx.body = ResultFactory.buildSuccessResult(result)
+    ctx.body = ResultFactory.buildSuccessResult(result)
   }
 }
 

@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, inject } from 'vue';
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router';
 import { login, register, getOneByToken } from '../api/axios';
@@ -62,6 +62,8 @@ const userInfo = reactive({
   account: ref("admin"),
   password: ref("123456"),
 })
+
+const msg: any = inject('Message');
 const toLogin = () => {
   isLogin.value = true
 }
@@ -84,13 +86,13 @@ const loginSubmit = async () => {
       localStorage.setItem("avater", userInfo.avater);
       store.commit('updateUserInfo', { "id": userInfo._id, "nickname": userInfo.nickname, "avater": userInfo.avater })
       // store.commit('updateUserInfo', { userInfo })
-      alert("登录成功")
+      msg('success', '登录成功')
       router.push({
         path: '/'
       })
     }
   } else {
-    alert("登录失败")
+    msg('fail', '登录失败')
   }
 }
 
@@ -100,9 +102,9 @@ const registerSubmit = async () => {
   params.append("password", userInfo.password);
   let { data: result } = await register(params);
   if (result.code === 200) {
-    alert("注册成功")
+    msg('success', '注册成功')
   } else {
-    alert("注册失败")
+    msg('fail', '注册失败')
   }
 }
 

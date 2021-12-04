@@ -67,6 +67,7 @@ const getChannelList = (channelList) => {
   currentChannelList.value = channelList;
 }
 
+const msg: any = inject('Message')
 //发表问题提交
 const userInfo: any = inject('userInfo')
 const title = ref('')
@@ -80,7 +81,7 @@ const publishTopicSubmit = async () => {
 
   let { data: result } = await addTopic(params);
   if (result.code === 200) {
-    alert('提问成功')
+    msg('success', '提问成功')
   }
 }
 

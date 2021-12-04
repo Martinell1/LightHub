@@ -143,7 +143,7 @@ const showFormItem: any = reactive({
   education: false,
 })
 
-
+const msg: any = inject('Message')
 const updateUserInfoSubmit = async () => {
   const params = new FormData();
   params.append('_id', userInfo.value._id)
@@ -157,7 +157,7 @@ const updateUserInfoSubmit = async () => {
   let { data: result } = await updateUserInfo(params);
   if (result.code === 200) {
     userInfo.value = result.data;
-    alert('更新成功')
+    msg('success', '更新成功')
   }
 }
 

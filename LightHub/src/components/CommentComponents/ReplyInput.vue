@@ -41,6 +41,7 @@ import { upComment, replyComment } from '../../api/axios';
 const props: any = defineProps({
   comment: Object
 })
+const msg: any = inject('Message')
 const userInfo: any = inject('userInfo')
 const upSubmit = async (comment) => {
   let opt = isFollow(comment.up_list)
@@ -59,7 +60,7 @@ const upSubmit = async (comment) => {
 
   let { data: result } = await upComment(params);
   if (result.code === 200) {
-    console.log(result.data);
+    msg('success', '成功')
   }
 }
 

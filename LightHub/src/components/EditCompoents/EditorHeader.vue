@@ -29,12 +29,12 @@ const currentChannelList: any = ref([])
 const getChannelList = (channelList) => {
   currentChannelList.value = channelList
 }
-
+const msg: any = inject('Message')
 const router = useRouter()
 const title = ref('')
 const articleSubmit = async () => {
   if (store.state.articleText === '') {
-    alert("内容不可为空")
+    msg('fail', '内容不可为空')
     return
   }
   const params = new FormData();
@@ -45,7 +45,7 @@ const articleSubmit = async () => {
 
   let { data: result } = await addArticle(params);
   if (result.code === 200) {
-    alert('发布成功')
+    msg('success', '发布成功')
     router.push({
       path: '/'
     })

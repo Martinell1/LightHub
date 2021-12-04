@@ -24,6 +24,10 @@ class Service{
     { status : 0 } )
   }
 
+  findAndUpdate(fndObj,updateObj){
+    return this.model.findOneAndUpdate(fndObj,updateObj)
+  }
+
   update(obj){
     return this.model.updateOne({_id:obj._id},obj)
   }

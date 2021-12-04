@@ -3,28 +3,26 @@ import {h,render} from 'vue'
 
 export default {
   install: (app) => {
-    const msg = (info)=>{
+
+    const msg = (type,info)=>{
       const container = document.createElement('div')
-  
+      container.classList.add('fixed')
+      container.classList.add('top-16')
+      container.classList.add('right-0')
+      container.classList.add('flex')
+      container.classList.add('flex-col')
+     
       const messageVNode = h(Message)
 
       render(messageVNode, container)
-      // 最后将 container 追加到 body 上
+
+      messageVNode.component.exposed.setType(type)
+      messageVNode.component.exposed.setTinfo(info)
+
       document.body.appendChild(container)
-    
-      console.log(Message);
-      // Message.props.info() = info
-      messageVNode.component.exposed.log(info)
-
-      console.log(container);
-
       setTimeout(() => {
         document.body.removeChild(container)
-      }, 3000);
-
-
-  
-      return messageVNode
+      }, 5000);
     }
 
     app.provide('Message', msg)

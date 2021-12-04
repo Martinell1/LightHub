@@ -1,8 +1,10 @@
 const userService = require("../service/user")
 const articleService = require("../service/article");
+const channelService = require("../service/channel");
 const ResultFactory = require('../result')
 const us = new userService();
 const as = new articleService();
+const cs2 = new channelService();
 const {getToken,verify} = require('../utils/getToken')
 const bcrypt = require('bcryptjs');
 
@@ -76,7 +78,11 @@ const update = async ctx => {
 
 const follow_tag = async ctx => {
   let body = ctx.request.body;
-  let result = await us.update({"_id":body._id,"tag_list":JSON.parse(body.tag_list)});
+  body.tag_list = JSON.parse(body.tag_list)
+  body.tag_list.forEach(async element => {
+    let tag = await cs2.findAndUpdate({'name':element},{$inc:{'fans_count':1}})
+  });
+  let result = await us.update({"_id":body._id,"tag_list":body.tag_list});
   if(result){
     ctx.body = ResultFactory.buildSuccessResult("修改成功");
   }else{

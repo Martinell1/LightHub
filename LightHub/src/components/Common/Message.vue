@@ -1,25 +1,49 @@
 <template>
   <div
-    class="w-80 h-20 bg-blue-400 fixed right-0 top-16 rounded shadow flex justify-center items-center"
-    @click="log()"
+    class="msg"
+    :class="{
+      'success_msg': type === 'success', 'fail_msg': type === 'fail',
+      'hide': isDisappear
+    }"
   >{{ info }}</div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-const props = defineProps({
-  info: String,
-})
 const info = ref('')
-const log = (a) => {
-  info.value = a
-  console.log(a);
+const setTinfo = (msg) => {
+  info.value = msg
 }
+const type = ref('')
+const setType = (str) => {
+  type.value = str
+}
+
 defineExpose({
-  info,
-  log
+  setTinfo,
+  setType,
 })
+
+const isDisappear = ref(false)
+setTimeout(() => {
+  isDisappear.value = true
+}, 2500)
 
 </script>
 <style scoped>
+.msg {
+  @apply w-80 h-12  rounded shadow text-center leading-12 text-sm border-2;
+}
+
+.success_msg {
+  @apply bg-blue-200 text-blue-500 border-blue-200;
+}
+
+.fail_msg {
+  @apply bg-red-200 text-red-500 border-red-200;
+}
+
+.hide {
+  @apply opacity-0 transition-opacity duration-1400 ease-in-out;
+}
 </style>

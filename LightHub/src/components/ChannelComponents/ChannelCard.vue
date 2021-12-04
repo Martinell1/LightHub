@@ -31,7 +31,7 @@ import { updateFollowTag } from '../../api/axios'
 const props: any = defineProps({
   channelList: Array,
 })
-
+const msg: any = inject('Message')
 const userInfo: any = inject('userInfo')
 
 const followSubmit = async (channel) => {
@@ -49,7 +49,7 @@ const followSubmit = async (channel) => {
   params.append('tag_list', JSON.stringify(userInfo.value.tag_list));
   let { data: result } = await updateFollowTag(params);
   if (result.code === 200) {
-    console.log(result.data);
+    msg("success", '成功')
   }
 }
 

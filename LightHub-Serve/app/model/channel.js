@@ -15,13 +15,17 @@ const channelSchema = new Schema({
     require:true,
     default:""
   },
-  topic_list:{
-    type:Array,
-    default:[]
+  article_count:{
+    type:Number,
+    default:0
   },
-  fans:{
-    type:Array,
-    default:[]
+  topic_count:{
+    type:Number,
+    default:0
+  },
+  fans_count:{
+    type:Number,
+    default:0
   },
   status:{
     type:Number,

@@ -6,7 +6,7 @@
         <div v-if="props.article.author" class="flex flex-col">
           <div class="font-semibold">{{ props.article.author.nickname }}</div>
           <div class="text-sm text-gray-500 flex">
-            <div class="mr-4">{{ props.article.update_time }}</div>
+            <div class="mr-4">{{ fmt4Time(props.article.update_time) }}</div>
             <div>阅读{{ props.article.view_count }}</div>
           </div>
         </div>
@@ -54,6 +54,7 @@ import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { updateArticleComment } from '../../api/axios';
 import CommentList from '../CommentComponents/CommentList.vue';
+import { fmt4Time } from '../../util/fmt4Time.js'
 const userInfo: any = inject('userInfo')
 const props: any = defineProps({
   article: Object
@@ -64,6 +65,8 @@ const comment = reactive({
   content: "",
   commenter: {},
 })
+
+const msg: any = inject('Message')
 const commmentSubmit = async () => {
   comment.target_id = props.article._id
   comment.commenter = userInfo.value
@@ -71,10 +74,10 @@ const commmentSubmit = async () => {
   params.append("comment", JSON.stringify(comment))
   let { data: result } = await updateArticleComment(params);
   if (result.code === 200) {
-    alert("发布成功")
+    msg('success', '发布成功')
   }
 }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </script>
+</script>
 <style  scoped>
 </style>
