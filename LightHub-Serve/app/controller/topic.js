@@ -1,19 +1,18 @@
 const topicService = require("../service/topic")
 const ResultFactory = require('../result')
 const ts = new topicService();
-const channelService = require("../service/channel")
-const cs2 = new channelService()
+const tagService = require("../service/tag")
+const cs2 = new tagService()
 const toRegular = require('../utils/toRegular')
 
 const list = async ctx => {
-  let key = toRegular(ctx.query)
-  let result = await ts.find(key)
+  let result = await ts.find()
   ctx.body = ResultFactory.buildSuccessResult(result)
 }
 
 const add = async ctx => {
   let body = ctx.request.body
-  body.channel_list = JSON.parse(body.channel_list);
+  body.tag_list = JSON.parse(body.tag_list);
   body.tag_list.forEach(async element => {
     let tag = await cs2.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
   });

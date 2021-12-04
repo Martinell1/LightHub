@@ -15,7 +15,7 @@
         :toolbars="toolBars"
         style="height:160px"
       ></editor>
-      <ChannelAdd @collection="getChannelList"></ChannelAdd>
+      <TagAdd @collection="getChannelList"></TagAdd>
       <div class="flex justify-end">
         <div
           class="w-24 h-8 bg-blue-600 leading-8 text-center text-sm text-gray-50 rounded cursor-pointer"
@@ -31,11 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import ChannelAdd from '../ChannelComponents/ChannelAdd.vue';
 import { addTopic } from '../../api/axios';
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { ref, inject, onMounted, watch } from 'vue'
+import TagAdd from '../TagComponents/TagAdd.vue';
 
 const emit = defineEmits(['close'])
 //编辑框的工具栏
@@ -61,10 +61,10 @@ const closeDialog = () => {
   emit('close')
 }
 
-//接受channelList
+//接受tagList
 const currentChannelList: any = ref([])
-const getChannelList = (channelList) => {
-  currentChannelList.value = channelList;
+const getChannelList = (tagList) => {
+  currentChannelList.value = tagList;
 }
 
 const msg: any = inject('Message')
@@ -77,7 +77,7 @@ const publishTopicSubmit = async () => {
   params.append('title', title.value);
   params.append('initiator', userInfo.value._id);
   params.append('introduce', content.value)
-  params.append('channel_list', JSON.stringify(currentChannelList.value))
+  params.append('tag_list', JSON.stringify(currentChannelList.value))
 
   let { data: result } = await addTopic(params);
   if (result.code === 200) {

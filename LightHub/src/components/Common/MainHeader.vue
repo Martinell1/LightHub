@@ -8,7 +8,7 @@
         </li>
 
         <li class="nav-list-item">
-          <router-link class="nav-list-item" to="/">首页</router-link>
+          <router-link class="nav-list-item" :to="{ name: 'Home', params: { 'tag': '' } }">首页</router-link>
         </li>
         <li class="nav-list-item">
           <router-link class="nav-list-item" :to="{ name: 'Topic' }">讨论区</router-link>

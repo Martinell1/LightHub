@@ -41,6 +41,8 @@ const userSchema = new Schema({
   },
   fans:{
     type:Array,
+    require:true,
+    default:[],
   },
   tag_list:{
     type:Array,
@@ -49,7 +51,8 @@ const userSchema = new Schema({
   },
   collection_list:{
     type:Array,
-
+    require:true,
+    default:[],
   },
   gender:{
     type:String,

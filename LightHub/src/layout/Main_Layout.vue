@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { ref, provide, onMounted } from 'vue'
 import { useStore } from 'vuex';
-import { getOneById, getChannelList } from '../api/axios';
+import { getOneById } from '../api/axios';
 //提供用户信息
 const store = useStore();
 const id: String = store.state.userInfo.id;
@@ -42,22 +42,9 @@ const loadUserInfo = async () => {
 }
 
 
-//提供channel信息
-const channelList = ref([]);
-
-const loadChannelList = async () => {
-  let { data: result } = await getChannelList();
-  if (result.code === 200) {
-    channelList.value = result.data;
-  }
-}
-
-provide('channelList', channelList)
 
 onMounted(async () => {
   await loadUserInfo()
-  await loadChannelList()
-
 })
 
 

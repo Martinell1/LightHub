@@ -1,27 +1,27 @@
 const articleService = require("../service/article")
 const userService = require("../service/user");
 const commentService = require("../service/comment")
-const channelService = require("../service/channel")
+const tagService = require("../service/tag")
 const ResultFactory = require('../result')
 const as = new articleService();
 const us = new userService();
 const cs = new commentService();
-const cs2 = new channelService()
+const cs2 = new tagService()
 
 
 
 const list = async ctx => {
-  let channel = ctx.query.channel;
+  let tag = ctx.query.tag;
   let token = ctx.header.token;
   let result = await as.list();
-  if(channel===''){
+  if(tag===''){
 
-  }else if(channel === 'follow'){
+  }else if(tag === 'follow'){
     const userInfo = await us.getInfoByToken(token);
     const tag_list = userInfo.tag_list;
     result = await as.find({'tag_list':{ $in: tag_list}});
   }else{
-    result = result.filter(article=>{return article.tag_list.includes(channel)})
+    result = result.filter(article=>{return article.tag_list.includes(tag)})
   }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(result)

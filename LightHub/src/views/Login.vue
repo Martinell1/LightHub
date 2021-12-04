@@ -88,8 +88,11 @@ const loginSubmit = async () => {
       // store.commit('updateUserInfo', { userInfo })
       msg('success', '登录成功')
       router.push({
-        path: '/'
+        name: 'Home',
+        params: { 'tag': '' },
       })
+
+
     }
   } else {
     msg('fail', '登录失败')

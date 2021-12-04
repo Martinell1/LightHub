@@ -4,19 +4,19 @@
       <ul class="flex flex-wrap">
         <li
           class="mr-2 my-1 py-2 px-4 rounded-full bg-blue-100 text-blue-600 cursor-pointer"
-          v-for="channel in currentChannelList"
+          v-for="tag in currentTagList"
         >
-          {{ channel }}
-          <span @click="delChannel(channel)" class="font-semibold">×</span>
+          {{ tag }}
+          <span @click="delTag(tag)" class="font-semibold">×</span>
         </li>
         <div
           v-show="isShow.message"
           @click="isShow.message = false; isShow.input = true"
           class="font-semibold text-blue-600 text-sm cursor-pointer my-auto mr-4 py-2"
-        >+添加话题{{ currentChannelList.length }}/5</div>
+        >+添加话题{{ currentTagList.length }}/5</div>
         <div v-show="isShow.input" class="relative mr-4 z-10">
           <input
-            v-model="channelKey"
+            v-model="tagKey"
             class="ring-1 outline-none ring-blue-500 rounded-full w-48 h-7 my-2 px-4"
           />
           <div
@@ -24,10 +24,10 @@
             class="shadow absolute outline-none mt-1 left-4 top-10 text-base max-h-40 overflow-y-scroll"
           >
             <li
-              v-for="channel in channelList"
-              @click="appendList(channel); channelSubmit()"
+              v-for="tag in tagList"
+              @click="appendList(tag); tagSubmit()"
               class="py-2 px-4 bg-gray-50 text-gray-800 w-40 hover:bg-gray-200"
-            >{{ channel }}</li>
+            >{{ tag }}</li>
           </div>
         </div>
       </ul>
@@ -36,7 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch, inject } from 'vue'
+import { ref, reactive, watch, inject, onMounted } from 'vue'
+import { getTagList } from '../../api/axios'
 const isShow = reactive({
   message: true,
   input: false
@@ -44,39 +45,50 @@ const isShow = reactive({
 
 const openSelect = ref(false)
 
-//加载所有的Channel
-let allChannelList: any = inject('channelList')
+
+const allTagList: any = ref([])
+//加载所有的Tag
+const loadTagList = async () => {
+  let { data: result } = await getTagList();
+  if (result.code == 200) {
+    allTagList.value = result.data
+  }
+}
+
+onMounted(async () => {
+  await loadTagList()
+})
 
 
 //监听输入框变化
-const channelKey = ref('');
+const tagKey = ref('');
 
 
-const channelList: any = ref([])  //待选ChannelList
+const tagList: any = ref([])  //待选TagList
 
-watch(channelKey, () => {
-  channelList.value = []
-  if (channelKey.value) {
+watch(tagKey, () => {
+  tagList.value = []
+  if (tagKey.value) {
     openSelect.value = true
-    allChannelList.value.forEach((item: Object) => {
-      if (item["name"].indexOf(channelKey.value) > -1) {
-        channelList.value.push(item["name"])
+    allTagList.value.forEach((item: Object) => {
+      if (item["name"].indexOf(tagKey.value) > -1) {
+        tagList.value.push(item["name"])
       }
     });
   }
 })
 
-//将被选中的Channel加入当前List
+//将被选中的Tag加入当前List
 
 const msg: any = inject('Message')
-const currentChannelList: any = ref([])
+const currentTagList: any = ref([])
 
-const appendList = (channel) => {
-  let result = currentChannelList.value.find(element => element === channel)
+const appendList = (tag) => {
+  let result = currentTagList.value.find(element => element === tag)
   if (!result) {
-    if (currentChannelList.value.length < 5) {
-      currentChannelList.value.push(channel)
-      channelKey.value = ''
+    if (currentTagList.value.length < 5) {
+      currentTagList.value.push(tag)
+      tagKey.value = ''
       openSelect.value = false
       isShow.message = true
       isShow.input = false
@@ -88,13 +100,13 @@ const appendList = (channel) => {
 }
 
 //删除标签
-const delChannel = channel => {
-  let index = currentChannelList.value.findIndex(element => element === channel);
-  currentChannelList.value.splice(index, 1)
+const delTag = tag => {
+  let index = currentTagList.value.findIndex(element => element === tag);
+  currentTagList.value.splice(index, 1)
 }
 
-//监听currentChannelList的长度
-watch(() => [...currentChannelList.value], (newValue, oldValue) => {
+//监听currentTagList的长度
+watch(() => [...currentTagList.value], (newValue, oldValue) => {
   console.log(newValue.length);
   if (newValue.length === 5) {
     isShow.message = false
@@ -106,8 +118,8 @@ watch(() => [...currentChannelList.value], (newValue, oldValue) => {
 
 //返回数据给上层组件
 const emit = defineEmits(['collection'])
-const channelSubmit = () => {
-  emit('collection', currentChannelList.value)
+const tagSubmit = () => {
+  emit('collection', currentTagList.value)
 }
 
 </script>

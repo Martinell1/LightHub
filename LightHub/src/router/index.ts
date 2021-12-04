@@ -17,9 +17,14 @@ const routes: Array<RouteRecordRaw> = [
           default: () => import('../views/Home.vue'),
           header: () => import('../components/Common/MainHeader.vue')
         },
+        redirect: to => {
+          // 方法接收目标路由作为参数
+          // return 重定向的字符串路径/路径对象
+          return { name: 'Home', params: { 'tag': '' } }
+        },
         children: [
           {
-            path: '/:channel?',
+            path: '/:tag?',
             name: 'Home',
             component: () => import('../views/Home.vue'),
           }
@@ -45,20 +50,20 @@ const routes: Array<RouteRecordRaw> = [
         ]
       },
       {
-        path: 'channel/',
-        name: 'Channel',
+        path: 'tag/',
+        name: 'Tag',
         components: {
-          default: () => import('../views/Channel.vue'),
+          default: () => import('../views/Tag.vue'),
           header: () => import('../components/Common/MainHeader.vue')
         },
         children: [
           {
             path: 'follow',
-            component: () => import('../components/ChannelComponents/ChannelList.vue')
+            component: () => import('../components/TagComponents/TagList.vue')
           },
           {
             path: 'all',
-            component: () => import('../components/ChannelComponents/ChannelList.vue')
+            component: () => import('../components/TagComponents/TagList.vue')
           },
         ]
       },

@@ -81,36 +81,23 @@ const loadUserInfo = async () => {
 }
 const msg: any = inject('Message')
 const followSubmit = async () => {
-  let opt = isFollow()
-  if (opt) {
-    //取关
-    let index = getIndex();
-    userInfo.value.follows.splice(index, 1)
-  } else {
-    userInfo.value.follows.push(currentUserInfo.value._id)
-  }
-  const params = new FormData();
-  params.append('_id', userInfo.value._id);
-  params.append('follows', JSON.stringify(userInfo.value.follows));
+  const opt: any = isFollow();
+  console.log(opt);
 
+  const params = new FormData();
+  params.append('user_id', userInfo.value._id);
+  params.append('followed_user_id', currentUserInfo.value._id);
+  params.append('isFollow', opt);
   let { data: result } = await updateFollowUser(params);
   if (result.code === 200) {
-    msg('success', '成功')
+    msg("success", '成功')
+    userInfo.value.follows.push(currentUserInfo.value._id)
   }
 }
 
-//获取当前item在用户关注中的下标，用于删除
-const getIndex = () => {
-  let index = -1
-  try {
-    index = userInfo.value.follows.indexOf(currentUserInfo.value._id)
-  } finally {
-    return index;
-  }
-}
-
+//是否关注
 const isFollow = () => {
-  return getIndex() > -1 ? true : false
+  return userInfo.value.follows.indexOf(currentUserInfo.value._id) > -1 ? true : false
 }
 
 onMounted(async () => {

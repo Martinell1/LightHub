@@ -15,7 +15,7 @@ const topicSchema = new Schema({
     require:true,
     default:""
   },
-  channel_list:{
+  tag_list:{
     type:Array,
     default:[]
   },

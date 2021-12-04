@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { channel } from 'diagnostics_channel';
 // axios.defaults.baseURL = "https://121.5.127.215:8150/api/"
 axios.defaults.baseURL = "http://localhost:3001/api/"
 
@@ -42,12 +41,12 @@ const updateFollowUser: Function = async (follow: Array<any>) => {
   return await axios.post("user/follow_user", follow)
 }
 
-const getChannelList: Function = async () => {
-  return await axios.get("channel/list")
+const getTagList: Function = async () => {
+  return await axios.get("tag/list")
 }
 
-const getArticleList: Function = async (channel: String) => {
-  return await axios.get("article/list?channel=" + channel)
+const getArticleList: Function = async (tag: String) => {
+  return await axios.get("article/list?tag=" + tag)
 }
 
 const getArticleById: Function = async (id: String) => {
@@ -78,6 +77,9 @@ const replyComment: Function = async (params: Object) => {
   return await axios.post("comment/reply", params)
 }
 
+const getTopicList: Function = async () => {
+  return await axios.get("topic/list")
+}
 
 export {
   register,
@@ -87,7 +89,7 @@ export {
   updateUserInfo,
   updateFollowTag,
   updateFollowUser,
-  getChannelList,
+  getTagList,
   addTopic,
   getArticleList,
   getArticleById,
@@ -95,5 +97,6 @@ export {
   updateArticleComment,
   getCommentList,
   upComment,
-  replyComment
+  replyComment,
+  getTopicList
 }

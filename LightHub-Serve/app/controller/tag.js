@@ -1,7 +1,7 @@
-const channelService = require("../service/channel")
+const tagService = require("../service/tag")
 const ResultFactory = require('../result')
 const ObjectId = require('mongoose').Types.ObjectId
-const cs = new channelService();
+const cs = new tagService();
 
 const list = async ctx => {
   let result = await cs.list()
@@ -9,8 +9,8 @@ const list = async ctx => {
 }
 
 const add = async ctx => {
-  let channel = ctx.request.body
-  let result = await cs.add(channel)
+  let tag = ctx.request.body
+  let result = await cs.add(tag)
   ctx.body =  result
 } 
 
@@ -25,8 +25,8 @@ const remove = async ctx => {
 }
 
 const update = async ctx => {
-  let channel = ctx.request.body
-  let result = await cs.update(channel)
+  let tag = ctx.request.body
+  let result = await cs.update(tag)
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
 

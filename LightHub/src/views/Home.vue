@@ -1,5 +1,5 @@
 <template>
-  <SecondNav type="channelList"></SecondNav>
+  <SecondNav type="tagList"></SecondNav>
   <div class="home_layout">
     <main class="min-w-700">
       <ArticleCard v-for="article in articleList" :article="article"></ArticleCard>
@@ -17,7 +17,7 @@ import { ref, watch, onMounted } from 'vue'
 import { getArticleList } from '../api/axios'
 let articleList = ref([])
 const loadArticleList = async () => {
-  let { data: result } = await getArticleList(route.params.channel === undefined ? '' : route.params.channel);
+  let { data: result } = await getArticleList(route.params.tag);
   if (result.code === 200) {
     articleList.value = result.data
   }

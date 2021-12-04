@@ -1,10 +1,10 @@
 const userService = require("../service/user")
 const articleService = require("../service/article");
-const channelService = require("../service/channel");
+const tagService = require("../service/tag");
 const ResultFactory = require('../result')
 const us = new userService();
 const as = new articleService();
-const cs2 = new channelService();
+const ts = new tagService();
 const {getToken,verify} = require('../utils/getToken')
 const bcrypt = require('bcryptjs');
 
@@ -67,8 +67,9 @@ const update = async ctx => {
   //修改用户信息
   let result1 = await us.update(body);
   let user = await us.findOne({"_id":body._id})
-  //对应修改用户的文章，提问等信息
-  let result2 = await as.updates({"author":user});
+   //对应修改用户的文章，提问等信息
+  // let articles = await as.find({"author._id":body._id});
+  let result2 = await as.updates({"author._id":body._id},{"author":body})
   if(result1 && result2){
     ctx.body = ResultFactory.buildSuccessResult(user);
   }else{
@@ -78,26 +79,49 @@ const update = async ctx => {
 
 const follow_tag = async ctx => {
   let body = ctx.request.body;
-  body.tag_list = JSON.parse(body.tag_list)
-  body.tag_list.forEach(async element => {
-    let tag = await cs2.findAndUpdate({'name':element},{$inc:{'fans_count':1}})
-  });
-  let result = await us.update({"_id":body._id,"tag_list":body.tag_list});
-  if(result){
+  let user = await us.findOne({"_id":body.user_id})
+  let tag = await ts.findOne({"_id":body.tag_id})
+  let isFollow = body.isFollow
+  if(isFollow === true){
+    //已关注，需要取关
+    user.tag_list = user.tag_list.remove(tag.name)
+    tag.fans_count--
+  }else{
+    //未关注，需要关注
+    user.tag_list.push(tag.name)
+    tag.fans_count++
+  }
+  let result1 = await us.update(user)
+  let result2 = await ts.update(tag)
+  if(result1 && result2){
     ctx.body = ResultFactory.buildSuccessResult("修改成功");
   }else{
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }
+  //cs2.findAndUpdate({'name':element},{$inc:{'fans_count':1}})
 }
 
 const follow_user = async ctx => {
-  let body = ctx.request.body;
-  let result = await us.update({"_id":body._id,"follows":JSON.parse(body.follows)});
-  if(result){
-    ctx.body = ResultFactory.buildSuccessResult("修改成功");
-  }else{
-    ctx.body = ResultFactory.buildFailResult("修改失败");
-  }
+    let body = ctx.request.body;
+    let user = await us.findOne({"_id":body.user_id})
+    let followed_user = await us.findOne({"_id":body.followed_user_id})
+    let isFollow = body.isFollow
+    if(isFollow === true){
+      //已关注，需要取关
+      user.follows = user.follows.remove(followed_user._id)
+      followed_user.fans = followed_user.fans.remove(user._id)
+    }else{
+      //未关注，需要关注
+      user.follows.push(followed_user._id)
+      followed_user.fans.push(user._id)
+    }
+    let result1 = await us.update(user)
+    let result2 = await us.update(followed_user)
+    if(result1 && result2){
+      ctx.body = ResultFactory.buildSuccessResult("修改成功");
+    }else{
+      ctx.body = ResultFactory.buildFailResult("修改失败");
+    }
 }
 
 const remove = async ctx => {
