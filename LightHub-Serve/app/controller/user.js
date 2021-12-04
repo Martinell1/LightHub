@@ -42,10 +42,12 @@ const register = async ctx => {
 
 const info = async ctx => {
   if(ctx.query.id){
+    console.log("this?");
     const id = ctx.query.id;
     let result = await us.findOne({"_id":id})
+     console.log(result);
     if(result){
-      return ctx.body = ResultFactory.buildSuccessResult(result);
+      ctx.body = ResultFactory.buildSuccessResult(result);
     }
   }else{
     const token = ctx.query.token;

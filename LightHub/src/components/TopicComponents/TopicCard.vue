@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50 p-4 border-b-2">
-    <div>{{ props.topic.initiator }}</div>
+    <UserInfo :type="'topic'" :id="props.topic.initiator"></UserInfo>
     <div class="text-xl font-semibold my-2">{{ props.topic.title }}</div>
     <div class="h-12">{{ props.topic.introduce }}</div>
     <div class="flex my-3">
@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import UserInfo from '../Common/UserInfo.vue';
 const props: any = defineProps({
   topic: Object
 })
