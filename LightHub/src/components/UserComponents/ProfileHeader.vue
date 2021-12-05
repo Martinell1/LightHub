@@ -82,7 +82,6 @@ const loadUserInfo = async () => {
 const msg: any = inject('Message')
 const followSubmit = async () => {
   const opt: any = isFollow();
-  console.log(opt);
 
   const params = new FormData();
   params.append('user_id', userInfo.value._id);

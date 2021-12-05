@@ -6,6 +6,7 @@ import './index.css'
 
 import message from './plugin/message.js'
 
+
 createApp(App)
   .use(message)
   .use(router)

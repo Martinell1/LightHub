@@ -54,6 +54,21 @@ const userSchema = new Schema({
     require:true,
     default:[],
   },
+  article_count:{
+    type:Number,
+    require:true,
+    default:0
+  },
+  topic_count:{
+    type:Number,
+    require:true,
+    default:0
+  },
+  answer_count:{
+    type:Number,
+    require:true,
+    default:0
+  },
   gender:{
     type:String,
     default:"",
