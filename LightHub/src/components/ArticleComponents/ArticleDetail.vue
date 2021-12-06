@@ -52,7 +52,7 @@
 import { ref, reactive, inject } from 'vue'
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { updateArticleComment } from '../../api/axios';
+import { updateArticleComment } from '@/api/article';
 import CommentList from '../CommentComponents/CommentList.vue';
 import { fmt4Time } from '../../util/fmt4Time.js'
 const userInfo: any = inject('userInfo')

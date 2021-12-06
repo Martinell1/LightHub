@@ -1,10 +1,8 @@
 <template>
-  <div class="w-700 px-5 pt-4 bg-gray-50 rounded hover:bg-gray-100">
+  <div class="w-700 px-5 pt-4 bg-gray-50 rounded">
     <div class="flex mb-2 text-sm text-gray-600">
       <div class="border-r-2 pr-2">
-        <router-link
-          :to="{ name: 'User', params: { 'id': props.article.author._id } }"
-        >{{ props.article.author.nickname }}</router-link>
+        <UserInfo :type="'article'" :id="props.article.author"></UserInfo>
       </div>
       <div class="border-r-2 px-2">{{ fmt4Time() }}</div>
       <div class="tag-list" v-for="tag in props.article.tag_list">{{ tag }}</div>
@@ -28,11 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import UserInfo from '../Common/UserInfo.vue';
 const props: any = defineProps({
   article: Object
 })
-
 
 const fmt4Time = () => {
   const articleTime = Date.parse(props.article.create_time);

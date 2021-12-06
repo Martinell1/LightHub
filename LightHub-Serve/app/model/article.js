@@ -15,9 +15,9 @@ const articleSchema = new Schema({
     default:"",
   },
   author:{
-    type:Object,
+    type:String,
     require:true,
-    default:{},
+    default:"",
   },
   content:{
     type:String,

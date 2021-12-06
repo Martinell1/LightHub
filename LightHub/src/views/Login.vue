@@ -54,7 +54,7 @@
 import { ref, reactive, inject } from 'vue';
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router';
-import { login, register, getOneByToken } from '../api/axios';
+import { login, register, getOneByToken } from '@/api/user';
 const store = useStore();
 const router = useRouter();
 const isLogin = ref(true);

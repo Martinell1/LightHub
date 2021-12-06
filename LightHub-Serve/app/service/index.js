@@ -3,12 +3,12 @@ class Service{
     this.model = model
   }
 
-  findOne(obj){
-    return this.model.findOne(obj);
+  findOne(obj,fields){
+    return this.model.findOne(obj,fields);
   }
 
-  find(obj){
-    return this.model.find(obj);
+  find(obj,fields){
+    return this.model.find(obj,fields);
   }
 
   list(){

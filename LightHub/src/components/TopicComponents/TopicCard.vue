@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
 import UserInfo from '../Common/UserInfo.vue';
-import { upTopic, stepTopic } from '../../api/axios';
+import { upTopic, stepTopic } from '@/api/topic';
 const props: any = defineProps({
   topic: Object
 })

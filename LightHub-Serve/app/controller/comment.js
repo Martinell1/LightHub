@@ -36,16 +36,55 @@ const update = async ctx => {
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
 
-const up = async ctx => {
-  let body = ctx.request.body
-  body.up_list = JSON.parse(body.up_list);
-  let result = await cs.update(body)
-  if(result){
-    ctx.body = ResultFactory.buildSuccessResult("成功");
+const up_comment = async ctx => {
+  let body = ctx.request.body;
+  let comment = await cs.findOne({"_id":body._id})
+  let isUp = comment.up_list.indexOf(body.user_id)>-1;
+  if(isUp === true){
+    //取消赞
+    comment.up_list.remove(body.user_id)
   }else{
-    ctx.body = ResultFactory.buildFilResult("失败");
+    //点赞
+    comment.up_list.push(body.user_id)
+    comment.step_list.remove(body.user_id)
+  }
+  let result = await ts.update(comment);
+  if(result){
+    if(isUp){
+      ctx.body =  ResultFactory.buildSuccessResult("取消点赞成功")
+    }else{
+      ctx.body =  ResultFactory.buildSuccessResult("点赞成功")
+    }
+  }else{
+    ctx.body = ResultFactory.buildFailResult("失败")
   }
 }
+
+const step_comment = async ctx => {
+  let body = ctx.request.body;
+  let comment = await cs.findOne({"_id":body._id})
+  let isStep = comment.step_list.indexOf(body.user_id)>-1;
+  if(isStep === true){
+    //取消点踩
+    comment.step_list.remove(body.user_id)
+  }else{
+    //点踩
+    comment.step_list.push(body.user_id)
+    comment.up_list.remove(body.user_id)
+  }
+  let result = await cs.update(comment);
+  if(result){
+    if(isStep){
+      ctx.body =  ResultFactory.buildSuccessResult("取消点踩成功")
+    }else{
+      ctx.body =  ResultFactory.buildSuccessResult("点踩成功")
+    }
+  }else{
+    ctx.body = ResultFactory.buildFailResult("失败")
+  }
+}
+
+
 
 const reply = async ctx => {
   let body = ctx.request.body
@@ -65,6 +104,7 @@ module.exports = {
   add,
   remove,
   update,
-  up,
+  up_comment,
+  step_comment,
   reply
 }

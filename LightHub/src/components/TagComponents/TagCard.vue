@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
-import { updateFollowTag } from '../../api/axios'
+import { updateFollowTag } from '@/api/user'
 const props: any = defineProps({
   tagList: Array,
 })

@@ -16,7 +16,7 @@
 import { ref, inject, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
 import TagCard from './TagCard.vue';
-import { getTagList } from '../../api/axios'
+import { getTagList } from '@/api/tag'
 let userInfo: any = inject('userInfo')
 const route = useRoute();
 

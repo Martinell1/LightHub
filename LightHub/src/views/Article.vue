@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getArticleById } from '../api/axios';
+import { getArticleById } from '@/api/article';
 import { useRoute } from 'vue-router';
 import ArticleDetail from '../components/ArticleComponents/ArticleDetail.vue';
 const route = useRoute();

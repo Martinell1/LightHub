@@ -1,5 +1,5 @@
 import axios from 'axios'
-// axios.defaults.baseURL = "https://121.5.127.215:8150/api/"
+// axios.defaults.baseURL = "https://121.5.127.215:8150/api/" 
 axios.defaults.baseURL = "http://localhost:3001/api/"
 
 // 添加请求拦截器
@@ -13,100 +13,4 @@ axios.interceptors.request.use(function (config: any) {
 });
 
 
-const register: Function = async (user: Object) => {
-  return await axios.post("user/register", user);
-}
-
-const login: Function = async (user: Object) => {
-  return await axios.post("user/login", user);
-}
-
-const getOneByToken: Function = async (token: String) => {
-  return await axios.get("user/info?token=" + token)
-}
-
-const getOneById: Function = async (id: String) => {
-  return await axios.get("user/info?id=" + id)
-}
-
-const updateUserInfo: Function = async (user: Object) => {
-  return await axios.post("user/update", user)
-}
-
-const updateFollowTag: Function = async (follow: Array<any>) => {
-  return await axios.post("user/follow_tag", follow)
-}
-
-const updateFollowUser: Function = async (follow: Array<any>) => {
-  return await axios.post("user/follow_user", follow)
-}
-
-const getTagList: Function = async () => {
-  return await axios.get("tag/list")
-}
-
-const getArticleList: Function = async (tag: String) => {
-  return await axios.get("article/list?tag=" + tag)
-}
-
-const getArticleById: Function = async (id: String) => {
-  return await axios.get("article/detail?id=" + id)
-}
-
-const addArticle: Function = async (article: Object) => {
-  return await axios.post("article/add", article)
-}
-
-const updateArticleComment: Function = async (params: Object) => {
-  return await axios.post("article/comment", params)
-}
-
-const addTopic: Function = async (topic: Object) => {
-  return await axios.post("topic/add", topic)
-}
-
-const getCommentList: Function = async (aid: String) => {
-  return await axios.get("comment/list?aid=" + aid)
-}
-
-const upComment: Function = async (params: Object) => {
-  return await axios.post("comment/up", params)
-}
-
-const replyComment: Function = async (params: Object) => {
-  return await axios.post("comment/reply", params)
-}
-
-const getTopicList: Function = async () => {
-  return await axios.get("topic/list")
-}
-
-const upTopic: Function = async (params: Object) => {
-  return await axios.post("topic/up_topic", params)
-}
-
-const stepTopic: Function = async (params: Object) => {
-  return await axios.post("topic/step_topic", params)
-}
-
-export {
-  register,
-  login,
-  getOneByToken,
-  getOneById,
-  updateUserInfo,
-  updateFollowTag,
-  updateFollowUser,
-  getTagList,
-  addTopic,
-  getArticleList,
-  getArticleById,
-  addArticle,
-  updateArticleComment,
-  getCommentList,
-  upComment,
-  replyComment,
-  getTopicList,
-  upTopic,
-  stepTopic
-}
+export default axios

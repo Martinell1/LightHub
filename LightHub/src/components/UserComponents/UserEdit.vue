@@ -131,7 +131,7 @@
 
 <script setup lang="ts">
 import { reactive, inject } from 'vue'
-import { updateUserInfo } from '../../api/axios'
+import { updateUserInfo } from '@/api/user'
 const userInfo: any = inject('userInfo');
 
 const showFormItem: any = reactive({

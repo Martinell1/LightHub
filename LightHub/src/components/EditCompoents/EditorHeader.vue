@@ -18,7 +18,7 @@
 import { ref, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { addArticle } from '../../api/axios';
+import { addArticle } from '@/api/article';
 import TagAdd from '../TagComponents/TagAdd.vue';
 const store = useStore();
 

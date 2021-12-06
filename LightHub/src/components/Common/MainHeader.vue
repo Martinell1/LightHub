@@ -52,7 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { setTimeout } from 'timers/promises';
 import { ref, inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";

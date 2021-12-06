@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { ref, inject, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
-import { getOneById, updateFollowUser } from '../../api/axios';
+import { getOneById, updateFollowUser } from '@/api/user';
 
 const userInfo: any = inject('userInfo')
 

@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, inject } from 'vue'
-import { upComment, replyComment } from '../../api/axios';
+import { upComment, replyComment } from '@/api/comment';
 
 const props: any = defineProps({
   comment: Object

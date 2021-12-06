@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref, inject, reactive, onMounted } from 'vue'
-import { getCommentList, upComment } from '../../api/axios';
+import { getCommentList, upComment } from '@/api/comment';
 import ReplyInput from './ReplyInput.vue';
 import ReplyItem from './ReplyItem.vue';
 const props: any = defineProps({

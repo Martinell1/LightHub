@@ -2,11 +2,13 @@ const topicService = require("../service/topic")
 const ResultFactory = require('../result')
 const ts = new topicService();
 const tagService = require("../service/tag")
-const cs2 = new tagService()
+const answerService = require("../service/answer")
+const as = new answerService()
+const tagS = new tagService()
 const toRegular = require('../utils/toRegular')
 
 const list = async ctx => {
-  let result = await ts.find()
+  let result = await ts.find({},{answer_list:0})
   ctx.body = ResultFactory.buildSuccessResult(result)
 }
 
@@ -15,7 +17,7 @@ const add = async ctx => {
   let user = await us.update({"_id":body._id},{"topic_count":body.topic_count++})
   body.tag_list = JSON.parse(body.tag_list)
   body.tag_list.forEach(async element => {
-    let tag = await cs2.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
+    let tag = await tagS.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
   });
   let result = await ts.add(body)
   if(result){
@@ -41,6 +43,8 @@ const update = async ctx => {
   let result = await ts.update(topic)
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
+
+
 
 const up_topic = async ctx => {
   let body = ctx.request.body;

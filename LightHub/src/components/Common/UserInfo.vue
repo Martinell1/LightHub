@@ -1,14 +1,12 @@
 <template>
-  <div
-    v-if="props.type === 'topic'"
-    @mouseenter="isShow = true"
-    @mouseleave="isShow = false"
-    class="relative"
-  >
-    <div class="flex items-center">
+  <div @mouseenter="isShow = true" @mouseleave="isShow = false" class="relative">
+    <div v-if="props.type === 'topic'" class="flex items-center">
       <img class="w-6 h-6 rounded-full mr-2" src="../../assets/images/login-bg.jpg" />
       <div class="font-semibold mr-4">{{ currentUserInfo.nickname }}</div>
       <div class="text-sm text-gray-500">{{ currentUserInfo.introduce }}</div>
+    </div>
+    <div v-if="props.type === 'article'" class="flex items-center">
+      <div class="font-semibold mr-4">{{ currentUserInfo.nickname }}</div>
     </div>
     <div
       v-show="isShow"
@@ -56,7 +54,7 @@
 
 <script setup lang="ts">
 import { ref, inject, computed, onMounted } from 'vue'
-import { getOneById, updateFollowUser } from '../../api/axios'
+import { getOneById, updateFollowUser } from '@/api/user'
 const props: any = defineProps({
   type: String,
   id: String,

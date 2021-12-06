@@ -14,7 +14,7 @@ import HomeAside from '../components/HoneComponents/HomeAside.vue';
 import ArticleCard from '../components/ArticleComponents/ArticleCard.vue';
 import { useRoute } from 'vue-router';
 import { ref, watch, onMounted } from 'vue'
-import { getArticleList } from '../api/axios'
+import { getArticleList } from '@/api/article'
 let articleList = ref([])
 const loadArticleList = async () => {
   let { data: result } = await getArticleList(route.params.tag);

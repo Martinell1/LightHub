@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { ref, provide, onMounted } from 'vue'
 import { useStore } from 'vuex';
-import { getOneById } from '../api/axios';
+import { getOneById } from '@/api/user';
 //提供用户信息
 const store = useStore();
 const id: String = store.state.userInfo.id;

@@ -49,11 +49,6 @@ const userSchema = new Schema({
     require:true,
     default:[],
   },
-  collection_list:{
-    type:Array,
-    require:true,
-    default:[],
-  },
   article_count:{
     type:Number,
     require:true,

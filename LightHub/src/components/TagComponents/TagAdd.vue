@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch, inject, onMounted } from 'vue'
-import { getTagList } from '../../api/axios'
+import { getTagList } from '@/api/tag'
 const isShow = reactive({
   message: true,
   input: false

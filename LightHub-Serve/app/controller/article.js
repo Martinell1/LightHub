@@ -43,7 +43,6 @@ const detail = async ctx => {
 const add = async ctx => {
   let body = ctx.request.body
   body.tag_list = JSON.parse(body.tag_list)
-  body.author = JSON.parse(body.author)
   body.author.article_count++
   body.tag_list.forEach(async element => {
     let tag = await cs2.findAndUpdate({'name':element},{$inc:{'article_count':1}})
@@ -74,6 +73,55 @@ const comment = async ctx => {
   }
 }
 
+const up_article = async ctx => {
+  let body = ctx.request.body;
+  let article = await as.findOne({"_id":body._id})
+  let isUp = article.up_list.indexOf(body.user_id)>-1;
+  if(isUp === true){
+    //取消赞
+    article.up_list.remove(body.user_id)
+  }else{
+    //点赞
+    article.up_list.push(body.user_id)
+    article.step_list.remove(body.user_id)
+  }
+  let result = await as.update(article);
+  if(result){
+    if(isUp){
+      ctx.body =  ResultFactory.buildSuccessResult("取消点赞成功")
+    }else{
+      ctx.body =  ResultFactory.buildSuccessResult("点赞成功")
+    }
+  }else{
+    ctx.body = ResultFactory.buildFailResult("失败")
+  }
+}
+
+const step_article = async ctx => {
+  let body = ctx.request.body;
+  let article = await as.findOne({"_id":body._id})
+  let isStep = article.step_list.indexOf(body.user_id)>-1;
+  if(isStep === true){
+    //取消点踩
+    article.step_list.remove(body.user_id)
+  }else{
+    //点踩
+    article.step_list.push(body.user_id)
+    article.up_list.remove(body.user_id)
+  }
+  let result = await as.update(article);
+  if(result){
+    if(isStep){
+      ctx.body =  ResultFactory.buildSuccessResult("取消点踩成功")
+    }else{
+      ctx.body =  ResultFactory.buildSuccessResult("点踩成功")
+    }
+  }else{
+    ctx.body = ResultFactory.buildFailResult("失败")
+  }
+}
+
+
 
 module.exports = {
   list,
@@ -81,4 +129,6 @@ module.exports = {
   add,
   remove,
   comment,
+  up_article,
+  step_article,
 }

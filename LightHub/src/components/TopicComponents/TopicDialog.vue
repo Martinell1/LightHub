@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { addTopic } from '../../api/axios';
+import { addTopic } from '@/api/topic';
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { ref, inject, onMounted, watch } from 'vue'

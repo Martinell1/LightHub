@@ -5,6 +5,7 @@ const ResultFactory = require('../result')
 const us = new userService();
 const as = new articleService();
 const ts = new tagService();
+
 const {getToken,verify} = require('../utils/getToken')
 const bcrypt = require('bcryptjs');
 
@@ -43,7 +44,14 @@ const register = async ctx => {
 const info = async ctx => {
   if(ctx.query.id){
     const id = ctx.query.id;
-    let result = await us.findOne({"_id":id})
+    let result = await us.findOne(
+      { "_id":id},
+      { password:0,
+        role:0,
+        status:0,
+      }
+    )
+    console.log(result);
     if(result){
       ctx.body = ResultFactory.buildSuccessResult(result);
     }
@@ -65,12 +73,9 @@ const update = async ctx => {
   let body = ctx.request.body
   body.education = JSON.parse(body.education)
   //修改用户信息
-  let result1 = await us.update(body);
+  let result = await us.update(body);
   let user = await us.findOne({"_id":body._id})
-   //对应修改用户的文章等信息
-  // let articles = await as.find({"author._id":body._id});
-  let result2 = await as.updates({"author._id":body._id},{"author":body})
-  if(result1 && result2){
+  if(result1){
     ctx.body = ResultFactory.buildSuccessResult(user);
   }else{
     ctx.body = ResultFactory.buildFailResult("更新失败");
@@ -124,6 +129,8 @@ const follow_user = async ctx => {
       ctx.body = ResultFactory.buildFailResult("修改失败");
     }
 }
+
+
 
 const remove = async ctx => {
   const id = ctx.request.body
