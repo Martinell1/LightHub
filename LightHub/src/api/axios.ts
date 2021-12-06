@@ -81,6 +81,14 @@ const getTopicList: Function = async () => {
   return await axios.get("topic/list")
 }
 
+const upTopic: Function = async (params: Object) => {
+  return await axios.post("topic/up_topic", params)
+}
+
+const stepTopic: Function = async (params: Object) => {
+  return await axios.post("topic/step_topic", params)
+}
+
 export {
   register,
   login,
@@ -98,5 +106,7 @@ export {
   getCommentList,
   upComment,
   replyComment,
-  getTopicList
+  getTopicList,
+  upTopic,
+  stepTopic
 }

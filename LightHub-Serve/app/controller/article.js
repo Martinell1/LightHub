@@ -44,6 +44,7 @@ const add = async ctx => {
   let body = ctx.request.body
   body.tag_list = JSON.parse(body.tag_list)
   body.author = JSON.parse(body.author)
+  body.author.article_count++
   body.tag_list.forEach(async element => {
     let tag = await cs2.findAndUpdate({'name':element},{$inc:{'article_count':1}})
   });

@@ -28,7 +28,6 @@
     <div v-if="props.type === 'topic'" class="m-auto flex">
       <router-link :to="{ 'name': 'Topic' }" class="topic-item" active-class="text-blue-500">关注</router-link>
       <router-link :to="{ 'name': 'Topic' }" class="topic-item" active-class="text-blue-500">推荐</router-link>
-      <router-link :to="{ 'name': 'Topic' }" class="topic-item" active-class="text-blue-500">热榜</router-link>
     </div>
   </nav>
 </template>

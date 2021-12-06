@@ -12,8 +12,7 @@
 import SecondNav from '../components/Common/SecondNav.vue';
 import HomeAside from '../components/HoneComponents/HomeAside.vue';
 import TopicCard from '../components/TopicComponents/TopicCard.vue';
-import { useRoute } from 'vue-router';
-import { ref, watch, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { getTopicList } from '../api/axios'
 let topicList = ref([])
 const loadTopicList = async () => {
