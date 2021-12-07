@@ -16,10 +16,10 @@
             <div class="flex mt-4">
               s
               <div
-                class="btn-primary"
+                class="btn-primary-mini"
                 @click="showFormItem.nickname = false; updateUserInfoSubmit()"
               >保存</div>
-              <div @click="showFormItem.nickname = false" class="btn-plain">取消</div>
+              <div @click="showFormItem.nickname = false" class="btn-plain-mini">取消</div>
             </div>
           </div>
         </div>
@@ -37,8 +37,11 @@
             <input type="radio" v-model="userInfo.gender" v-bind:value="'女'" />女
           </div>
           <div class="flex mt-4">
-            <div class="btn-primary" @click="showFormItem.gender = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.gender = false" class="btn-plain">取消</div>
+            <div
+              class="btn-primary-mini"
+              @click="showFormItem.gender = false; updateUserInfoSubmit()"
+            >保存</div>
+            <div @click="showFormItem.gender = false" class="btn-plain-mini">取消</div>
           </div>
         </div>
       </div>
@@ -51,8 +54,11 @@
         <div v-show="showFormItem.phone">
           <input v-model="userInfo.phone" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
-            <div class="btn-primary" @click="showFormItem.phone = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.phone = false" class="btn-plain">取消</div>
+            <div
+              class="btn-primary-mini"
+              @click="showFormItem.phone = false; updateUserInfoSubmit()"
+            >保存</div>
+            <div @click="showFormItem.phone = false" class="btn-plain-mini">取消</div>
           </div>
         </div>
       </div>
@@ -65,8 +71,11 @@
         <div v-show="showFormItem.email">
           <input v-model="userInfo.email" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
-            <div class="btn-primary" @click="showFormItem.email = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.email = false" class="btn-plain">取消</div>
+            <div
+              class="btn-primary-mini"
+              @click="showFormItem.email = false; updateUserInfoSubmit()"
+            >保存</div>
+            <div @click="showFormItem.email = false" class="btn-plain-mini">取消</div>
           </div>
         </div>
       </div>
@@ -108,10 +117,10 @@
           </select>
           <div class="flex mt-4">
             <div
-              class="btn-primary"
+              class="btn-primary-mini"
               @click="showFormItem.education = false; updateUserInfoSubmit()"
             >保存</div>
-            <div @click="showFormItem.education = false" class="btn-plain">取消</div>
+            <div @click="showFormItem.education = false" class="btn-plain-mini">取消</div>
           </div>
         </div>
       </div>
@@ -125,10 +134,10 @@
           <input v-model="userInfo.introduce" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
             <div
-              class="btn-primary"
+              class="btn-primary-mini"
               @click="showFormItem.introduce = false; updateUserInfoSubmit()"
             >保存</div>
-            <div @click="showFormItem.introduce = false" class="btn-plain">取消</div>
+            <div @click="showFormItem.introduce = false" class="btn-plain-mini">取消</div>
           </div>
         </div>
       </div>
@@ -201,10 +210,10 @@ const updateUserInfoSubmit = async () => {
   @apply opacity-100 transition-all duration-500 ease-out;
 }
 
-.btn-primary {
-  @apply min-w-0 px-4;
+.btn-primary-mini {
+  @apply min-w-0 px-4 mr-4;
 }
-.btn-plain {
-  @apply min-w-0 px-4;
+.btn-plain-mini {
+  @apply min-w-0 px-4 ring-1 ring-orange-500;
 }
 </style>

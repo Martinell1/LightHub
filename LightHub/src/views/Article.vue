@@ -1,7 +1,7 @@
 <template>
   <div class="article_layout">
     <main class="min-w-700">
-      <ArticleDetail :article="article"></ArticleDetail>
+      <ArticleDetail :article="article" :commentList="comment_list"></ArticleDetail>
     </main>
   </div>
 </template>
@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { getArticleById } from '@/api/article';
+import { getCommentList } from '@/api/comment';
 import { useRoute } from 'vue-router';
 import ArticleDetail from '../components/ArticleComponents/ArticleDetail.vue';
 const route = useRoute();
@@ -22,8 +23,17 @@ const loadArticle = async () => {
   }
 }
 
+const comment_list: any = ref([])
+const loadCommentList = async () => {
+  let { data: result } = await getCommentList(id);
+  if (result.code === 200) {
+    comment_list.value = result.data
+  }
+}
+
 onMounted(async () => {
   loadArticle()
+  loadCommentList()
 })
 
 </script>

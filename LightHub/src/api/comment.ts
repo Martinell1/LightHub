@@ -1,11 +1,11 @@
 import axios from './axios'
 
-const addComment: Function = async (aid: String) => {
+const getCommentList: Function = async (aid: String) => {
   return await axios.get("comment/list?aid=" + aid)
 }
 
-const getCommentList: Function = async (aid: String) => {
-  return await axios.get("comment/list?aid=" + aid)
+const addComment: Function = async (params: Object) => {
+  return await axios.post("comment/add", params)
 }
 
 const upComment: Function = async (params: Object) => {

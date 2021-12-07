@@ -1,7 +1,7 @@
 const {Schema,model} = require("../config/db.js")
 
 const commentSchema = new Schema({
-  targt_id:{
+  target_id:{
     type:String,
   },
   content:{

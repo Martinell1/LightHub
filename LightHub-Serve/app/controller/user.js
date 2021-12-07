@@ -74,7 +74,7 @@ const update = async ctx => {
   //修改用户信息
   let result = await us.update(body);
   let user = await us.findOne({"_id":body._id})
-  if(result1){
+  if(result){
     ctx.body = ResultFactory.buildSuccessResult(user);
   }else{
     ctx.body = ResultFactory.buildFailResult("更新失败");

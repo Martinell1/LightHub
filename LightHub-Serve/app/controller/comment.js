@@ -5,7 +5,7 @@ const cs = new commentService();
 
 const list = async ctx => {
   const id = ctx.query.aid;
-  let result = await cs.list({"target_id":id})
+  let result = await cs.find({"target_id":id})
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(result)
   }else{
@@ -15,9 +15,11 @@ const list = async ctx => {
 }
 
 const add = async ctx => {
-  let comment = ctx.request.body
-  let result = await cs.add(comment)
-  ctx.body =  result
+  let body = ctx.request.body
+  let result = await cs.add(body)
+  if(result){
+    ctx.body =  ResultFactory.buildSuccessResult(result)
+  }
 }
 
 const remove = async ctx => {
@@ -48,7 +50,7 @@ const up_comment = async ctx => {
     comment.up_list.push(body.user_id)
     comment.step_list.remove(body.user_id)
   }
-  let result = await ts.update(comment);
+  let result = await cs.update(comment);
   if(result){
     if(isUp){
       ctx.body =  ResultFactory.buildSuccessResult("取消点赞成功")

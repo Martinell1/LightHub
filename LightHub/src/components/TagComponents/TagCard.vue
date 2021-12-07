@@ -10,13 +10,9 @@
           <div class="mx-2 text-gray-500 text-sm">{{ tag.topic_count }}个讨论</div>
         </div>
 
-        <div
-          class="bg-orange-500 text-gray-100 text-sm px-4 py-1 rounded my-2 cursor-pointer"
-          :class="{ 'bg-red-400': isFollow(tag.name) }"
-          @click="followSubmit(tag)"
-        >
-          <div v-if="!isFollow(tag.name)">未关注</div>
-          <div v-if="isFollow(tag.name)">已关注</div>
+        <div @click="followSubmit(tag)" class="mt-2">
+          <div v-if="!isFollow(tag.name)" class="btn-plain-mini ring-1 ring-orange-500">未关注</div>
+          <div v-if="isFollow(tag.name)" class="btn-primary-mini">已关注</div>
         </div>
       </div>
     </div>

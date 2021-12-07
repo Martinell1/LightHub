@@ -4,6 +4,7 @@
       <div class="flex items-center mb-6">
         <img class="w-10 h-10 rounded-full mr-3" src="../../assets/images/login-bg.jpg" />
         <div v-if="props.article.author" class="flex flex-col">
+          <UserInfo :type="'article'" :id="props.article.author"></UserInfo>
           <div class="font-semibold">{{ props.article.author.nickname }}</div>
           <div class="text-sm text-gray-500 flex">
             <div class="mr-4">{{ fmt4Time(props.article.update_time) }}</div>
@@ -44,9 +45,9 @@
     </article>
     <div class="pb-4 border-b-2">
       <div class="flex">
-        <img class="w-10 h-10 rounded-full mr-4" src="../../assets/images/login-bg.jpg" />
+        <img class="w-9 h-9 rounded-full mr-4" src="@/assets/images/login-bg.jpg" />
         <textarea
-          v-model="comment.content"
+          v-model="comment_content"
           class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-orange-500"
           placeholder="输入评论"
         ></textarea>
@@ -60,34 +61,38 @@
       </div>
     </div>
 
-    <CommentList :aid="props.article._id" ref="child"></CommentList>
+    <CommentList :commentList="props.commentList" ref="child"></CommentList>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, inject } from 'vue'
+import { ref, inject } from 'vue'
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { addComment } from '@/api/comment';
+import UserInfo from '../Common/UserInfo.vue';
 import CommentList from '../CommentComponents/CommentList.vue';
 import { fmt4Time } from '../../util/fmt4Time.js'
 const userInfo: any = inject('userInfo')
 const props: any = defineProps({
-  article: Object
+  article: Object,
+  commentList: Array,
 })
 
-const comment = reactive({
-  target_id: "",
-  content: "",
-  commenter: {},
-})
+const comment_content = ref("");
+
 
 const msg: any = inject('Message')
 const commmentSubmit = async () => {
-  comment.target_id = props.article._id
-  comment.commenter = userInfo.value
-  const params = new FormData();
-  params.append("comment", JSON.stringify(comment))
+  if (comment_content.value === '') {
+    msg('fail', '内容不能为空')
+    return
+  }
+
+  const params = new FormData()
+  params.append("target_id", props.article._id)
+  params.append("commenter", userInfo.value._id)
+  params.append("content", comment_content.value)
   let { data: result } = await addComment(params);
   if (result.code === 200) {
     msg('success', '发布成功')

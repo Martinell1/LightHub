@@ -1,19 +1,26 @@
 <template>
-  <div @mouseenter="isShow = true" @mouseleave="isShow = false" class="relative">
+  <div @mouseenter="isShow = true" @mouseleave="isShow = false" class="max-h-9">
     <div v-if="props.type === 'topic'" class="flex items-center">
-      <img class="w-6 h-6 rounded-full mr-2" src="../../assets/images/login-bg.jpg" />
+      <img class="w-6 h-6 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
       <div class="font-semibold mr-4">{{ currentUserInfo.nickname }}</div>
       <div class="text-sm text-gray-500">{{ currentUserInfo.introduce }}</div>
     </div>
     <div v-if="props.type === 'article'" class="flex items-center">
       <div class="font-semibold">{{ currentUserInfo.nickname }}</div>
     </div>
+    <div v-if="props.type === 'comment'" class>
+      <img class="w-9 h-9 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
+    </div>
+    <div v-if="props.type === 'reply'" class>
+      <img class="w-6 h-6 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
+    </div>
+
     <div
       v-show="isShow"
       class="bg-gray-50 absolute p-4 pt-6 shadow-lg ring-2 ring-gray-200 w-100 z-10 m-4 ml-0 hover-block"
     >
       <div class="flex -mt-10">
-        <img class="w-16 h-16 rounded-md border-2" src="../../assets/images/login-bg.jpg" />
+        <img class="w-16 h-16 rounded-md border-2" src="@/assets/images/login-bg.jpg" />
         <div class="flex flex-col text-sm transform ml-2 justify-end">
           <router-link
             :to="{ name: 'User', params: { 'id': props.id } }"
