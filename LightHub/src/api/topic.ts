@@ -12,13 +12,9 @@ const upTopic: Function = async (params: Object) => {
   return await axios.post("topic/up_topic", params)
 }
 
-const stepTopic: Function = async (params: Object) => {
-  return await axios.post("topic/step_topic", params)
-}
 
 export {
   addTopic,
   getTopicList,
   upTopic,
-  stepTopic
 }

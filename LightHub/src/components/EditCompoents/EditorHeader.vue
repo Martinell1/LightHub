@@ -7,8 +7,8 @@
     />
     <div class="flex items-center">
       <TagAdd @collection="getTagList"></TagAdd>
-      <div class="btn bg-gray-50 text-blue-500 ring-2">草稿箱</div>
-      <div class="btn bg-blue-500 text-gray-50" @click="articleSubmit()">发布</div>
+      <div class="btn bg-gray-50 text-orange-500 ring-2">草稿箱</div>
+      <div class="btn bg-orange-500 text-gray-50" @click="articleSubmit()">发布</div>
       <img class="w-8 h-8 rounded-full my-4 ml-4" src="../../assets/images/login-bg.jpg" />
     </div>
   </div>
@@ -41,7 +41,7 @@ const articleSubmit = async () => {
   const params = new FormData();
   params.append('title', title.value);
   params.append('content', store.state.articleText);
-  params.append('author', JSON.stringify(userInfo.value));
+  params.append('author', userInfo.value._id);
   params.append('tag_list', JSON.stringify(currentTagList.value));
 
   let { data: result } = await addArticle(params);
@@ -56,7 +56,7 @@ const articleSubmit = async () => {
 
 </script>
 <style scoped>
-.btn {
+/* .btn {
   @apply rounded-sm w-20 h-8 my-auto mx-2 text-center leading-8 text-sm cursor-pointer;
-}
+} */
 </style>

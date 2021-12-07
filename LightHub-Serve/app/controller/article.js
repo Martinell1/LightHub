@@ -63,16 +63,6 @@ const remove = async ctx => {
   }
 }
 
-const comment = async ctx => {
-  let body = ctx.request.body
-  let result = await cs.add(JSON.parse(body.comment));
-  if(result){
-    ctx.body = ResultFactory.buildSuccessResult("评论成功");
-  }else{
-    ctx.body = ResultFactory.buildSuccessResult("评论失败");
-  }
-}
-
 const up_article = async ctx => {
   let body = ctx.request.body;
   let article = await as.findOne({"_id":body._id})
@@ -128,7 +118,6 @@ module.exports = {
   detail,
   add,
   remove,
-  comment,
   up_article,
   step_article,
 }

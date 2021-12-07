@@ -51,7 +51,6 @@ const info = async ctx => {
         status:0,
       }
     )
-    console.log(result);
     if(result){
       ctx.body = ResultFactory.buildSuccessResult(result);
     }

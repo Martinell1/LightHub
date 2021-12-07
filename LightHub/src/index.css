@@ -2,3 +2,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn-primary{
+  @apply px-2 py-1 bg-orange-500 cursor-pointer rounded text-gray-50 text-center text-sm min-w-20 h-9 my-auto leading-7;
+}
+
+.btn-plain{
+  @apply px-2 py-1 text-orange-500 cursor-pointer rounded bg-orange-50 text-center text-sm min-w-20 h-9 my-auto leading-7;
+}
+
+.card{
+  @apply px-5 bg-gray-50 rounded shadow;
+}
+
+.last:nth-last-child(1) {
+  @apply border-0;
+}

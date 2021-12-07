@@ -3,28 +3,28 @@
     <div class="m-auto w-1200 flex justify-between">
       <ul class="flex">
         <li class="flex mr-4">
-          <img src="../../assets/images/logo.png" class="w-14 h-14 m-1" />
-          <div class="leading-16 h-16 text-xl font-semibold text-blue-900">LightHub</div>
+          <!-- <img src="../../assets/images/logo.png" class="w-14 h-14 m-1" /> -->
+          <div class="leading-16 h-16 text-xl font-semibold text-orange-600">LightHub</div>
         </li>
 
         <li class="nav-list-item">
           <router-link class="nav-list-item" :to="{ name: 'Home', params: { 'tag': '' } }">首页</router-link>
         </li>
         <li class="nav-list-item">
-          <router-link class="nav-list-item" :to="{ name: 'Topic' }">讨论区</router-link>
+          <router-link class="nav-list-item" :to="{ name: 'Forum' }">讨论区</router-link>
         </li>
       </ul>
       <div class="flex w-100 overflow-hidden">
         <input
-          class="m-auto mx-2 w-48 h-8 bg-gray-100 text-sm rounded-sm outline-none pl-4 ring-1 ring-blue-500 flex-shrink-0"
+          class="m-auto mx-2 w-48 h-8 bg-gray-100 text-sm rounded-sm outline-none pl-4 ring-1 ring-orange-500 flex-shrink-0"
           :class="{ 'input-focus': isSearch, 'input': !isSearch }"
           type="text"
           @focus="focusOnSearch()"
           @blur="focusOnElse()"
         />
 
-        <div class="btn" :class="{ 'btn-focus': isSearch }">搜索</div>
-        <div class="btn" :class="{ 'btn-focus': isSearch }" @click="preTopicSubmit()">提问</div>
+        <div class="btn-primary" :class="{ 'btn-focus': isSearch }">搜索</div>
+        <div class="btn-primary" :class="{ 'btn-focus': isSearch }" @click="preTopicSubmit()">提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
         <img
@@ -58,7 +58,6 @@ import { useStore } from "vuex";
 import TopicDialog from '../TopicComponents/TopicDialog.vue';
 const store = useStore();
 const userInfo = store.state.userInfo;
-// const userInfo: any = inject('userInfo')
 
 let isSearch = ref(false);
 let clickAvater = ref(false);
@@ -87,13 +86,10 @@ const exit = () => {
   })
 }
 
-
-
-
 </script>
 <style scoped>
 .nav-list-item {
-  @apply text-base leading-16 h-16 mx-2 cursor-pointer text-gray-500 hover:text-blue-500;
+  @apply text-base leading-16 h-16 mx-2 cursor-pointer text-gray-500 hover:text-orange-500;
 }
 
 .input {
@@ -102,10 +98,6 @@ const exit = () => {
 
 .input-focus {
   @apply w-96 transition-all duration-500 ease-in-out;
-}
-
-.btn {
-  @apply rounded-sm w-20 h-9 my-auto mx-2 bg-blue-500 text-gray-50 text-center leading-8 text-sm cursor-pointer;
 }
 
 .btn-focus {

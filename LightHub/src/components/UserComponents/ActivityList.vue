@@ -20,6 +20,6 @@
 }
 
 .activity-item-act {
-  @apply border-blue-500 border-b-2;
+  @apply border-orange-500 border-b-2;
 }
 </style>

@@ -3,7 +3,7 @@ const topicService = require("../service/topic")
 const ResultFactory = require('../result')
 const as = new answerService();
 
-const answer_topic = async ctx => {
+const add = async ctx => {
   let body = ctx.request.body;
   let result = await as.add(answer)
   if(result){
@@ -79,7 +79,7 @@ const step_answer = async ctx => {
 }
 
 module.exports = {
-  answer_topic,
+  add,
   up_answer,
   step_answer,
   remove,

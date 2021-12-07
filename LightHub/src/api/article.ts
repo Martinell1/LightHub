@@ -12,13 +12,19 @@ const addArticle: Function = async (article: Object) => {
   return await axios.post("article/add", article)
 }
 
-const updateArticleComment: Function = async (params: Object) => {
-  return await axios.post("article/comment", params)
+const upArticle: Function = async (params: Object) => {
+  return await axios.post("article/up_article", params)
 }
+
+const stepArticle: Function = async (params: Object) => {
+  return await axios.post("article/step_article", params)
+}
+
 
 export {
   getArticleList,
   getArticleById,
   addArticle,
-  updateArticleComment,
+  upArticle,
+  stepArticle,
 }

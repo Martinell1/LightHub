@@ -14,15 +14,16 @@
           <div>
             <input v-model="userInfo.nickname" type="text" class="outline-none border-2 w-100" />
             <div class="flex mt-4">
+              s
               <div
-                class="btn-save"
+                class="btn-primary"
                 @click="showFormItem.nickname = false; updateUserInfoSubmit()"
               >保存</div>
-              <div @click="showFormItem.nickname = false" class="btn-cancel">取消</div>
+              <div @click="showFormItem.nickname = false" class="btn-plain">取消</div>
             </div>
           </div>
         </div>
-        <router-link :to="{ 'name': 'User' }" class="text-sm leading-8 text-gray-500">返回我的主页></router-link>
+        <router-link :to="{ 'name': 'User' }" class="text-sm leading-8 text-orange-500">返回我的主页></router-link>
       </div>
       <div class="edit-item">
         <div class="form-label">性别</div>
@@ -36,8 +37,8 @@
             <input type="radio" v-model="userInfo.gender" v-bind:value="'女'" />女
           </div>
           <div class="flex mt-4">
-            <div class="btn-save" @click="showFormItem.gender = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.gender = false" class="btn-cancel">取消</div>
+            <div class="btn-primary" @click="showFormItem.gender = false; updateUserInfoSubmit()">保存</div>
+            <div @click="showFormItem.gender = false" class="btn-plain">取消</div>
           </div>
         </div>
       </div>
@@ -50,8 +51,8 @@
         <div v-show="showFormItem.phone">
           <input v-model="userInfo.phone" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
-            <div class="btn-save" @click="showFormItem.phone = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.phone = false" class="btn-cancel">取消</div>
+            <div class="btn-primary" @click="showFormItem.phone = false; updateUserInfoSubmit()">保存</div>
+            <div @click="showFormItem.phone = false" class="btn-plain">取消</div>
           </div>
         </div>
       </div>
@@ -64,8 +65,8 @@
         <div v-show="showFormItem.email">
           <input v-model="userInfo.email" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
-            <div class="btn-save" @click="showFormItem.email = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.email = false" class="btn-cancel">取消</div>
+            <div class="btn-primary" @click="showFormItem.email = false; updateUserInfoSubmit()">保存</div>
+            <div @click="showFormItem.email = false" class="btn-plain">取消</div>
           </div>
         </div>
       </div>
@@ -106,8 +107,11 @@
             <option class="form-education-option">博士及以上</option>
           </select>
           <div class="flex mt-4">
-            <div class="btn-save" @click="showFormItem.education = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.education = false" class="btn-cancel">取消</div>
+            <div
+              class="btn-primary"
+              @click="showFormItem.education = false; updateUserInfoSubmit()"
+            >保存</div>
+            <div @click="showFormItem.education = false" class="btn-plain">取消</div>
           </div>
         </div>
       </div>
@@ -120,8 +124,11 @@
         <div v-show="showFormItem.introduce">
           <input v-model="userInfo.introduce" type="text" class="outline-none border-2 w-100" />
           <div class="flex mt-4">
-            <div class="btn-save" @click="showFormItem.introduce = false; updateUserInfoSubmit()">保存</div>
-            <div @click="showFormItem.introduce = false" class="btn-cancel">取消</div>
+            <div
+              class="btn-primary"
+              @click="showFormItem.introduce = false; updateUserInfoSubmit()"
+            >保存</div>
+            <div @click="showFormItem.introduce = false" class="btn-plain">取消</div>
           </div>
         </div>
       </div>
@@ -179,26 +186,25 @@ const updateUserInfoSubmit = async () => {
 }
 
 .form-education-input {
-  @apply outline-none border-2 px-2 mr-2 rounded text-gray-500;
+  @apply outline-none border-2 px-2 mr-2 rounded text-orange-500;
 }
 
 .form-education-option {
-  @apply text-gray-500 bg-gray-50 hover:bg-gray-200;
+  @apply text-orange-500 bg-orange-50 hover:bg-gray-200;
 }
 
 .btn-change {
-  @apply cursor-pointer leading-8 mx-2 text-blue-600 w-8 opacity-0;
+  @apply cursor-pointer leading-8 mx-2 text-orange-500 w-8 opacity-0;
 }
 
 .edit-item:hover .btn-change {
   @apply opacity-100 transition-all duration-500 ease-out;
 }
 
-.btn-save {
-  @apply text-sm py-1 px-4 bg-blue-500 text-gray-50 rounded cursor-pointer mr-4;
+.btn-primary {
+  @apply min-w-0 px-4;
 }
-
-.btn-cancel {
-  @apply text-sm py-1 px-4 bg-gray-50 rounded cursor-pointer border-2;
+.btn-plain {
+  @apply min-w-0 px-4;
 }
 </style>

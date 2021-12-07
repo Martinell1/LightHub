@@ -168,7 +168,7 @@ const registerSubmit = async () => {
   text-indent: 1rem;
 }
 
-.btn {
+/* .btn {
   @apply my-3 leading-8 text-center border-2 rounded cursor-pointer;
 }
 
@@ -178,5 +178,5 @@ const registerSubmit = async () => {
 
 .btn-second {
   @apply bg-blue-100 text-blue-400 mb-0;
-}
+} */
 </style>

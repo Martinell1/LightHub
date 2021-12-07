@@ -18,7 +18,7 @@
       <TagAdd @collection="getChannelList"></TagAdd>
       <div class="flex justify-end">
         <div
-          class="w-24 h-8 bg-blue-600 leading-8 text-center text-sm text-gray-50 rounded cursor-pointer"
+          class="w-24 h-8 bg-orange-600 leading-8 text-center text-sm text-gray-50 rounded cursor-pointer"
           @click="publishTopicSubmit()"
         >发布问题</div>
       </div>

@@ -84,14 +84,21 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: '/topic',
+        path: '/forum',
+        name: 'Forum',
+        components: {
+          default: () => import('../views/Forum.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        }
+      },
+      {
+        path: '/topic/:id',
         name: 'Topic',
         components: {
           default: () => import('../views/Topic.vue'),
           header: () => import('../components/Common/MainHeader.vue')
         }
       },
-
 
     ]
   },

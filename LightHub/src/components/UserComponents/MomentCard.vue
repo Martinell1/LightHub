@@ -12,7 +12,9 @@
           <span class="text-gray-500 text-sm">某南极贱畜</span>
         </div>
       </div>
-      <div class="my-auto text-sm px-2 py-1 ring-1 ring-blue-500 text-blue-500 cursor-pointer">已关注</div>
+      <div
+        class="my-auto text-sm px-2 py-1 ring-1 ring-orange-500 text-orange-500 cursor-pointer"
+      >已关注</div>
     </div>
 
     <div class="border-b-2">

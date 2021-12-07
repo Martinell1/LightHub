@@ -2,7 +2,7 @@
   <SecondNav type="tagList"></SecondNav>
   <div class="home_layout">
     <main class="min-w-700">
-      <ArticleCard v-for="article in articleList" :article="article"></ArticleCard>
+      <ArticleCard :articleList="articleList"></ArticleCard>
     </main>
     <HomeAside></HomeAside>
   </div>

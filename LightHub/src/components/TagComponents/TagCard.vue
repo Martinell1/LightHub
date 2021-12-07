@@ -11,7 +11,7 @@
         </div>
 
         <div
-          class="bg-blue-500 text-gray-100 text-sm px-4 py-1 rounded my-2 cursor-pointer"
+          class="bg-orange-500 text-gray-100 text-sm px-4 py-1 rounded my-2 cursor-pointer"
           :class="{ 'bg-red-400': isFollow(tag.name) }"
           @click="followSubmit(tag)"
         >

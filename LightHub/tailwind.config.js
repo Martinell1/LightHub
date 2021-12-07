@@ -1,4 +1,5 @@
 // Example `tailwind.config.js` file
+const { orange } = require('tailwindcss/colors')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
@@ -8,16 +9,20 @@ module.exports = {
       blue: colors.sky,
       red: colors.rose,
       pink: colors.fuchsia,
+      yellow:colors.yellow,
+      indigo:colors.indigo,
+      green:colors.green,
+      orange:colors.orange
     },
     fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
+      sans: ['sans-serif'],
     },
     extend: {
       inset:{
         '1/5': '20%',
       },
       minWidth:{
+        '20':"5rem",
         '700':'700px',
       },
       width:{

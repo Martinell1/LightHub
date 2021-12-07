@@ -10,7 +10,7 @@
         <div>写文章</div>
         <div>回答问题</div>
       </div>
-      <div class="ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1">进入创作中心></div>
+      <div class="ring-2 ring-orange-500 text-center text-sm text-orange-500 p-1">进入创作中心></div>
     </div>
 
     <div class="card py-2 mt-4">
@@ -43,10 +43,10 @@ const userInfo: any = inject('userInfo')
 }
 
 .sidebar-item {
-  @apply flex justify-between hover:bg-gray-200 px-2;
+  @apply flex justify-between hover:bg-gray-100 px-2;
 }
 
 .sidebar-item-count {
-  @apply w-8 h-8 leading-8 bg-gray-200 text-center rounded my-auto mr-2;
+  @apply w-8 h-8 leading-8 bg-gray-100 text-center rounded my-auto mr-2;
 }
 </style>

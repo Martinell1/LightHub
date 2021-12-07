@@ -3,8 +3,10 @@ const ResultFactory = require('../result')
 const ts = new topicService();
 const tagService = require("../service/tag")
 const answerService = require("../service/answer")
+const userService = require("../service/user")
 const as = new answerService()
 const tagS = new tagService()
+const us = new userService()
 const toRegular = require('../utils/toRegular')
 
 const list = async ctx => {
@@ -14,7 +16,7 @@ const list = async ctx => {
 
 const add = async ctx => {
   let body = ctx.request.body
-  let user = await us.update({"_id":body._id},{"topic_count":body.topic_count++})
+  let user = await us.update({"_id":body.initiator},{$inc:{'topic_count':1}})
   body.tag_list = JSON.parse(body.tag_list)
   body.tag_list.forEach(async element => {
     let tag = await tagS.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
@@ -70,30 +72,6 @@ const up_topic = async ctx => {
   }
 }
 
-const step_topic = async ctx => {
-  let body = ctx.request.body;
-  let topic = await ts.findOne({"_id":body._id})
-  let isStep = topic.step_list.indexOf(body.user_id)>-1;
-  if(isStep === true){
-    //取消点踩
-    topic.step_list.remove(body.user_id)
-  }else{
-    //点踩
-    topic.step_list.push(body.user_id)
-    topic.up_list.remove(body.user_id)
-  }
-  let result = await ts.update(topic);
-  if(result){
-    if(isStep){
-      ctx.body =  ResultFactory.buildSuccessResult("取消点踩成功")
-    }else{
-      ctx.body =  ResultFactory.buildSuccessResult("点踩成功")
-    }
-  }else{
-    ctx.body = ResultFactory.buildFailResult("失败")
-  }
-}
-
 
 
 module.exports = {
@@ -102,5 +80,4 @@ module.exports = {
   remove,
   update,
   up_topic,
-  step_topic
 }

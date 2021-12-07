@@ -20,13 +20,13 @@
     <div v-show="replyShow" class="mt-4 px-4 pt-4 bg-gray-100 mb-1">
       <input
         v-model="reply.content"
-        class="bg-gray-50 outline-none w-full px-3 py-2 rounded border-2 h-9 focus:border-blue-500"
+        class="bg-gray-50 outline-none w-full px-3 py-2 rounded border-2 h-9 focus:border-orange-500"
         placeholder="输入评论"
       />
       <div class="flex justify-between items-center">
         <div class="text-gray-500 ml-14 opacity-0">按Enter键发送</div>
         <div
-          class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-blue-500 cursor-pointer"
+          class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-orange-500 cursor-pointer"
           @click="replySubmit()"
         >发表评论</div>
       </div>

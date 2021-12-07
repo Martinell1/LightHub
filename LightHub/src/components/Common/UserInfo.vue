@@ -6,7 +6,7 @@
       <div class="text-sm text-gray-500">{{ currentUserInfo.introduce }}</div>
     </div>
     <div v-if="props.type === 'article'" class="flex items-center">
-      <div class="font-semibold mr-4">{{ currentUserInfo.nickname }}</div>
+      <div class="font-semibold">{{ currentUserInfo.nickname }}</div>
     </div>
     <div
       v-show="isShow"
@@ -17,36 +17,28 @@
         <div class="flex flex-col text-sm transform ml-2 justify-end">
           <router-link
             :to="{ name: 'User', params: { 'id': props.id } }"
-            class="mr-4"
+            class="mr-4 text-orange-600 font-semibold"
           >{{ currentUserInfo.nickname }}</router-link>
           <div class="text-sm text-gray-500">{{ currentUserInfo.introduce }}</div>
         </div>
       </div>
       <div class="flex justify-around my-4">
-        <div class="flex flex-col items-center">
-          <div class="text-sm text-gray-500">文章数</div>
-          <div class="font-semibold text-lg">{{ currentUserInfo.article_count }}</div>
+        <div class="item">
+          <div class="item-text">文章数</div>
+          <div class="item-count">{{ currentUserInfo.article_count }}</div>
         </div>
-        <div class="flex flex-col items-center">
-          <div class="text-sm text-gray-500">回答数</div>
-          <div class="font-semibold text-lg">{{ currentUserInfo.answer_count }}</div>
+        <div class="item">
+          <div class="item-text">回答数</div>
+          <div class="item-count">{{ currentUserInfo.answer_count }}</div>
         </div>
-        <div class="flex flex-col items-center">
-          <div class="text-sm text-gray-500">关注者</div>
-          <div class="font-semibold text-lg">{{ fans_count }}</div>
+        <div class="item">
+          <div class="item-text">关注者</div>
+          <div class="item-count">{{ fans_count }}</div>
         </div>
       </div>
       <div v-if="!identify">
-        <div
-          v-show="isFollow"
-          @click="followSubmit()"
-          class="text-gray-50 bg-blue-500 rounded cursor-pointer text-center py-1 my-2"
-        >取消关注</div>
-        <div
-          v-show="!isFollow"
-          @click="followSubmit()"
-          class="text-gray-50 bg-blue-500 rounded cursor-pointer text-center py-1 my-2"
-        >关注他</div>
+        <div v-show="isFollow" @click="followSubmit()" class="btn-primary">取消关注</div>
+        <div v-show="!isFollow" @click="followSubmit()" class="btn-primary">关注他</div>
       </div>
     </div>
   </div>
@@ -135,5 +127,17 @@ onMounted(async () => {
   content: "";
   z-index: -10;
   @apply absolute -inset-5;
+}
+
+.item {
+  @apply flex flex-col items-center;
+}
+
+.item-text {
+  @apply text-sm text-gray-500;
+}
+
+.item-count {
+  @apply font-semibold text-lg text-orange-600;
 }
 </style>

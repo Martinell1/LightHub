@@ -10,9 +10,9 @@ const commentSchema = new Schema({
     default:""
   },
   commenter:{
-    type:Object,
+    type:String,
     require:true,
-    default:{}
+    default:""
   },
   reply_list:{
     type:Array,

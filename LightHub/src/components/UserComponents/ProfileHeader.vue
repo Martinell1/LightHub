@@ -21,10 +21,10 @@
         <router-link
           v-if="identify()"
           :to="{ 'name': 'Edit' }"
-          class="cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1 w-32"
+          class="cursor-pointer px-4 ring-2 ring-orange-500 text-center text-sm text-orange-500 p-1 w-32"
         >编辑个人信息</router-link>
         <div
-          class="cursor-pointer px-4 ring-2 ring-blue-500 text-center text-sm text-blue-500 p-1"
+          class="cursor-pointer px-4 ring-2 ring-orange-500 text-center text-sm text-orange-500 p-1"
           v-if="!identify()"
           @click="followSubmit()"
         >
