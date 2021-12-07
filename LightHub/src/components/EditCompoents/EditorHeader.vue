@@ -7,8 +7,8 @@
     />
     <div class="flex items-center">
       <TagAdd @collection="getTagList"></TagAdd>
-      <div class="btn bg-gray-50 text-orange-500 ring-2">草稿箱</div>
-      <div class="btn bg-orange-500 text-gray-50" @click="articleSubmit()">发布</div>
+      <div class="btn-plain ring-1 ring-orange-600 mx-4">草稿箱</div>
+      <div class="btn-primary" @click="articleSubmit()">发布</div>
       <img class="w-8 h-8 rounded-full my-4 ml-4" src="../../assets/images/login-bg.jpg" />
     </div>
   </div>
@@ -56,7 +56,4 @@ const articleSubmit = async () => {
 
 </script>
 <style scoped>
-/* .btn {
-  @apply rounded-sm w-20 h-8 my-auto mx-2 text-center leading-8 text-sm cursor-pointer;
-} */
 </style>

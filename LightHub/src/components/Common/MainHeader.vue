@@ -23,7 +23,7 @@
           @blur="focusOnElse()"
         />
 
-        <div class="btn-primary" :class="{ 'btn-focus': isSearch }">搜索</div>
+        <div class="btn-primary mx-4" :class="{ 'btn-focus': isSearch }">搜索</div>
         <div class="btn-primary" :class="{ 'btn-focus': isSearch }" @click="preTopicSubmit()">提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">

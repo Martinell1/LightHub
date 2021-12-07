@@ -22,8 +22,24 @@
       <div class="flex border-t-2">
         <div
           v-for="tag in props.article.tag_list"
-          class="mt-4 mr-4 bg-gray-100 px-2 py-1 rounded text-gray-600"
-        >{{ tag }}</div>
+          class="mt-4 mr-4 bg-orange-500 px-2 py-1 rounded text-gray-50 text-sm text-center flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"
+            />
+          </svg>
+          {{ tag }}
+        </div>
       </div>
     </article>
     <div class="pb-4 border-b-2">

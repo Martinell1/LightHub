@@ -10,7 +10,7 @@
     </div>
     <div
       v-show="isShow"
-      class="bg-gray-50 absolute p-4 pt-6 shadow-lg w-100 z-10 m-4 ml-0 hover-block"
+      class="bg-gray-50 absolute p-4 pt-6 shadow-lg ring-2 ring-gray-200 w-100 z-10 m-4 ml-0 hover-block"
     >
       <div class="flex -mt-10">
         <img class="w-16 h-16 rounded-md border-2" src="../../assets/images/login-bg.jpg" />
@@ -138,6 +138,6 @@ onMounted(async () => {
 }
 
 .item-count {
-  @apply font-semibold text-lg text-orange-600;
+  @apply font-semibold text-lg text-gray-700;
 }
 </style>

@@ -3,9 +3,23 @@
     <div>
       <ul class="flex flex-wrap">
         <li
-          class="mr-2 my-1 py-2 px-4 rounded-full bg-orange-100 text-orange-600 cursor-pointer"
+          class="mr-2 my-1 py-2 px-4 rounded-full bg-orange-100 text-orange-600 cursor-pointer flex items-center"
           v-for="tag in currentTagList"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"
+            />
+          </svg>
           {{ tag }}
           <span @click="delTag(tag)" class="font-semibold">×</span>
         </li>
