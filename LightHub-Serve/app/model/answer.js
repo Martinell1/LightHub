@@ -5,10 +5,8 @@ const answerSchema = new Schema({
     type:String,
     require:true
   },
-  answerer:{
-    type:Object,
-    require:true,
-    default:{}
+  answerer_id:{
+    type:Schema.Types.ObjectId,
   },
   content:{
     type:String,

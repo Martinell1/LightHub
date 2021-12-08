@@ -14,10 +14,8 @@ const articleSchema = new Schema({
     type:String,
     default:"",
   },
-  author:{
-    type:String,
-    require:true,
-    default:"",
+  author_id:{
+    type:Schema.Types.ObjectId,
   },
   content:{
     type:String,

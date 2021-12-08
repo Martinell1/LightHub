@@ -41,7 +41,7 @@ const articleSubmit = async () => {
   const params = new FormData();
   params.append('title', title.value);
   params.append('content', store.state.articleText);
-  params.append('author', userInfo.value._id);
+  params.append('author_id', userInfo.value._id);
   params.append('tag_list', JSON.stringify(currentTagList.value));
 
   let { data: result } = await addArticle(params);

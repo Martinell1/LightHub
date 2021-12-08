@@ -1,9 +1,16 @@
 <template>
   <div class="w-700 card">
     <div v-for="(article,index) in props.articleList" :key="index" class="py-4 border-b-2 last">
-      <div class="flex mb-2 text-sm text-gray-600">
+      <div
+        class="flex mb-2 text-sm text-gray-600 relative"
+        :class="'article-' + index"
+        @mouseleave="remove(index)"
+      >
         <div class="border-r-2 pr-2">
-          <UserInfo :type="'article'" :id="article.author"></UserInfo>
+          <div
+            class="font-semibold"
+            @mouseenter="hoverInfo(index, userInfo, article.author)"
+          >{{ article.author.nickname }}</div>
         </div>
         <div class="border-r-2 px-2">{{ fmt4Time(article.create_time) }}</div>
         <div class="tag-list" v-for="tag in article.tag_list">{{ tag }}</div>
@@ -93,12 +100,15 @@
 </template>
 
 <script setup lang="ts">
-import UserInfo from '../Common/UserInfo.vue';
 import { inject } from 'vue'
 import { upArticle } from '@/api/article';
 const props: any = defineProps({
   articleList: Array
 })
+
+
+const hoverInfo: any = inject('hoverInfo')
+const remove: any = inject('remove')
 
 const fmt4Time = (create_time) => {
   const articleTime = Date.parse(create_time);

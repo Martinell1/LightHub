@@ -6,23 +6,24 @@ const ResultFactory = require('../result')
 const as = new articleService();
 const us = new userService();
 const cs = new commentService();
-const cs2 = new tagService()
-
+const ts = new tagService()
+const ObjectId = require('../config/db').Types.ObjectId
 
 
 const list = async ctx => {
   let tag = ctx.query.tag;
   let token = ctx.header.token;
-  let result = await as.list();
+  let result = []
   if(tag===''){
-
-  }else if(tag === 'follow'){
-    const userInfo = await us.getInfoByToken(token);
-    const tag_list = userInfo.tag_list;
-    result = await as.find({'tag_list':{ $in: tag_list}});
+    result = await as.getArticleListWithUserInfo();
   }else{
-    result = result.filter(article=>{return article.tag_list.includes(tag)})
+    const userInfo = await us.getInfoByToken(token);
+    const tagList = userInfo.tag_list;
+    result = await as.getArticleListByTag(tagList);
   }
+  result.forEach(element=>{
+    element.author = element.author[0]
+  })
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(result)
   }else{
@@ -31,10 +32,11 @@ const list = async ctx => {
 }
 
 const detail = async ctx => {
-  let id = ctx.query.id;
-  let result = await as.findOne({"_id":id})
-  if(result){
-     ctx.body = ResultFactory.buildSuccessResult(result)
+  let id = ObjectId(ctx.query.id);
+  let result = await as.getArticleWithUserInfo(id)
+  result[0].author = result[0].author[0]
+  if(result[0]){
+     ctx.body = ResultFactory.buildSuccessResult(result[0])
   }else{
     ctx.body = ResultFactory.buildFailResult("请求发生错误")
   }
@@ -43,9 +45,9 @@ const detail = async ctx => {
 const add = async ctx => {
   let body = ctx.request.body
   body.tag_list = JSON.parse(body.tag_list)
-  body.author.article_count++
+  let user = await us.findAndUpdate({'_id':body.author_id},{$inc:{'article_count':1}})
   body.tag_list.forEach(async element => {
-    let tag = await cs2.findAndUpdate({'name':element},{$inc:{'article_count':1}})
+    let tag = await ts.findAndUpdate({'name':element},{$inc:{'article_count':1}})
   });
   let result = await as.add(body)
   if(result){

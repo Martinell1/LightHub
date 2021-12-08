@@ -5,10 +5,8 @@ const topicSchema = new Schema({
     type:String,
     require:true
   },
-  initiator:{
-    type:Object,
-    require:true,
-    default:{}
+  initiator_id:{
+    type:Schema.Types.ObjectId,
   },
   introduce:{
     type:String,

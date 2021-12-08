@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { inject } from 'vue'
 import { updateFollowTag } from '@/api/user'
 const props: any = defineProps({
   tagList: Array,
@@ -33,11 +33,15 @@ const followSubmit = async (tag) => {
   const params = new FormData();
   params.append('user_id', userInfo.value._id);
   params.append('tag_id', tag._id);
-  params.append('isFollow', opt);
   let { data: result } = await updateFollowTag(params);
   if (result.code === 200) {
     msg("success", '成功')
-    userInfo.value.tag_list.push(tag.name)
+    if (opt) {
+      userInfo.value.tag_list.splice(userInfo.value.tag_list.indexOf(name), 1)
+    } else {
+      userInfo.value.tag_list.push(tag.name)
+    }
+
   }
 }
 

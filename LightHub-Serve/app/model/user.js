@@ -13,7 +13,6 @@ const userSchema = new Schema({
   salt:{
     type:String,
     require:true
-
   },
   nickname:{
     type:String,

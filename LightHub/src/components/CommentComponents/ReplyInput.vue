@@ -117,13 +117,25 @@ const isFollow = computed(() => {
 const replyShow = ref(false)
 const reply = reactive({
   content: "",
-  replyer: "",
+  replyer: {
+    "_id": userInfo.value._id,
+    "nickname": userInfo.value.nickname,
+    "avater": userInfo.value.avater,
+    "introduce": userInfo.value.introduce,
+    "follows": userInfo.value.follows,
+    "fans": userInfo.value.fans,
+    "article_count": userInfo.value.article_count,
+    "topic_count": userInfo.value.topic_count,
+    "answer_count": userInfo.value.answer_count,
+    "create_time": userInfo.value.create_time
+  },
   create_time: new Date().toLocaleString()
 })
 
 const replySubmit = async () => {
-  reply.replyer = userInfo.value._id;
+  reply.replyer = userInfo.value;
   props.comment.reply_list.push(reply)
+
   const params = new FormData();
   params.append("_id", props.comment._id)
   params.append("reply_list", JSON.stringify(props.comment.reply_list))

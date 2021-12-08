@@ -3,7 +3,7 @@
     <div class="m-auto w-1200 flex justify-between">
       <ul class="flex">
         <li class="flex mr-4">
-          <!-- <img src="../../assets/images/logo.png" class="w-14 h-14 m-1" /> -->
+          <img src="@/assets/images/logo.png" class="w-14 h-14 m-1" />
           <div class="leading-16 h-16 text-xl font-semibold text-orange-600">LightHub</div>
         </li>
 
@@ -23,8 +23,12 @@
           @blur="focusOnElse()"
         />
 
-        <div class="btn-primary mx-4" :class="{ 'btn-focus': isSearch }">搜索</div>
-        <div class="btn-primary" :class="{ 'btn-focus': isSearch }" @click="preTopicSubmit()">提问</div>
+        <div class="btn-primary my-auto mx-4" :class="{ 'btn-focus': isSearch }">搜索</div>
+        <div
+          class="btn-primary my-auto"
+          :class="{ 'btn-focus': isSearch }"
+          @click="preTopicSubmit()"
+        >提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
         <img
@@ -52,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
 import TopicDialog from '../TopicComponents/TopicDialog.vue';

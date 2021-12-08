@@ -75,7 +75,7 @@ const content = ref('')
 const publishTopicSubmit = async () => {
   const params = new FormData();
   params.append('title', title.value);
-  params.append('initiator', userInfo.value._id);
+  params.append('initiator_id', userInfo.value._id);
   params.append('introduce', content.value)
   params.append('tag_list', JSON.stringify(currentChannelList.value))
 

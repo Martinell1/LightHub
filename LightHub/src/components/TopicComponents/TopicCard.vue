@@ -1,7 +1,12 @@
 <template>
   <div class="card">
     <div v-for="(topic,index) in props.topicList" class="py-4 border-b-2 last">
-      <UserInfo :type="'topic'" :id="topic.initiator"></UserInfo>
+      <div class="flex items-center">
+        <img class="w-6 h-6 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
+        <div class="font-semibold mr-4">{{ topic.initiator.nickname }}</div>
+        <div class="text-sm text-gray-500">{{ topic.initiator.introduce }}</div>
+      </div>
+      <!-- <UserInfo :type="'topic'" :id="topic.initiator"></UserInfo> -->
       <div class="text-xl font-semibold my-2">{{ topic.title }}</div>
       <div class="h-12">{{ topic.introduce }}</div>
       <div class="flex">

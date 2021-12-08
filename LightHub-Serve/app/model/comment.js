@@ -2,15 +2,15 @@ const {Schema,model} = require("../config/db.js")
 
 const commentSchema = new Schema({
   target_id:{
-    type:String,
+    type:Schema.Types.ObjectId
   },
   content:{
     type:String,
     require:true,
     default:""
   },
-  commenter:{
-    type:String,
+  commenter_id:{
+    type: Schema.Types.ObjectId,
     require:true,
     default:""
   },

@@ -4,7 +4,7 @@
       <div class="flex items-center mb-6">
         <img class="w-10 h-10 rounded-full mr-3" src="../../assets/images/login-bg.jpg" />
         <div v-if="props.article.author" class="flex flex-col">
-          <UserInfo :type="'article'" :id="props.article.author"></UserInfo>
+          <!-- <UserInfo :type="'article'" :id="props.article.author"></UserInfo> -->
           <div class="font-semibold">{{ props.article.author.nickname }}</div>
           <div class="text-sm text-gray-500 flex">
             <div class="mr-4">{{ fmt4Time(props.article.update_time) }}</div>
@@ -91,7 +91,7 @@ const commmentSubmit = async () => {
 
   const params = new FormData()
   params.append("target_id", props.article._id)
-  params.append("commenter", userInfo.value._id)
+  params.append("commenter_id", userInfo.value._id)
   params.append("content", comment_content.value)
   let { data: result } = await addComment(params);
   if (result.code === 200) {

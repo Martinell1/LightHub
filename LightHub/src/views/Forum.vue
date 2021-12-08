@@ -1,8 +1,10 @@
 <template>
   <div class="topic_layout">
-    <main class="min-w-700 border-2">
-      <SecondNav type="topic"></SecondNav>
-      <TopicCard :topicList="topicList"></TopicCard>
+    <main class="min-w-700">
+      <div class="border-2">
+        <SecondNav type="topic"></SecondNav>
+        <TopicCard :topicList="topicList"></TopicCard>
+      </div>
     </main>
     <HomeAside></HomeAside>
   </div>

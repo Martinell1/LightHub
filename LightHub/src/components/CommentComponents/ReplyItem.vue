@@ -1,6 +1,6 @@
 <template>
   <div v-for="reply in props.reply_list" class="flex p-4 bg-gray-100 border-b-2 last">
-    <UserInfo :type="'reply'" :id="reply.replyer._id"></UserInfo>
+    <!-- <UserInfo :type="'reply'" :user="reply.replyer"></UserInfo> -->
     <div class="flex flex-col w-full">
       <div class="flex items-center">
         <div class="text-xs mr-2 pr-2 border-r-2">{{ reply.replyer.nickname }}</div>
@@ -16,6 +16,7 @@ import UserInfo from '../Common/UserInfo.vue';
 const props: any = defineProps({
   reply_list: Array
 })
+console.log(props.reply_list);
 
 </script>
 <style  scoped>

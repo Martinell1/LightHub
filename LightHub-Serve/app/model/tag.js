@@ -1,6 +1,6 @@
 const {Schema,model} = require("../config/db.js")
 
-const channelSchema = new Schema({
+const tagSchema = new Schema({
   name:{
     type:String,
     require:true
@@ -39,6 +39,6 @@ const channelSchema = new Schema({
   }
 },{versionKey:false})
 
-const channelModel = model("channel",channelSchema)
+const tagModel = model("tag",tagSchema)
 
-module.exports = channelModel
+module.exports = tagModel

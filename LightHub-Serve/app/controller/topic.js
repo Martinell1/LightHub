@@ -8,10 +8,19 @@ const as = new answerService()
 const tagS = new tagService()
 const us = new userService()
 const toRegular = require('../utils/toRegular')
+const ObjectId = require('../config/db').Types.ObjectId
 
 const list = async ctx => {
-  let result = await ts.find({},{answer_list:0})
-  ctx.body = ResultFactory.buildSuccessResult(result)
+  let result = await ts.getTopicListWithUserInfo();
+  result.forEach(element => {
+    element.initiator = element.initiator[0]
+  });
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult(result)
+  }
+
 }
 
 const add = async ctx => {

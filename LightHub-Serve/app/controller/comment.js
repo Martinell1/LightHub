@@ -1,11 +1,14 @@
 const commentService = require("../service/comment")
 const ResultFactory = require('../result')
-const ObjectId = require('mongoose').Types.ObjectId
+const ObjectId = require('../config/db').Types.ObjectId
 const cs = new commentService();
 
 const list = async ctx => {
-  const id = ctx.query.aid;
-  let result = await cs.find({"target_id":id})
+  const id = ObjectId(ctx.query.aid);
+  let result = await cs.getCommentListWithUserInfo(id);
+  result.forEach(element => {
+    element.commenter = element.commenter[0]
+  });
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(result)
   }else{
