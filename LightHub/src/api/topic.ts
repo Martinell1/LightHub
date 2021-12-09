@@ -8,6 +8,10 @@ const getTopicList: Function = async () => {
   return await axios.get("topic/list")
 }
 
+const getTopicById: Function = async (id: String) => {
+  return await axios.get("topic/detail?id=" + id)
+}
+
 const upTopic: Function = async (params: Object) => {
   return await axios.post("topic/up_topic", params)
 }
@@ -15,6 +19,7 @@ const upTopic: Function = async (params: Object) => {
 
 export {
   addTopic,
+  getTopicById,
   getTopicList,
   upTopic,
 }

@@ -17,10 +17,6 @@ const topicSchema = new Schema({
     type:Array,
     default:[]
   },
-  answer_list:{
-    type:Array,
-    default:[]
-  },
   view_count:{
     type:Number,
     default:0

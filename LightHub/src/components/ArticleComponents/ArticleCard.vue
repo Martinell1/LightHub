@@ -3,8 +3,8 @@
     <div v-for="(article,index) in props.articleList" :key="index" class="py-4 border-b-2 last">
       <div
         class="flex mb-2 text-sm text-gray-600 relative"
-        :class="'article-' + index"
-        @mouseleave="remove(index)"
+        :class="'item-' + index"
+        @mouseleave="removeHoverInfo(index)"
       >
         <div class="border-r-2 pr-2">
           <div
@@ -108,7 +108,7 @@ const props: any = defineProps({
 
 
 const hoverInfo: any = inject('hoverInfo')
-const remove: any = inject('remove')
+const removeHoverInfo: any = inject('removeHoverInfo')
 
 const fmt4Time = (create_time) => {
   const articleTime = Date.parse(create_time);

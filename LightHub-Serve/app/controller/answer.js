@@ -2,12 +2,46 @@ const answerService = require("../service/answer")
 const topicService = require("../service/topic")
 const ResultFactory = require('../result')
 const as = new answerService();
+const ObjectId = require('../config/db').Types.ObjectId
 
-const add = async ctx => {
+const saveOrUpdate = async ctx => {
   let body = ctx.request.body;
-  let result = await as.add(answer)
+  let temp = await as.findOne({"topic_id":body.topic_id,"answerer_id":body.answerer_id})
+  let result = undefined;
+  if(temp){
+    result = await as.findAndUpdate({"topic_id":body.topic_id,"answerer_id":body.answerer_id},{"content":body.content})
+  }else{
+    result = await as.add(body);
+  }
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult("回答成功");
+    ctx.body = ResultFactory.buildSuccessResult("编辑成功");
+  }else{
+    ctx.body = ResultFactory.buildFailResult("编辑失败")
+  }
+}
+
+const list = async ctx => {
+  let id = ObjectId(ctx.query.tid);
+  let result = await as.getAnswerListByTopicId(id)
+  result.forEach(element => {
+    element.answerer = element.answerer[0]
+  });
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(result);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("回答失败")
+  }
+}
+
+const detail = async ctx => {
+  let tid = ObjectId(ctx.query.tid);
+  let uid = ObjectId(ctx.query.uid);
+  let result = await as.getAnswerByUserId(tid,uid)
+  result.forEach(element => {
+    element.answerer = element.answerer[0]
+  });
+  if(result[0]){
+    ctx.body = ResultFactory.buildSuccessResult(result[0]);
   }else{
     ctx.body = ResultFactory.buildFailResult("回答失败")
   }
@@ -79,7 +113,9 @@ const step_answer = async ctx => {
 }
 
 module.exports = {
-  add,
+  list,
+  saveOrUpdate,
+  detail,
   up_answer,
   step_answer,
   remove,

@@ -20,7 +20,17 @@ const list = async ctx => {
   }else{
     ctx.body = ResultFactory.buildFailResult(result)
   }
+}
 
+const detail = async ctx => {
+  let id = ObjectId(ctx.query.id);
+  let result = await ts.getTopicWithAnswer(id)
+  result[0].initiator = result[0].initiator[0]
+  if(result[0]){
+     ctx.body = ResultFactory.buildSuccessResult(result[0])
+  }else{
+    ctx.body = ResultFactory.buildFailResult("请求发生错误")
+  }
 }
 
 const add = async ctx => {
@@ -85,6 +95,7 @@ const up_topic = async ctx => {
 
 module.exports = {
   list,
+  detail,
   add,
   remove,
   update,

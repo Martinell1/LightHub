@@ -3,7 +3,9 @@ const { answer } = require('../controller');
 
 const router = new Router();
 router.prefix('/answer')
-      .post("/add",answer.add)
+      .get("/list",answer.list)
+      .get("/detail",answer.detail)
+      .post("/saveOrUpdate",answer.saveOrUpdate)
       .post("/up_answer",answer.up_answer)
       .post("/step_answer",answer.step_answer)
       .post("/update",answer.update)

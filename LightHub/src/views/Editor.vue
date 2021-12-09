@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 
-import { ref, reactive, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';

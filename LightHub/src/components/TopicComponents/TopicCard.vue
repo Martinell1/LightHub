@@ -1,13 +1,21 @@
 <template>
   <div class="card">
     <div v-for="(topic,index) in props.topicList" class="py-4 border-b-2 last">
-      <div class="flex items-center">
+      <div
+        class="flex items-center relative"
+        :class="'item-' + index"
+        @mouseenter="hoverInfo(index, userInfo, topic.initiator)"
+        @mouseleave="removeHoverInfo(index)"
+      >
         <img class="w-6 h-6 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
+
         <div class="font-semibold mr-4">{{ topic.initiator.nickname }}</div>
         <div class="text-sm text-gray-500">{{ topic.initiator.introduce }}</div>
       </div>
-      <!-- <UserInfo :type="'topic'" :id="topic.initiator"></UserInfo> -->
-      <div class="text-xl font-semibold my-2">{{ topic.title }}</div>
+      <router-link :to="{ 'name': 'Topic', params: { 'id': topic._id } }">
+        <div class="text-xl font-semibold my-2">{{ topic.title }}</div>
+      </router-link>
+
       <div class="h-12">{{ topic.introduce }}</div>
       <div class="flex">
         <div class="flex">
@@ -65,13 +73,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject } from 'vue'
-import UserInfo from '../Common/UserInfo.vue';
+import { inject } from 'vue'
 import { upTopic } from '@/api/topic';
 const props: any = defineProps({
   topicList: Array
 })
 const userInfo: any = inject('userInfo')
+
+
+const hoverInfo: any = inject('hoverInfo')
+const removeHoverInfo: any = inject('removeHoverInfo')
 
 const isThumb = (index) => {
   return props.topicList[index].up_list.indexOf(userInfo.value._id) > -1;

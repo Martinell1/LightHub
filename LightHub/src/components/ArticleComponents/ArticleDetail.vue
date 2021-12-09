@@ -1,15 +1,20 @@
 <template>
-  <div class="bg-gray-50 px-6">
+  <div class="card">
     <article class="py-6">
-      <div class="flex items-center mb-6">
-        <img class="w-10 h-10 rounded-full mr-3" src="../../assets/images/login-bg.jpg" />
-        <div v-if="props.article.author" class="flex flex-col">
-          <!-- <UserInfo :type="'article'" :id="props.article.author"></UserInfo> -->
-          <div class="font-semibold">{{ props.article.author.nickname }}</div>
-          <div class="text-sm text-gray-500 flex">
-            <div class="mr-4">{{ fmt4Time(props.article.update_time) }}</div>
-            <div>阅读{{ props.article.view_count }}</div>
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center">
+          <img class="w-10 h-10 rounded-full mr-3" src="../../assets/images/login-bg.jpg" />
+          <div v-if="props.article.author" class="flex flex-col">
+            <div class="font-semibold">{{ props.article.author.nickname }}</div>
+            <div class="text-sm text-gray-500 flex">
+              <div class="mr-4">{{ fmt4Time(props.article.update_time) }}</div>
+              <div>阅读{{ props.article.view_count }}</div>
+            </div>
           </div>
+        </div>
+        <div v-if="!identify" @click="followSubmit()">
+          <div v-if="isFollow" class="btn-primary-mini">已关注</div>
+          <div v-if="!isFollow" class="btn-plain-mini ring-1 ring-orange-500">关注</div>
         </div>
       </div>
 
@@ -43,61 +48,54 @@
         </div>
       </div>
     </article>
-    <div class="pb-4 border-b-2">
-      <div class="flex">
-        <img class="w-9 h-9 rounded-full mr-4" src="@/assets/images/login-bg.jpg" />
-        <textarea
-          v-model="comment_content"
-          class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-orange-500"
-          placeholder="输入评论"
-        ></textarea>
-      </div>
-      <div class="flex justify-between items-center">
-        <div class="text-gray-500 ml-14 opacity-0">按Enter键发送</div>
-        <div
-          class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-orange-500 cursor-pointer"
-          @click="commmentSubmit()"
-        >发表评论</div>
-      </div>
-    </div>
-
+    <CommentPublish :article_id="props.article._id"></CommentPublish>
     <CommentList :commentList="props.commentList" ref="child"></CommentList>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { inject, computed } from 'vue'
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { addComment } from '@/api/comment';
-import UserInfo from '../Common/UserInfo.vue';
-import CommentList from '../CommentComponents/CommentList.vue';
 import { fmt4Time } from '../../util/fmt4Time.js'
+import CommentList from '../CommentComponents/CommentList.vue';
+import CommentPublish from '../CommentComponents/CommentPublish.vue';
+import { updateFollowUser } from '@/api/user'
 const userInfo: any = inject('userInfo')
 const props: any = defineProps({
   article: Object,
   commentList: Array,
 })
 
-const comment_content = ref("");
+const identify = computed(() => {
+  return userInfo.value._id === props.article.author_id
+})
 
+const index = computed(() => {
+  return userInfo.value.follows.indexOf(props.article.author_id)
+})
 
-const msg: any = inject('Message')
-const commmentSubmit = async () => {
-  if (comment_content.value === '') {
-    msg('fail', '内容不能为空')
-    return
-  }
+const isFollow = computed(() => {
+  return userInfo.value.follows.indexOf(props.article.author_id) > -1
+})
 
-  const params = new FormData()
-  params.append("target_id", props.article._id)
-  params.append("commenter_id", userInfo.value._id)
-  params.append("content", comment_content.value)
-  let { data: result } = await addComment(params);
+//提交按钮
+const followSubmit = async () => {
+  const params = new FormData();
+  params.append('user_id', userInfo.value._id);
+  params.append('followed_user_id', props.article.author_id);
+  let { data: result } = await updateFollowUser(params);
+
   if (result.code === 200) {
-    msg('success', '发布成功')
+    if (result.data === true) {
+      userInfo.value.follows.splice(index, 1);
+    } else {
+      userInfo.value.follows.push(props.article.author_id);
+      props.article.author.fans.push(userInfo.value._id)
+    }
   }
 }
+
 
 </script>
 <style  scoped>

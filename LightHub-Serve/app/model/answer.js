@@ -2,8 +2,7 @@ const {Schema,model} = require("../config/db.js")
 
 const answerSchema = new Schema({
   topic_id:{
-    type:String,
-    require:true
+    type:Schema.Types.ObjectId,
   },
   answerer_id:{
     type:Schema.Types.ObjectId,
