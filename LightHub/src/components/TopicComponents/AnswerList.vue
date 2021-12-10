@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted } from 'vue';
+import { inject } from 'vue';
 
 const props: any = defineProps({
   answer_list: Array

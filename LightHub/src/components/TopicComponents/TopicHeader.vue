@@ -85,6 +85,7 @@ const props: any = defineProps({
   star_count: Number
 })
 
+
 const emit = defineEmits(['useEdit'])
 const shiftEdit = () => {
   emit('useEdit')
@@ -107,9 +108,11 @@ const starSubmit = async (tid) => {
       let index = userInfo.value.star_list.indexOf(tid)
       userInfo.value.star_list.splice(index, 1);
       msg("success", "取关")
+
     } else {
       userInfo.value.star_list.push(tid);
       msg("success", "关注成功")
+
     }
   }
 }

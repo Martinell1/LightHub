@@ -1,7 +1,5 @@
 <template>
-  <div class="fixed left-10">
-    <div>收藏</div>
-  </div>
+  <ArticleSideAction :article="props.article"></ArticleSideAction>
   <div class="card">
     <article class="py-6">
       <div class="flex justify-between items-center mb-6">
@@ -51,7 +49,7 @@
         </div>
       </div>
     </article>
-    <CommentPublish :article_id="props.article._id"></CommentPublish>
+    <CommentPublish :article_id="props.article._id" name="comment"></CommentPublish>
     <CommentList :commentList="props.commentList" ref="child"></CommentList>
   </div>
 </template>
@@ -64,6 +62,7 @@ import { fmt4Time } from '../../util/fmt4Time.js'
 import CommentList from '../CommentComponents/CommentList.vue';
 import CommentPublish from '../CommentComponents/CommentPublish.vue';
 import { updateFollowUser } from '@/api/user'
+import ArticleSideAction from './ArticleSideAction.vue';
 const userInfo: any = inject('userInfo')
 const props: any = defineProps({
   article: Object,
@@ -98,6 +97,9 @@ const followSubmit = async () => {
     }
   }
 }
+
+
+
 
 
 </script>

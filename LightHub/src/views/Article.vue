@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { getArticleById } from '@/api/article';
 import { getCommentList } from '@/api/comment';
 import { useRoute } from 'vue-router';
@@ -15,7 +15,19 @@ import ArticleDetail from '../components/ArticleComponents/ArticleDetail.vue';
 const route = useRoute();
 const id = route.params.id;
 
-const article = ref({})
+let article = ref({
+  author: {},
+  content: "",
+  cover: "",
+  create_time: "",
+  step_list: [],
+  tag_list: [],
+  title: "",
+  update_time: "",
+  view_count: "",
+  _id: "",
+  up_list: []
+})
 const loadArticle = async () => {
   let { data: result } = await getArticleById(id);
   if (result.code === 200) {

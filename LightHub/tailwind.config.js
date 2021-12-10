@@ -44,6 +44,7 @@ module.exports = {
       },
       minHeight:{
         '36px':'36px',
+        '30':'120px',
         '60':'15rem',
       },
       height:{
