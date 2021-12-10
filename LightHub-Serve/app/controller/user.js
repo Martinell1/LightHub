@@ -1,10 +1,12 @@
 const userService = require("../service/user")
 const articleService = require("../service/article");
 const tagService = require("../service/tag");
+const topicService = require("../service/topic");
 const ResultFactory = require('../result')
 const us = new userService();
 const as = new articleService();
 const ts = new tagService();
+const ts2 = new topicService();
 
 const {getToken,verify} = require('../utils/getToken')
 const bcrypt = require('bcryptjs');
@@ -129,7 +131,28 @@ const follow_user = async ctx => {
     }
 }
 
+const start_topic = async ctx => {
+  let body = ctx.request.body;
+  let uid = body.uid;
+  let tid = body.tid;
+  let user = await us.findOne({"_id":uid})
+  let star_list = user.star_list;
+  let isStar = star_list.indexOf(tid)>-1
 
+  if(isStar){
+    star_list.remove(tid)
+    let result2 = await ts2.findAndUpdate({'_id':tid},{$inc:{'star_count':-1}})
+  }else{
+    star_list.push(tid)
+    let result2 = await ts2.findAndUpdate({'_id':tid},{$inc:{'star_count':1}})
+  }
+  let result = await us.update({"_id":uid,"star_list":star_list})
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(isStar);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("修改失败");
+  }
+}
 
 const remove = async ctx => {
   const id = ctx.request.body
@@ -149,5 +172,6 @@ module.exports = {
   login,
   info,
   follow_tag,
-  follow_user
+  follow_user,
+  start_topic
 }

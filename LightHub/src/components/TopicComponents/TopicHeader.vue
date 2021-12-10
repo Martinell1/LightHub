@@ -17,7 +17,11 @@
           <p class="mb-2">{{ props.introduce }}</p>
 
           <div class="flex">
-            <div class="btn-primary flex mr-4">
+            <div
+              class="flex mr-4 ring-1 ring-orange-500"
+              :class="{ 'btn-primary': isStar, 'btn-plain': !isStar }"
+              @click="starSubmit(props.topic_id)"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 my-auto mx-1"
@@ -58,19 +62,27 @@
           <div class="text-sm text-gray-500">浏览量</div>
           <div class="font-semibold text-lg">{{ props.view_count }}</div>
         </div>
+        <div class="flex flex-col items-center px-4 border-l-2">
+          <div class="text-sm text-gray-500">关注数</div>
+          <div class="font-semibold text-lg">{{ props.star_count }}</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { inject, computed } from 'vue'
+import { updateStarTopic } from '@/api/user'
 const props: any = defineProps({
+  topic_id: String,
   tag_list: Array,
   title: String,
   initiator: Object,
   view_count: Number,
   up_list: Array,
   introduce: String,
+  star_count: Number
 })
 
 const emit = defineEmits(['useEdit'])
@@ -78,6 +90,29 @@ const shiftEdit = () => {
   emit('useEdit')
 }
 
+const isStar = computed(() => {
+  return userInfo.value.star_list.indexOf(props.topic_id) > -1
+})
+
+const userInfo: any = inject('userInfo')
+const msg: any = inject('Message')
+const starSubmit = async (tid) => {
+  const params = new FormData();
+  params.append('uid', userInfo.value._id);
+  params.append('tid', tid);
+  let { data: result } = await updateStarTopic(params);
+
+  if (result.code === 200) {
+    if (result.data === true) {
+      let index = userInfo.value.star_list.indexOf(tid)
+      userInfo.value.star_list.splice(index, 1);
+      msg("success", "取关")
+    } else {
+      userInfo.value.star_list.push(tid);
+      msg("success", "关注成功")
+    }
+  }
+}
 
 
 </script>

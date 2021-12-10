@@ -17,7 +17,7 @@
       <ul class="text-sm leading-10">
         <li class="sidebar-item">
           收藏集
-          <div>{{ userInfo.collection_list.length }}</div>
+          <div>{{ 0 }}</div>
         </li>
         <li class="sidebar-item">
           关注标签

@@ -1,4 +1,7 @@
 <template>
+  <div class="fixed left-10">
+    <div>收藏</div>
+  </div>
   <div class="card">
     <article class="py-6">
       <div class="flex justify-between items-center mb-6">

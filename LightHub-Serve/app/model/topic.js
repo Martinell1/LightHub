@@ -21,6 +21,10 @@ const topicSchema = new Schema({
     type:Number,
     default:0
   },
+  star_count:{
+    type:Number,
+    default:0
+  },
   up_list:{
     type:Array,
     default:[]

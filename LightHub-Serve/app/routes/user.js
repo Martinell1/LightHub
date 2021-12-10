@@ -11,6 +11,7 @@ router.prefix('/user')
       .post("/follow_tag",user.follow_tag)
       .post("/follow_user",user.follow_user)
       .post("/remove",user.remove)
+      .post("/start_topic",user.start_topic)
 
 
 module.exports = router;  

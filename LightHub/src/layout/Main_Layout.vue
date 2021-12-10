@@ -21,7 +21,7 @@ const userInfo: any = ref({
   follows: [],
   fans: [],
   tag_list: [],
-  collection_list: [],
+  star_list: [],
   gender: "",
   phone: "",
   email: "",

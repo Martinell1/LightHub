@@ -25,7 +25,6 @@ export default {
       if(aimNode.contains(container)){
         aimNode.removeChild(container)
       }
-      console.log("leave");
       
     }
     app.provide('hoverInfo', hoverInfo)

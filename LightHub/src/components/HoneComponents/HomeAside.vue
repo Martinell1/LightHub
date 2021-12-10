@@ -92,7 +92,7 @@
             </svg>
             我的收藏
           </div>
-          <div class="sidebar-item-count">{{ userInfo.collection_list.length }}</div>
+          <div class="sidebar-item-count">{{ 0 }}</div>
         </li>
         <li class="sidebar-item">
           <div class="flex items-center">
@@ -108,7 +108,7 @@
             </svg> 我关注的问题
           </div>
 
-          <div class="sidebar-item-count">{{ userInfo.collection_list.length }}</div>
+          <div class="sidebar-item-count">{{ userInfo.star_list.length }}</div>
         </li>
         <li class="sidebar-item">
           <div class="flex items-center">
