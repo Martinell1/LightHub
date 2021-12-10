@@ -99,7 +99,14 @@ const routes: Array<RouteRecordRaw> = [
           header: () => import('../components/Common/MainHeader.vue')
         }
       },
-
+      {
+        path: '/creator/:id',
+        name: 'Creator',
+        components: {
+          default: () => import('../views/Creator.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        }
+      }
     ]
   },
 ]

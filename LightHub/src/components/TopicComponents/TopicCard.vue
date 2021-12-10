@@ -20,7 +20,7 @@
       <div class="flex">
         <div class="flex">
           <div
-            class="flex mr-4"
+            class="flex mr-4 ring-1 ring-orange-500"
             :class="{ 'btn-primary': isThumb(index), 'btn-plain': !isThumb(index) }"
             @click="upSubmit(topic)"
           >

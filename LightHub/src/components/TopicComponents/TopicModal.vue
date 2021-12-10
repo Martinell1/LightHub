@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-cover flex">
+  <div v-if="isShow" class="bg-cover flex">
     <div
       class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50 w-140 min-h-60 p-6 flex flex-col"
     >
@@ -25,7 +25,7 @@
     </div>
     <div
       @click="closeDialog()"
-      class="fixed top-1/3 right-1/3 text-3xl text-gray-50 transform -translate-y-5 cursor-pointer"
+      class="absolute top-1/3 right-1/3 text-3xl text-gray-50 transform -translate-y-5 cursor-pointer"
     >×</div>
   </div>
 </template>
@@ -34,8 +34,24 @@
 import { addTopic } from '@/api/topic';
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { ref, inject, onMounted, watch } from 'vue'
+import { ref } from 'vue'
 import TagAdd from '../TagComponents/TagAdd.vue';
+const userInfo: any = ref({})
+
+const setUserInfo = (info) => {
+  userInfo.value = info
+}
+
+const isShow = ref(true)
+
+//关闭对话框
+const closeDialog = () => {
+  isShow.value = false
+}
+
+defineExpose({
+  setUserInfo,
+})
 
 const emit = defineEmits(['close'])
 //编辑框的工具栏
@@ -56,10 +72,7 @@ const toolBars: any = [
   'table',
 ]
 
-//关闭对话框
-const closeDialog = () => {
-  emit('close')
-}
+
 
 //接受tagList
 const currentChannelList: any = ref([])
@@ -67,21 +80,20 @@ const getChannelList = (tagList) => {
   currentChannelList.value = tagList;
 }
 
-const msg: any = inject('Message')
 //发表问题提交
-const userInfo: any = inject('userInfo')
+
 const title = ref('')
 const content = ref('')
 const publishTopicSubmit = async () => {
   const params = new FormData();
   params.append('title', title.value);
-  params.append('initiator_id', userInfo.value._id);
+  params.append('initiator_id', userInfo.value.id);
   params.append('introduce', content.value)
   params.append('tag_list', JSON.stringify(currentChannelList.value))
 
   let { data: result } = await addTopic(params);
   if (result.code === 200) {
-    msg('success', '提问成功')
+    closeDialog()
   }
 }
 

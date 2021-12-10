@@ -94,7 +94,7 @@ watch(tagKey, () => {
 
 //将被选中的Tag加入当前List
 
-const msg: any = inject('Message')
+
 const currentTagList: any = ref([])
 
 const appendList = (tag) => {
@@ -107,9 +107,6 @@ const appendList = (tag) => {
       isShow.message = true
       isShow.input = false
     }
-  } else {
-
-    msg('fail', '该分类您你已添加')
   }
 }
 

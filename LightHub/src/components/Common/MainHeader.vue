@@ -27,7 +27,7 @@
         <div
           class="btn-primary my-auto"
           :class="{ 'btn-focus': isSearch }"
-          @click="preTopicSubmit()"
+          @click="topicModal(userInfo)"
         >提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
@@ -52,20 +52,17 @@
       </div>
     </div>
   </nav>
-  <TopicDialog v-if="showDialog" @close="closeDialog()"></TopicDialog>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
-import TopicDialog from '../TopicComponents/TopicDialog.vue';
 const store = useStore();
 const userInfo = store.state.userInfo;
 
 let isSearch = ref(false);
 let clickAvater = ref(false);
-let showDialog = ref(false)
 
 const focusOnSearch = () => {
   isSearch.value = true;
@@ -74,13 +71,8 @@ const focusOnElse = () => {
   isSearch.value = false;
 }
 
-const preTopicSubmit = () => {
-  showDialog.value = true
-}
+const topicModal: any = inject('TopicModal');
 
-const closeDialog = () => {
-  showDialog.value = false
-}
 
 const router = useRouter();
 const exit = () => {
