@@ -2,7 +2,8 @@
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../config/jwt')
 
-function getToken(payload) {
+//playload = user._id
+function buildToken(payload) {
   return jwt.sign(payload, SECRET, { expiresIn:'7d' });
 }
 
@@ -11,6 +12,6 @@ function verify(token){
 }
 
 module.exports = {
-  getToken,
+  buildToken,
   verify,
 }

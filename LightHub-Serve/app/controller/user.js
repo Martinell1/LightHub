@@ -8,7 +8,7 @@ const as = new articleService();
 const ts = new tagService();
 const ts2 = new topicService();
 
-const {getToken,verify} = require('../utils/getToken')
+const {buildToken,verify} = require('../utils/getToken')
 const bcrypt = require('bcryptjs');
 
 
@@ -20,7 +20,7 @@ const login = async ctx => {
   }
   let isEqual = await bcrypt.compare(body.password, user.password);
   if(isEqual){
-    return ctx.body = ResultFactory.buildSuccessResult(getToken({"id":user._id}))
+    return ctx.body = ResultFactory.buildSuccessResult(buildToken({"id":user._id}))
   }else{
     return ctx.body = ResultFactory.buildFailResult("密码错误")
   }
@@ -72,12 +72,13 @@ const list = async ctx => {
 
 const update = async ctx => {
   let body = ctx.request.body
+  const uid = verify(ctx.header.token).id
   body.education = JSON.parse(body.education)
   //修改用户信息
-  let result = await us.update(body);
-  let user = await us.findOne({"_id":body._id})
+  await us.findAndUpdate({"_id":uid},body)
+  let result = await us.findOne({"_id":uid})
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult(user);
+    ctx.body = ResultFactory.buildSuccessResult(result);
   }else{
     ctx.body = ResultFactory.buildFailResult("更新失败");
   }
@@ -85,7 +86,7 @@ const update = async ctx => {
 
 const follow_tag = async ctx => {
   let body = ctx.request.body;
-  let user = await us.findOne({"_id":body.user_id})
+  const user = await us.getInfoByToken(ctx.header.token)
   let tag = await ts.findOne({"_id":body.tag_id})
   let isFollow = user.tag_list.indexOf(tag.name)>-1
   if(isFollow === true){
@@ -109,7 +110,7 @@ const follow_tag = async ctx => {
 
 const follow_user = async ctx => {
     let body = ctx.request.body;
-    let user = await us.findOne({"_id":body.user_id})
+    const user = await us.getInfoByToken(ctx.header.token)
     let followed_user = await us.findOne({"_id":body.followed_user_id})
 
     let isFollow = user.follows.indexOf(followed_user._id)>-1
@@ -133,9 +134,8 @@ const follow_user = async ctx => {
 
 const start_topic = async ctx => {
   let body = ctx.request.body;
-  let uid = body.uid;
   let tid = body.tid;
-  let user = await us.findOne({"_id":uid})
+  const user = await us.getInfoByToken(ctx.header.token);
   let star_list = user.star_list;
   let isStar = star_list.indexOf(tid)>-1
 
@@ -146,7 +146,7 @@ const start_topic = async ctx => {
     star_list.push(tid)
     let result2 = await ts2.findAndUpdate({'_id':tid},{$inc:{'star_count':1}})
   }
-  let result = await us.update({"_id":uid,"star_list":star_list})
+  let result = await us.update({"_id":user._id,"star_list":star_list})
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(isStar);
   }else{
@@ -155,7 +155,7 @@ const start_topic = async ctx => {
 }
 
 const remove = async ctx => {
-  const id = ctx.request.body
+  const id = verify(ctx.header.token).id
   let result = await us.remove(id);
   if(result.modifiedCount === 0){
     ctx.body = ResultFactory.buildFailResult("删除失败")

@@ -68,7 +68,7 @@ const routes: Array<RouteRecordRaw> = [
         ]
       },
       {
-        path: '/editor',
+        path: 'editor',
         name: 'Editor',
         components: {
           default: () => import('../views/Editor.vue'),
@@ -76,7 +76,7 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: '/article/:id',
+        path: 'article/:id',
         name: 'Article',
         components: {
           default: () => import('../views/Article.vue'),
@@ -84,7 +84,7 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: '/forum',
+        path: 'forum',
         name: 'Forum',
         components: {
           default: () => import('../views/Forum.vue'),
@@ -92,7 +92,7 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: '/topic/:id',
+        path: 'topic/:id',
         name: 'Topic',
         components: {
           default: () => import('../views/Topic.vue'),
@@ -100,12 +100,28 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: '/creator/:id',
-        name: 'Creator',
+        path: 'creator/:id',
         components: {
           default: () => import('../views/Creator.vue'),
           header: () => import('../components/Common/MainHeader.vue')
-        }
+        },
+        children: [
+          {
+            path: 'home',
+            name: 'CreatorHome',
+            component: () => import('../components/CreatorComponents/CreatorHome.vue'),
+          },
+          {
+            path: 'article',
+            name: 'CreatorArticle',
+            component: () => import('../components/CreatorComponents/CreatorArticle.vue'),
+          },
+          {
+            path: 'topic',
+            name: 'CreatorTopic',
+            component: () => import('../components/CreatorComponents/CreatorTopic.vue'),
+          },
+        ]
       }
     ]
   },

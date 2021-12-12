@@ -2,6 +2,7 @@ const tagService = require("../service/tag")
 const ResultFactory = require('../result')
 const ObjectId = require('mongoose').Types.ObjectId
 const cs = new tagService();
+const {verify} = require('../utils/getToken')
 
 const list = async ctx => {
   let result = await cs.list()

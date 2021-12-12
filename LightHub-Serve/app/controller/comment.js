@@ -2,6 +2,7 @@ const commentService = require("../service/comment")
 const ResultFactory = require('../result')
 const ObjectId = require('../config/db').Types.ObjectId
 const cs = new commentService();
+const {verify} = require('../utils/getToken')
 
 const list = async ctx => {
   const id = ObjectId(ctx.query.aid);
@@ -43,15 +44,16 @@ const update = async ctx => {
 
 const up_comment = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let comment = await cs.findOne({"_id":body._id})
-  let isUp = comment.up_list.indexOf(body.user_id)>-1;
+  let isUp = comment.up_list.indexOf(uid)>-1;
   if(isUp === true){
     //取消赞
-    comment.up_list.remove(body.user_id)
+    comment.up_list.remove(uid)
   }else{
     //点赞
-    comment.up_list.push(body.user_id)
-    comment.step_list.remove(body.user_id)
+    comment.up_list.push(uid)
+    comment.step_list.remove(uid)
   }
   let result = await cs.update(comment);
   if(result){
@@ -67,15 +69,16 @@ const up_comment = async ctx => {
 
 const step_comment = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let comment = await cs.findOne({"_id":body._id})
-  let isStep = comment.step_list.indexOf(body.user_id)>-1;
+  let isStep = comment.step_list.indexOf(uid)>-1;
   if(isStep === true){
     //取消点踩
-    comment.step_list.remove(body.user_id)
+    comment.step_list.remove(uid)
   }else{
     //点踩
-    comment.step_list.push(body.user_id)
-    comment.up_list.remove(body.user_id)
+    comment.step_list.push(uid)
+    comment.up_list.remove(uid)
   }
   let result = await cs.update(comment);
   if(result){

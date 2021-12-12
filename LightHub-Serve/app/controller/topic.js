@@ -9,6 +9,7 @@ const tagS = new tagService()
 const us = new userService()
 const toRegular = require('../utils/toRegular')
 const ObjectId = require('../config/db').Types.ObjectId
+const {verify} = require('../utils/getToken')
 
 const list = async ctx => {
   let result = await ts.getTopicListWithUserInfo();
@@ -34,8 +35,9 @@ const detail = async ctx => {
 }
 
 const add = async ctx => {
+  const uid = verify(ctx.header.token).id
   let body = ctx.request.body
-  let user = await us.update({"_id":body.initiator},{$inc:{'topic_count':1}})
+  let user = await us.update({"_id":uid},{$inc:{'topic_count':1}})
   body.tag_list = JSON.parse(body.tag_list)
   body.tag_list.forEach(async element => {
     let tag = await tagS.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
@@ -69,15 +71,16 @@ const update = async ctx => {
 
 const up_topic = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let topic = await ts.findOne({"_id":body._id})
-  let isUp = topic.up_list.indexOf(body.user_id)>-1;
+  let isUp = topic.up_list.indexOf(uid)>-1;
   if(isUp === true){
     //取消赞
-    topic.up_list.remove(body.user_id)
+    topic.up_list.remove(uid)
   }else{
     //点赞
-    topic.up_list.push(body.user_id)
-    topic.step_list.remove(body.user_id)
+    topic.up_list.push(uid)
+    topic.step_list.remove(uid)
   }
   let result = await ts.update(topic);
   if(result){

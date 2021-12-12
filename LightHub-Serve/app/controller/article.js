@@ -8,6 +8,7 @@ const us = new userService();
 const cs = new commentService();
 const ts = new tagService()
 const ObjectId = require('../config/db').Types.ObjectId
+const {verify} = require('../utils/getToken')
 
 
 const list = async ctx => {
@@ -44,8 +45,9 @@ const detail = async ctx => {
 
 const add = async ctx => {
   let body = ctx.request.body
+  const uid = verify(ctx.header.token).id
   body.tag_list = JSON.parse(body.tag_list)
-  let user = await us.findAndUpdate({'_id':body.author_id},{$inc:{'article_count':1}})
+  let user = await us.findAndUpdate({'_id':uid},{$inc:{'article_count':1}})
   body.tag_list.forEach(async element => {
     let tag = await ts.findAndUpdate({'name':element},{$inc:{'article_count':1}})
   });
@@ -67,15 +69,16 @@ const remove = async ctx => {
 
 const up_article = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let article = await as.findOne({"_id":body._id})
-  let isUp = article.up_list.indexOf(body.user_id)>-1;
+  let isUp = article.up_list.indexOf(uid)>-1;
   if(isUp === true){
     //取消赞
-    article.up_list.remove(body.user_id)
+    article.up_list.remove(uid)
   }else{
     //点赞
-    article.up_list.push(body.user_id)
-    article.step_list.remove(body.user_id)
+    article.up_list.push(uid)
+    article.step_list.remove(uid)
   }
   let result = await as.update(article);
   if(result){
@@ -91,15 +94,16 @@ const up_article = async ctx => {
 
 const step_article = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let article = await as.findOne({"_id":body._id})
-  let isStep = article.step_list.indexOf(body.user_id)>-1;
+  let isStep = article.step_list.indexOf(uid)>-1;
   if(isStep === true){
     //取消点踩
-    article.step_list.remove(body.user_id)
+    article.step_list.remove(uid)
   }else{
     //点踩
-    article.step_list.push(body.user_id)
-    article.up_list.remove(body.user_id)
+    article.step_list.push(uid)
+    article.up_list.remove(uid)
   }
   let result = await as.update(article);
   if(result){

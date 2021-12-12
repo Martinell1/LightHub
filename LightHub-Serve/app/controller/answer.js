@@ -3,13 +3,15 @@ const topicService = require("../service/topic")
 const ResultFactory = require('../result')
 const as = new answerService();
 const ObjectId = require('../config/db').Types.ObjectId
+const {verify} = require('../utils/getToken')
 
 const saveOrUpdate = async ctx => {
   let body = ctx.request.body;
-  let temp = await as.findOne({"topic_id":body.topic_id,"answerer_id":body.answerer_id})
+  const uid = verify(ctx.header.token).id
+  let temp = await as.findOne({"topic_id":body.topic_id,"answerer_id":uid})
   let result = undefined;
   if(temp){
-    result = await as.findAndUpdate({"topic_id":body.topic_id,"answerer_id":body.answerer_id},{"content":body.content})
+    result = await as.findAndUpdate({"topic_id":body.topic_id,"answerer_id":uid},{"content":body.content})
   }else{
     result = await as.add(body);
   }
@@ -66,15 +68,16 @@ const update = async ctx => {
 
 const up_answer = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let answer = await as.findOne({"_id":body._id})
-  let isUp = answer.up_list.indexOf(body.user_id)>-1;
+  let isUp = answer.up_list.indexOf(uid)>-1;
   if(isUp === true){
     //取消赞
-    answer.up_list.remove(body.user_id)
+    answer.up_list.remove(uid)
   }else{
     //点赞
-    answer.up_list.push(body.user_id)
-    answer.step_list.remove(body.user_id)
+    answer.up_list.push(buid)
+    answer.step_list.remove(uid)
   }
   let result = await as.update(answer);
   if(result){
@@ -90,15 +93,16 @@ const up_answer = async ctx => {
 
 const step_answer = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let answer = await as.findOne({"_id":body._id})
-  let isStep = article.step_list.indexOf(body.user_id)>-1;
+  let isStep = article.step_list.indexOf(uid)>-1;
   if(isStep === true){
     //取消点踩
-    answer.step_list.remove(body.user_id)
+    answer.step_list.remove(uid)
   }else{
     //点踩
-    answer.step_list.push(body.user_id)
-    answer.up_list.remove(body.user_id)
+    answer.step_list.push(uid)
+    answer.up_list.remove(uid)
   }
   let result = await as.update(answer);
   if(result){

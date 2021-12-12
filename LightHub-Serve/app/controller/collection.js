@@ -4,7 +4,7 @@ const ResultFactory = require('../result')
 const cs = new collectionService();
 const us = new userService();
 const ObjectId = require('../config/db').Types.ObjectId
-
+const {verify} = require('../utils/getToken')
 
 const list = async ctx => {
   let id = ctx.query.uid
@@ -18,10 +18,11 @@ const list = async ctx => {
 
 const add = async ctx => {
   let body = ctx.request.body;
+  const uid = verify(ctx.header.token).id
   let article_list = [];
   article_list.push(body.aid)
-  let user = await us.findAndUpdate({'_id':body.uid},{$inc:{'collection_list':1}})
-  let result =  await cs.add({"holder_id":body.uid,"name":body.name,"article_list":article_list})
+  let user = await us.findAndUpdate({'_id':uid},{$inc:{'collection_list':1}})
+  let result =  await cs.add({"holder_id":uid,"name":body.name,"article_list":article_list})
 
   if(result){
     ctx.body = ResultFactory.buildSuccessResult("添加成功");

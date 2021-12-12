@@ -75,7 +75,7 @@
         </div>
       </div>
       <a
-        :href="/creator/ + userInfo._id"
+        :href="'/creator/' + userInfo._id + '/home'"
         class="ring-1 ring-orange-500 text-center text-sm text-orange-500 p-1 cursor-pointer block"
       >进入创作中心></a>
     </div>
