@@ -1,10 +1,10 @@
 const {tag} = require('../model')
 const Service = require('.')
 
-class tagService extends Service{
+class TagService extends Service{
   constructor(){
     super(tag)
   }
 }
 
-module.exports = tagService;
+module.exports = TagService;

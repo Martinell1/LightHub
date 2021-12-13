@@ -1,18 +1,18 @@
-const topicService = require("../service/topic")
+const TopicService = require("../service/topic")
+const TagService = require("../service/tag")
+const UserService = require("../service/user")
 const ResultFactory = require('../result')
-const ts = new topicService();
-const tagService = require("../service/tag")
-const answerService = require("../service/answer")
-const userService = require("../service/user")
-const as = new answerService()
-const tagS = new tagService()
-const us = new userService()
-const toRegular = require('../utils/toRegular')
+const topicService = new TopicService();
+const tagService = new TagService()
+const userService = new UserService()
 const ObjectId = require('../config/db').Types.ObjectId
+const toRegular = require('../utils/toRegular')
 const {verify} = require('../utils/getToken')
+const {up_utils} = require('../utils/thumbUtil')
+
 
 const list = async ctx => {
-  let result = await ts.getTopicListWithUserInfo();
+  let result = await topicService.getTopicListWithUserInfo();
   result.forEach(element => {
     element.initiator = element.initiator[0]
   });
@@ -25,7 +25,7 @@ const list = async ctx => {
 
 const detail = async ctx => {
   let id = ObjectId(ctx.query.id);
-  let result = await ts.getTopicWithAnswer(id)
+  let result = await topicService.getTopicWithAnswer(id)
   result[0].initiator = result[0].initiator[0]
   if(result[0]){
      ctx.body = ResultFactory.buildSuccessResult(result[0])
@@ -37,12 +37,12 @@ const detail = async ctx => {
 const add = async ctx => {
   const uid = verify(ctx.header.token).id
   let body = ctx.request.body
-  let user = await us.update({"_id":uid},{$inc:{'topic_count':1}})
+  let user = await userService.update({"_id":uid},{$inc:{'topic_count':1}})
   body.tag_list = JSON.parse(body.tag_list)
   body.tag_list.forEach(async element => {
-    let tag = await tagS.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
+    let tag = await tagService.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
   });
-  let result = await ts.add(body)
+  let result = await topicService.add(body)
   if(result){
     ctx.body =  ResultFactory.buildSuccessResult(result)
   }else{
@@ -53,7 +53,7 @@ const add = async ctx => {
 
 const remove = async ctx => {
   const id = ctx.request.body
-  let result = await ts.remove(id);
+  let result = await topicService.remove(id);
   if(result.modifiedCount === 0){
     ctx.body = ResultFactory.buildFailResult("删除失败")
   }else{
@@ -63,34 +63,18 @@ const remove = async ctx => {
 
 const update = async ctx => {
   let topic = ctx.request.body
-  let result = await ts.update(topic)
+  let result = await topicService.update(topic)
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
 
 
 
 const up_topic = async ctx => {
-  let body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
-  let topic = await ts.findOne({"_id":body._id})
-  let isUp = topic.up_list.indexOf(uid)>-1;
-  if(isUp === true){
-    //取消赞
-    topic.up_list.remove(uid)
+  const result = await up_utils(ctx,'topic');
+  if(result === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    //点赞
-    topic.up_list.push(uid)
-    topic.step_list.remove(uid)
-  }
-  let result = await ts.update(topic);
-  if(result){
-    if(isUp){
-      ctx.body =  ResultFactory.buildSuccessResult("取消点赞成功")
-    }else{
-      ctx.body =  ResultFactory.buildSuccessResult("点赞成功")
-    }
-  }else{
-    ctx.body = ResultFactory.buildFailResult("失败")
+    ctx.body = ResultFactory.buildSuccessResult(result)
   }
 }
 

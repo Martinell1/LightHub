@@ -1,19 +1,19 @@
-const answerService = require("../service/answer")
-const topicService = require("../service/topic")
+const AnswerService = require("../service/answer")
 const ResultFactory = require('../result')
-const as = new answerService();
+const answerService = new AnswerService();
 const ObjectId = require('../config/db').Types.ObjectId
 const {verify} = require('../utils/getToken')
+const {up_utils,step_utils} = require('../utils/thumbUtil')
 
 const saveOrUpdate = async ctx => {
   let body = ctx.request.body;
   const uid = verify(ctx.header.token).id
-  let temp = await as.findOne({"topic_id":body.topic_id,"answerer_id":uid})
+  let temp = await answerService.findOne({"topic_id":body.topic_id,"answerer_id":uid})
   let result = undefined;
   if(temp){
-    result = await as.findAndUpdate({"topic_id":body.topic_id,"answerer_id":uid},{"content":body.content})
+    result = await answerService.findAndUpdate({"topic_id":body.topic_id,"answerer_id":uid},{"content":body.content})
   }else{
-    result = await as.add(body);
+    result = await answerService.add(body);
   }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult("编辑成功");
@@ -24,7 +24,7 @@ const saveOrUpdate = async ctx => {
 
 const list = async ctx => {
   let id = ObjectId(ctx.query.tid);
-  let result = await as.getAnswerListByTopicId(id)
+  let result = await answerService.getAnswerListByTopicId(id)
   result.forEach(element => {
     element.answerer = element.answerer[0]
   });
@@ -38,7 +38,7 @@ const list = async ctx => {
 const detail = async ctx => {
   let tid = ObjectId(ctx.query.tid);
   let uid = ObjectId(ctx.query.uid);
-  let result = await as.getAnswerByUserId(tid,uid)
+  let result = await answerService.getAnswerByUserId(tid,uid)
   result.forEach(element => {
     element.answerer = element.answerer[0]
   });
@@ -52,7 +52,7 @@ const detail = async ctx => {
 
 const remove = async ctx => {
   const id = ctx.request.body
-  let result = await as.remove(id);
+  let result = await answerService.remove(id);
   if(result.modifiedCount === 0){
     ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
@@ -62,57 +62,25 @@ const remove = async ctx => {
 
 const update = async ctx => {
   let answer = ctx.request.body
-  let result = await as.update(answer)
+  let result = await answerService.update(answer)
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
 
 const up_answer = async ctx => {
-  let body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
-  let answer = await as.findOne({"_id":body._id})
-  let isUp = answer.up_list.indexOf(uid)>-1;
-  if(isUp === true){
-    //取消赞
-    answer.up_list.remove(uid)
+  const result = await up_utils(ctx,'answer');
+  if(result === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    //点赞
-    answer.up_list.push(buid)
-    answer.step_list.remove(uid)
-  }
-  let result = await as.update(answer);
-  if(result){
-    if(isUp){
-      ctx.body =  ResultFactory.buildSuccessResult("取消点赞成功")
-    }else{
-      ctx.body =  ResultFactory.buildSuccessResult("点赞成功")
-    }
-  }else{
-    ctx.body = ResultFactory.buildFailResult("失败")
+    ctx.body = ResultFactory.buildSuccessResult(result)
   }
 }
 
 const step_answer = async ctx => {
-  let body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
-  let answer = await as.findOne({"_id":body._id})
-  let isStep = article.step_list.indexOf(uid)>-1;
-  if(isStep === true){
-    //取消点踩
-    answer.step_list.remove(uid)
+  const result = await step_utils(ctx,'answer');
+  if(result === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    //点踩
-    answer.step_list.push(uid)
-    answer.up_list.remove(uid)
-  }
-  let result = await as.update(answer);
-  if(result){
-    if(isStep){
-      ctx.body =  ResultFactory.buildSuccessResult("取消点踩成功")
-    }else{
-      ctx.body =  ResultFactory.buildSuccessResult("点踩成功")
-    }
-  }else{
-    ctx.body = ResultFactory.buildFailResult("失败")
+    ctx.body = ResultFactory.buildSuccessResult(result)
   }
 }
 

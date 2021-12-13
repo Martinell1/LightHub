@@ -1,4 +1,6 @@
 const {Schema,model} = require("../config/db.js")
+const plugins = require('../plugins/article');  
+
 
 const articleSchema = new Schema({
   id:{
@@ -48,17 +50,14 @@ const articleSchema = new Schema({
     require:true,
     default:1
   },
-  update_time:{
-    type:Date,
-    require:true,
-    default:Date.now()
-  },
   create_time:{
     type:Date,
     require:true,
     default:new Date().toLocaleString()
   }
 },{versionKey:false})
+
+articleSchema.plugin(plugins.lastModified);
 
 const articleModel = model("articles",articleSchema)
 

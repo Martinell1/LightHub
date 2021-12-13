@@ -1,4 +1,4 @@
-const {Schema,model} = require("../config/db.js")
+const {Schema,model} = require("../config/db.js") 
 
 const userSchema = new Schema({
   
@@ -103,6 +103,7 @@ const userSchema = new Schema({
     default:new Date().toLocaleString()
   }
 },{versionKey:false})
+
 
 const userModel = model("user",userSchema)
 

@@ -1,11 +1,11 @@
 const {history} = require('../model')
-const Service = require('./')
+const Service = require('.')
 
-class historyService extends Service{
+class HistoryService extends Service{
   constructor(){
     super(history)
   }
 
 }
 
-module.exports = historyService;
+module.exports = HistoryService;

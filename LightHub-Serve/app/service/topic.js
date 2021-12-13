@@ -1,7 +1,7 @@
 const {topic} = require('../model')
 const Service = require('./')
 
-class topicService extends Service{
+class TopicService extends Service{
   constructor(){
     super(topic)
   }
@@ -68,4 +68,4 @@ class topicService extends Service{
   }
 }
 
-module.exports = topicService;
+module.exports = TopicService;

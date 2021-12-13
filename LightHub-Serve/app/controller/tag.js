@@ -1,23 +1,23 @@
-const tagService = require("../service/tag")
+const TagService = require("../service/tag")
 const ResultFactory = require('../result')
 const ObjectId = require('mongoose').Types.ObjectId
-const cs = new tagService();
+const tagService = new TagService();
 const {verify} = require('../utils/getToken')
 
 const list = async ctx => {
-  let result = await cs.list()
+  let result = await tagService.list()
   ctx.body = ResultFactory.buildSuccessResult(result)
 }
 
 const add = async ctx => {
   let tag = ctx.request.body
-  let result = await cs.add(tag)
+  let result = await tagService.add(tag)
   ctx.body =  result
 } 
 
 const remove = async ctx => {
   const id = ctx.request.body
-  let result = await cs.remove(id);
+  let result = await tagService.remove(id);
   if(result.modifiedCount === 0){
     ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
@@ -27,7 +27,7 @@ const remove = async ctx => {
 
 const update = async ctx => {
   let tag = ctx.request.body
-  let result = await cs.update(tag)
+  let result = await tagService.update(tag)
   ctx.body = ResultFactory.buildSuccessResult(result);
 }
 

@@ -1,7 +1,7 @@
 const {comment} = require('../model')
 const Service = require('.')
 
-class commentService extends Service{
+class CommentService extends Service{
   constructor(){
     super(comment)
   }
@@ -40,4 +40,4 @@ class commentService extends Service{
   }
 }
 
-module.exports = commentService;
+module.exports = CommentService;

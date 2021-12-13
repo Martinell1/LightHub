@@ -1,14 +1,13 @@
-const articleService = require("../service/article")
-const userService = require("../service/user");
-const commentService = require("../service/comment")
-const tagService = require("../service/tag")
+const ArticleService = require("../service/article")
+const UserService = require("../service/user");
+const TagService = require("../service/tag")
 const ResultFactory = require('../result')
-const as = new articleService();
-const us = new userService();
-const cs = new commentService();
-const ts = new tagService()
+const articleService = new ArticleService();
+const userService = new UserService();
+const tagService = new TagService()
 const ObjectId = require('../config/db').Types.ObjectId
 const {verify} = require('../utils/getToken')
+const {up_utils,step_utils} = require('../utils/thumbUtil')
 
 
 const list = async ctx => {
@@ -16,11 +15,11 @@ const list = async ctx => {
   let token = ctx.header.token;
   let result = []
   if(tag===''){
-    result = await as.getArticleListWithUserInfo();
+    result = await articleService.getArticleListWithUserInfo();
   }else{
-    const userInfo = await us.getInfoByToken(token);
+    const userInfo = await userService.getInfoByToken(token);
     const tagList = userInfo.tag_list;
-    result = await as.getArticleListByTag(tagList);
+    result = await articleService.getArticleListByTag(tagList);
   }
   result.forEach(element=>{
     element.author = element.author[0]
@@ -34,7 +33,7 @@ const list = async ctx => {
 
 const detail = async ctx => {
   let id = ObjectId(ctx.query.id);
-  let result = await as.getArticleWithUserInfo(id)
+  let result = await articleService.getArticleWithUserInfo(id)
   result[0].author = result[0].author[0]
   if(result[0]){
      ctx.body = ResultFactory.buildSuccessResult(result[0])
@@ -47,11 +46,11 @@ const add = async ctx => {
   let body = ctx.request.body
   const uid = verify(ctx.header.token).id
   body.tag_list = JSON.parse(body.tag_list)
-  let user = await us.findAndUpdate({'_id':uid},{$inc:{'article_count':1}})
+  let user = await userService.findAndUpdate({'_id':uid},{$inc:{'article_count':1}})
   body.tag_list.forEach(async element => {
-    let tag = await ts.findAndUpdate({'name':element},{$inc:{'article_count':1}})
+    let tag = await tagService.findAndUpdate({'name':element},{$inc:{'article_count':1}})
   });
-  let result = await as.add(body)
+  let result = await articleService.add(body)
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(result)
   }
@@ -59,7 +58,7 @@ const add = async ctx => {
 
 const remove = async ctx => {
   const id = ctx.request.body
-  let result = await as.remove(id);
+  let result = await articleService.remove(id);
   if(result.modifiedCount === 0){
     ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
@@ -68,52 +67,20 @@ const remove = async ctx => {
 }
 
 const up_article = async ctx => {
-  let body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
-  let article = await as.findOne({"_id":body._id})
-  let isUp = article.up_list.indexOf(uid)>-1;
-  if(isUp === true){
-    //取消赞
-    article.up_list.remove(uid)
+  const result = await up_utils(ctx,'article');
+  if(result === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    //点赞
-    article.up_list.push(uid)
-    article.step_list.remove(uid)
-  }
-  let result = await as.update(article);
-  if(result){
-    if(isUp){
-      ctx.body =  ResultFactory.buildSuccessResult("取消点赞成功")
-    }else{
-      ctx.body =  ResultFactory.buildSuccessResult("点赞成功")
-    }
-  }else{
-    ctx.body = ResultFactory.buildFailResult("失败")
+    ctx.body = ResultFactory.buildSuccessResult(result)
   }
 }
 
 const step_article = async ctx => {
-  let body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
-  let article = await as.findOne({"_id":body._id})
-  let isStep = article.step_list.indexOf(uid)>-1;
-  if(isStep === true){
-    //取消点踩
-    article.step_list.remove(uid)
+  const result = await step_utils(ctx,'article');
+  if(result === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    //点踩
-    article.step_list.push(uid)
-    article.up_list.remove(uid)
-  }
-  let result = await as.update(article);
-  if(result){
-    if(isStep){
-      ctx.body =  ResultFactory.buildSuccessResult("取消点踩成功")
-    }else{
-      ctx.body =  ResultFactory.buildSuccessResult("点踩成功")
-    }
-  }else{
-    ctx.body = ResultFactory.buildFailResult("失败")
+    ctx.body = ResultFactory.buildSuccessResult(result)
   }
 }
 
