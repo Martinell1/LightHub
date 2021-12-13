@@ -36,8 +36,18 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { getActionList } from '@/api/user';
 
+const loadActionHistory = async () => {
+  let { data: result } = await getActionList();
+  console.log(result);
 
+}
+
+onMounted(async () => {
+  loadActionHistory()
+})
 </script>
 <style  scoped>
 .moment-item {

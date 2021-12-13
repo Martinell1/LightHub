@@ -62,7 +62,6 @@ const step_comment = async ctx => {
 }
 
 
-
 const reply = async ctx => {
   let body = ctx.request.body
   body.reply_list = JSON.parse(body.reply_list);

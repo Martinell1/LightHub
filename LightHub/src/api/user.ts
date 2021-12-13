@@ -29,7 +29,11 @@ const updateFollowUser: Function = async (follow: Array<any>) => {
 }
 
 const updateStarTopic: Function = async (params: Array<any>) => {
-  return await axios.post("user/start_topic", params)
+  return await axios.post("user/star_topic", params)
+}
+
+const getActionList: Function = async () => {
+  return await axios.get("user/action_list")
 }
 
 export {
@@ -40,5 +44,6 @@ export {
   updateUserInfo,
   updateFollowTag,
   updateFollowUser,
-  updateStarTopic
+  updateStarTopic,
+  getActionList
 }

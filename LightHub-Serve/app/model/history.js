@@ -4,7 +4,7 @@ const historySchema = new Schema({
   user_id:{
     type:Schema.Types.ObjectId
   },
-  history_list:{
+  action_list:{
     type:Array,
     default:[]
   }

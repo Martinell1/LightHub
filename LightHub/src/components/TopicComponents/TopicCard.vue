@@ -110,34 +110,29 @@ const upSubmit = async (topic) => {
   params.append("user_id", userInfo.value._id)
   let { data: result } = await upTopic(params);
   if (result.code === 200) {
-    if (result.data === "取消点赞成功") {
-      msg("success", "取消点赞成功")
+    msg("success", result.code)
+    if (result.data === "已取消点赞") {
       let index = topic.up_list.indexOf(userInfo.value._id)
       topic.up_list.splice(index, 1)
     } else {
-      msg("success", "点赞成功")
       topic.up_list.push(userInfo.value._id)
     }
 
   }
 }
 
-
 const starSubmit = async (tid) => {
   const params = new FormData();
-  params.append('uid', userInfo.value._id);
   params.append('tid', tid);
   let { data: result } = await updateStarTopic(params);
 
   if (result.code === 200) {
-    if (result.data === true) {
+    msg("success", result.data)
+    if (result.data === "取关成功") {
       let index = userInfo.value.star_list.indexOf(tid)
       userInfo.value.star_list.splice(index, 1);
-      msg("success", "取关")
-
     } else {
       userInfo.value.star_list.push(tid);
-      msg("success", "关注成功")
     }
   }
 }

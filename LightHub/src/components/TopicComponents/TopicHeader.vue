@@ -99,20 +99,15 @@ const userInfo: any = inject('userInfo')
 const msg: any = inject('Message')
 const starSubmit = async (tid) => {
   const params = new FormData();
-  params.append('uid', userInfo.value._id);
   params.append('tid', tid);
   let { data: result } = await updateStarTopic(params);
-
   if (result.code === 200) {
-    if (result.data === true) {
+    msg("success", result.data)
+    if (result.data === "取关成功") {
       let index = userInfo.value.star_list.indexOf(tid)
       userInfo.value.star_list.splice(index, 1);
-      msg("success", "取关")
-
     } else {
       userInfo.value.star_list.push(tid);
-      msg("success", "关注成功")
-
     }
   }
 }

@@ -81,7 +81,7 @@ const isFollow = computed(() => {
   return userInfo.value.follows.indexOf(props.article.author_id) > -1
 })
 
-//提交按钮
+//关注
 const followSubmit = async () => {
   const params = new FormData();
   params.append('user_id', userInfo.value._id);

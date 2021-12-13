@@ -73,15 +73,13 @@ const msg: any = inject('Message')
 const upSubmit = async () => {
   const params = new FormData();
   params.append("_id", props.article._id);
-  params.append("user_id", userInfo.value._id)
   let { data: result } = await upArticle(params);
   if (result.code === 200) {
-    if (result.data === "取消点赞成功") {
-      msg("success", "取消点赞成功")
+    msg("success", result.data)
+    if (result.data === "已取消点赞") {
       let index = props.article.up_list.indexOf(userInfo.value._id)
       props.article.up_list.splice(index, 1)
     } else {
-      msg("success", "点赞成功")
       props.article.up_list.push(userInfo.value._id)
     }
   }

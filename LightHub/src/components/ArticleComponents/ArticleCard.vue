@@ -24,7 +24,7 @@
 
           <div class="flex items-center text-sm">
             <div
-              class="flex mr-4"
+              class="flex mr-4 ring-1 ring-orange-500"
               @click="upSubmit(article)"
               :class="{ 'btn-primary': isThumb(index), 'btn-plain': !isThumb(index) }"
             >
@@ -126,18 +126,15 @@ const msg: any = inject('Message')
 const upSubmit = async (article) => {
   let params = new FormData();
   params.append("_id", article._id);
-  params.append("user_id", userInfo.value._id)
   let { data: result } = await upArticle(params);
   if (result.code === 200) {
-    if (result.data === "取消点赞成功") {
-      msg("success", "取消点赞成功")
+    msg("success", result.data)
+    if (result.data === "已取消点赞") {
       let index = article.up_list.indexOf(userInfo.value._id)
       article.up_list.splice(index, 1)
     } else {
-      msg("success", "点赞成功")
       article.up_list.push(userInfo.value._id)
     }
-
   }
 }
 

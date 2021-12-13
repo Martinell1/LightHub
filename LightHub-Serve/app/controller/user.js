@@ -9,6 +9,7 @@ const topicService = new TopicService();
 const historyService = new HistoryService();
 
 const bcrypt = require('bcryptjs');
+const ObjectId = require('../config/db').Types.ObjectId
 const {buildToken,verify} = require('../utils/getToken')
 const {follow_utils} = require('../utils/followUtil')
 
@@ -87,7 +88,7 @@ const update = async ctx => {
 }
 
 const follow_tag = async ctx => {
-  let result = await follow_utils(ctx,'tag')
+  const result = await follow_utils(ctx,'tag')
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }else{
@@ -96,7 +97,7 @@ const follow_tag = async ctx => {
 }
 
 const follow_user = async ctx => {
-  let result = await follow_utils(ctx,'user')
+  const result = await follow_utils(ctx,'user')
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }else{
@@ -105,7 +106,7 @@ const follow_user = async ctx => {
 }
 
 const star_topic = async ctx => {
-  let result = await follow_utils(ctx,'topic')
+  const result = await follow_utils(ctx,'topic')
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }else{
@@ -123,6 +124,18 @@ const remove = async ctx => {
   }
 }
 
+const action_list = async ctx => {
+  const id = ObjectId(verify(ctx.header.token).id)
+
+  let result = await historyService.findDetail(id);
+  console.log(result);
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(result.action_list);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("出现错误");
+  }
+}
+
 module.exports = {
   list,
   remove,
@@ -132,5 +145,6 @@ module.exports = {
   info,
   follow_tag,
   follow_user,
-  star_topic
+  star_topic,
+  action_list
 }
