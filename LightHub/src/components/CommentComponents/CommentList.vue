@@ -17,7 +17,6 @@
 <script setup lang="ts">
 import ReplyInput from './ReplyInput.vue';
 import ReplyItem from './ReplyItem.vue';
-import UserInfo from '../Common/UserInfo.vue';
 const props: any = defineProps({
   commentList: Array
 })

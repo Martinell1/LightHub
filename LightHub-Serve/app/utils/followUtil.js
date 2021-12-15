@@ -39,19 +39,19 @@ const follow_utils = async(ctx,field) => {
 
   else if(field === 'topic'){
     const tid = body.tid
-    isFollow = user.star_list.indexOf(tid)>-1
+    isFollow = user.topic_list.indexOf(tid)>-1
     if(isFollow){
       //已关注，需要取关
       count = -1
-      result1 = await userService.findAndUpdate({"_id":user._id},{$pull:{"star_list":tid}});  
+      result1 = await userService.findAndUpdate({"_id":user._id},{$pull:{"topic_list":tid}});  
       await historyService.delete({"user_id":user._id,"opt":'follow',"field":'topic','target_id':tid})
     }else{
       //未关注，需要关注
       count = 1
-      result1 = await userService.findAndUpdate({"_id":user._id},{$push:{"star_list":tid}});
+      result1 = await userService.findAndUpdate({"_id":user._id},{$push:{"topic_list":tid}});
       await historyService.add({"user_id":user._id,"opt":'follow',"field":'topic','target_id':tid})
     }
-    result2 = await topicService.findAndUpdate({"_id":tid},{$inc:{"star_count":count}})
+    result2 = await topicService.findAndUpdate({"_id":tid},{$inc:{"follow_count":count}})
   }
 
   else if(field === 'user'){
@@ -73,9 +73,15 @@ const follow_utils = async(ctx,field) => {
   }
 
   if(result1 && result2 && count === 1){
-    return '关注成功'
+    return {
+      message:'关注成功',
+      data:count
+    }
   }else if(result1 && result2 && count === -1){
-    return '取关成功'
+    return {
+      message:'取关成功',
+      data:count
+    }
   }else{
     return '出现错误'
   }

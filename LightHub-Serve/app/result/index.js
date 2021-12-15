@@ -15,8 +15,8 @@ class ResultCode{
 
 class ResultFactory{
 
-  static buildSuccessResult(data){
-    return new Result(ResultCode.SUCCESS,"成功",data);
+  static buildSuccessResult(message='成功',data){
+    return new Result(ResultCode.SUCCESS,message,data);
   }
 
   static buildFailResult(message){

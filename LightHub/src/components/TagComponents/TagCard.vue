@@ -10,7 +10,7 @@
           <div class="mx-2 text-gray-500 text-sm">{{ tag.topic_count }}个讨论</div>
         </div>
 
-        <div @click="followSubmit(tag)" class="mt-2">
+        <div @click="followSubmit(tag._id)" class="mt-2">
           <div v-if="!isFollow(tag.name)" class="btn-plain-mini ring-1 ring-orange-500">未关注</div>
           <div v-if="isFollow(tag.name)" class="btn-primary-mini">已关注</div>
         </div>
@@ -21,29 +21,23 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import { updateFollowTag } from '@/api/user'
+import { followTag } from '@/util/useFollow'
 const props: any = defineProps({
   tagList: Array,
 })
 const msg: any = inject('Message')
 const userInfo: any = inject('userInfo')
 
-const followSubmit = async (tag) => {
-  const opt: any = isFollow(tag.name);
-  const params = new FormData();
-  params.append('user_id', userInfo.value._id);
-  params.append('tag_id', tag._id);
-  let { data: result } = await updateFollowTag(params);
+//关注
+const followSubmit = async (tid) => {
+  const result = await followTag(tid);
   if (result.code === 200) {
-    msg("success", '成功')
-    if (opt) {
-      userInfo.value.tag_list.splice(userInfo.value.tag_list.indexOf(name), 1)
-    } else {
-      userInfo.value.tag_list.push(tag.name)
-    }
-
+    msg('success', result.data);
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
+
 
 //是否关注
 const isFollow = (name) => {

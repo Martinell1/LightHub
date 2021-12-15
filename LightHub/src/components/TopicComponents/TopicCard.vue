@@ -21,8 +21,8 @@
         <div class="flex">
           <div
             class="flex mr-4 ring-1 ring-orange-500"
-            :class="{ 'btn-primary': isThumb(index), 'btn-plain': !isThumb(index) }"
-            @click="upSubmit(topic)"
+            :class="{ 'btn-primary': topic.isUp, 'btn-plain': !topic.isUp }"
+            @click="upSubmit(topic._id, index)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -34,14 +34,14 @@
                 d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"
               />
             </svg>
-            有所帮助 {{ topic.up_list.length }}
+            有所帮助 {{ topic.up_count }}
           </div>
         </div>
 
         <div
           class="flex mr-4 ring-1 ring-orange-500"
-          :class="{ 'btn-primary': isStar(topic._id), 'btn-plain': !isStar(topic._id) }"
-          @click="starSubmit(topic._id)"
+          :class="{ 'btn-primary': topic.isFollow, 'btn-plain': !topic.isFollow }"
+          @click="followSubmit(topic._id, index)"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -80,8 +80,9 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import { upTopic } from '@/api/topic';
-import { updateStarTopic } from '@/api/user';
+import { upTopic } from '@/util/useThumb';
+import { followTopic } from '@/util/useFollow';
+
 const props: any = defineProps({
   topicList: Array
 })
@@ -91,49 +92,27 @@ const userInfo: any = inject('userInfo')
 const hoverInfo: any = inject('hoverInfo')
 const removeHoverInfo: any = inject('removeHoverInfo')
 
-const isThumb = (index) => {
-  return props.topicList[index].up_list.indexOf(userInfo.value._id) > -1;
-}
 
-const isStar = (id) => {
-  if (userInfo.value._id) {
-    return (userInfo.value.star_list as Array<String>).indexOf(id) > -1
-  } else {
-    return false
-  }
-}
 
 const msg: any = inject("Message")
-const upSubmit = async (topic) => {
-  let params = new FormData();
-  params.append("_id", topic._id);
-  params.append("user_id", userInfo.value._id)
-  let { data: result } = await upTopic(params);
+const upSubmit = async (tid, index) => {
+  const result = await upTopic(tid)
   if (result.code === 200) {
-    msg("success", result.code)
-    if (result.data === "已取消点赞") {
-      let index = topic.up_list.indexOf(userInfo.value._id)
-      topic.up_list.splice(index, 1)
-    } else {
-      topic.up_list.push(userInfo.value._id)
-    }
-
+    msg('success', result.message);
+    props.topicList[index].isUp = !props.topicList[index].isUp
+    props.topicList[index].up_count += result.data
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
 
-const starSubmit = async (tid) => {
-  const params = new FormData();
-  params.append('tid', tid);
-  let { data: result } = await updateStarTopic(params);
-
+const followSubmit = async (tid, index) => {
+  const result = await followTopic(tid);
   if (result.code === 200) {
-    msg("success", result.data)
-    if (result.data === "取关成功") {
-      let index = userInfo.value.star_list.indexOf(tid)
-      userInfo.value.star_list.splice(index, 1);
-    } else {
-      userInfo.value.star_list.push(tid);
-    }
+    msg('success', result.message);
+    props.topicList[index].isFollow = !props.topicList[index].isFollow
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
 

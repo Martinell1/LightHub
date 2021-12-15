@@ -27,15 +27,15 @@
       </div>
     </div>
     <div v-if="!identify">
-      <div v-show="isFollow" @click="followSubmit()" class="btn-primary">取消关注</div>
-      <div v-show="!isFollow" @click="followSubmit()" class="btn-primary">关注他</div>
+      <div v-show="isFollow" @click="Submit()" class="btn-primary">取消关注</div>
+      <div v-show="!isFollow" @click="Submit()" class="btn-primary">关注他</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { updateFollowUser } from '@/api/user'
+import { followUser } from '@/util/useFollow'
 
 const currentUserInfo: any = ref({})
 //我的信息
@@ -72,20 +72,8 @@ const isFollow = computed(() => {
 })
 
 //提交按钮
-const followSubmit = async () => {
-  const params = new FormData();
-  params.append('user_id', userInfo.value._id);
-  params.append('followed_user_id', currentUserInfo.value._id);
-  let { data: result } = await updateFollowUser(params);
-
-  if (result.code === 200) {
-    if (result.data === true) {
-      userInfo.value.follows.splice(index, 1);
-    } else {
-      userInfo.value.follows.push(currentUserInfo.value._id);
-      currentUserInfo.fans.push(userInfo.value._id)
-    }
-  }
+const Submit = async () => {
+  await followUser(currentUserInfo.value._id);
 }
 
 

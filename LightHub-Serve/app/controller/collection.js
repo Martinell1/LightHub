@@ -10,7 +10,7 @@ const list = async ctx => {
   let id = ctx.query.uid
   let result = await collectionService.find({"holder_id":id})
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult(result);
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{
     ctx.body = ResultFactory.buildFailResult("出现错误")
   }
@@ -25,7 +25,7 @@ const add = async ctx => {
   let result =  await collectionService.add({"holder_id":uid,"name":body.name,"article_list":article_list})
 
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult("添加成功");
+    ctx.body = ResultFactory.buildSuccessResult(undefined,"添加成功");
   }else{
     ctx.body = ResultFactory.buildFailResult("添加失败")
   }
@@ -40,7 +40,7 @@ const fav = async ctx => {
   let article_list = Array.from(new Set(collection.article_list))
   let result = await collectionService.findAndUpdate({"_id":cid},{"article_list":article_list})
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult("添加成功");
+    ctx.body = ResultFactory.buildSuccessResult(undefined,"添加成功");
   }else{
     ctx.body = ResultFactory.buildFailResult("添加失败")
   }

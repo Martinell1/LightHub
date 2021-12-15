@@ -85,27 +85,20 @@
 
 <script setup lang="ts">
 import { ref, reactive, inject, computed } from 'vue'
-import { upComment, replyComment } from '@/api/comment';
+import { replyComment } from '@/api/comment';
+import { upComment } from '@/util/useThumb'
 
 const props: any = defineProps({
   comment: Object
 })
 const msg: any = inject('Message')
 const userInfo: any = inject('userInfo')
-const upSubmit = async (comment) => {
-  const params = new FormData();
-  params.append('_id', comment._id);
-  params.append("user_id", userInfo.value._id)
-  let { data: result } = await upComment(params);
+const upSubmit = async (cid) => {
+  const result = await upComment(cid)
   if (result.code === 200) {
-    if (result.data === "取消点赞成功") {
-      msg("success", "取消点赞成功")
-      let index = comment.up_list.indexOf(userInfo.value._id)
-      comment.up_list.splice(index, 1)
-    } else {
-      msg("success", "点赞成功")
-      comment.up_list.push(userInfo.value._id)
-    }
+    msg('success', result.data);
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
 

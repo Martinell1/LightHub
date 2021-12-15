@@ -1,15 +1,5 @@
 <template>
-  <TopicHeader
-    :topic_id="topic._id"
-    :tag_list="topic.tag_list"
-    :title="topic.title"
-    :initiator="topic.initiator"
-    :view_count="topic.view_count"
-    :up_list="topic.up_list"
-    :introduce="topic.introduce"
-    :star_count="topic.star_count"
-    @useEdit="shiftEdit()"
-  ></TopicHeader>
+  <TopicHeader :topic="topic" @useEdit="shiftEdit()"></TopicHeader>
 
   <div class="flex answer_layout mt-4">
     <div class="w-700">

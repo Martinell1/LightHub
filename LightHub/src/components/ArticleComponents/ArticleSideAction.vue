@@ -2,12 +2,12 @@
   <div class="fixed -ml-28 top-64">
     <div
       class="side-act-item"
-      :class="{ 'text-orange-500': isThumb, ' text-gray-500': !isThumb }"
+      :class="{ 'text-orange-500': props.article.isUp, ' text-gray-500': !props.article.isUp }"
       @click="upSubmit()"
     >
       <div
         class="absolute top-0 -right-2 bg-gray-500 text-gray-50 leading-3 text-xs rounded-full w-5 h-3 text-center"
-      >{{ props.article.up_list.length }}</div>
+      >{{ props.article.up_count }}</div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-5 w-5"
@@ -57,31 +57,23 @@
 
 <script setup lang="ts">
 import { ref, inject, computed } from 'vue'
-import { upArticle } from '@/api/article';
+import { upArticle } from '@/util/useThumb'
 
 import CollectionAdd from '../CollectionComponents/CollectionAdd.vue';
 const props: any = defineProps({
   article: Object
 })
 
-const userInfo: any = inject('userInfo')
-const isThumb = computed(() => {
-  return props.article.up_list.indexOf(userInfo.value._id) > -1;
-})
-
 const msg: any = inject('Message')
 const upSubmit = async () => {
-  const params = new FormData();
-  params.append("_id", props.article._id);
-  let { data: result } = await upArticle(params);
+  const result = await upArticle(props.article._id)
   if (result.code === 200) {
-    msg("success", result.data)
-    if (result.data === "已取消点赞") {
-      let index = props.article.up_list.indexOf(userInfo.value._id)
-      props.article.up_list.splice(index, 1)
-    } else {
-      props.article.up_list.push(userInfo.value._id)
-    }
+    msg('success', result.message);
+    props.article.isUp = !props.article.isUp
+    props.article.up_count += result.data
+
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
 

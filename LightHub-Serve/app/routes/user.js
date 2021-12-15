@@ -11,7 +11,7 @@ router.prefix('/user')
       .post("/follow_tag",user.follow_tag)
       .post("/follow_user",user.follow_user)
       .post("/remove",user.remove)
-      .post("/star_topic",user.star_topic)
+      .post("/follow_topic",user.follow_topic)
       .get("/action_list",user.action_list)
 
 

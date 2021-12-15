@@ -48,7 +48,7 @@ const userSchema = new Schema({
     require:true,
     default:[],
   },
-  star_list:{
+  topic_list:{
     type:Array,
     require:true,
     default:[],

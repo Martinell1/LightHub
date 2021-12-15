@@ -1,24 +1,28 @@
-import {  } from '@/api/user';
+import { updateFollowUser,updateFollowTag,updateFollowTopic } from '@/api/user';
 
-const loadUserInfo = async () => {
-  let { data: result } = await getOneById(route.params.id);
-  if (result.code === 200) {
-    currentUserInfo.value = result.data
-  }
-}
-const msg: any = inject('Message')
-const followSubmit = async () => {
-  const params = new FormData();
-  params.append('user_id', userInfo.value._id);
-  params.append('followed_user_id', currentUserInfo.value._id);
-  let { data: result } = await updateFollowUser(params);
-  if (result.code === 200) {
-    msg("success", '成功')
-    userInfo.value.follows.push(currentUserInfo.value._id)
-  }
+const followUser = async (uid) => {
+  const params = new FormData()
+  params.append('followed_user_id', uid)
+  const {data:result} = await updateFollowUser(params)
+  return result
 }
 
-//是否关注
-const isFollow = () => {
-  return userInfo.value.follows.indexOf(currentUserInfo.value._id) > -1 ? true : false
+const followTag = async (tid) => {
+  const params = new FormData()
+  params.append('tag_id', tid)
+  const {data:result} = await updateFollowTag(params)
+  return result
+}
+
+const followTopic = async (tid) => {
+  const params = new FormData()
+  params.append('tid', tid)
+  const { data: result } = await updateFollowTopic(params);
+  return result
+}
+
+export {
+  followUser,
+  followTag,
+  followTopic
 }

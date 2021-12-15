@@ -26,7 +26,7 @@
         <div
           class="cursor-pointer px-4 ring-2 ring-orange-500 text-center text-sm text-orange-500 p-1"
           v-if="!identify()"
-          @click="followSubmit()"
+          @click="Submit()"
         >
           <div v-if="!isFollow()">未关注</div>
           <div v-if="isFollow()">已关注</div>
@@ -39,8 +39,8 @@
 <script setup lang="ts">
 import { ref, inject, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
-import { getOneById, updateFollowUser } from '@/api/user';
-import { followSubmit } from '@/util/useFollow'
+import { getOneById } from '@/api/user';
+import { followUser } from '@/util/useFollow'
 const userInfo: any = inject('userInfo')
 
 const route = useRoute()
@@ -80,19 +80,14 @@ const loadUserInfo = async () => {
   }
 }
 const msg: any = inject('Message')
-// const followSubmit = async () => {
-//   const opt: any = isFollow();
-
-//   const params = new FormData();
-//   params.append('user_id', userInfo.value._id);
-//   params.append('followed_user_id', currentUserInfo.value._id);
-//   params.append('isFollow', opt);
-//   let { data: result } = await updateFollowUser(params);
-//   if (result.code === 200) {
-//     msg("success", '成功')
-//     userInfo.value.follows.push(currentUserInfo.value._id)
-//   }
-// }
+const Submit = async () => {
+  const result = await followUser(currentUserInfo.value._id);
+  if (result.code === 200) {
+    msg('success', result.data);
+  } else {
+    msg('fail', '出现错误' + result.code);
+  }
+}
 
 //是否关注
 const isFollow = () => {

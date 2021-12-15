@@ -11,16 +11,16 @@
           </div>
 
           <div class="my-2">
-            <h1 class="text-2xl font-semibold">{{ props.title }}</h1>
+            <h1 class="text-2xl font-semibold">{{ props.topic.title }}</h1>
           </div>
 
-          <p class="mb-2">{{ props.introduce }}</p>
+          <p class="mb-2">{{ props.topic.introduce }}</p>
 
           <div class="flex">
             <div
               class="flex mr-4 ring-1 ring-orange-500"
-              :class="{ 'btn-primary': isStar, 'btn-plain': !isStar }"
-              @click="starSubmit(props.topic_id)"
+              :class="{ 'btn-primary': props.topic.isFollow, 'btn-plain': !props.topic.isFollow }"
+              @click="followSubmit(props.topic._id)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,15 +56,15 @@
       <div class="w-260 flex justify-center h-12">
         <div class="flex flex-col items-center px-4">
           <div class="text-sm text-gray-500">点赞数</div>
-          <div class="font-semibold text-lg">{{ (props.up_list || []).length }}</div>
+          <div class="font-semibold text-lg">{{ props.topic.up_count }}</div>
         </div>
         <div class="flex flex-col items-center px-4 border-l-2">
           <div class="text-sm text-gray-500">浏览量</div>
-          <div class="font-semibold text-lg">{{ props.view_count }}</div>
+          <div class="font-semibold text-lg">{{ props.topic.view_count }}</div>
         </div>
         <div class="flex flex-col items-center px-4 border-l-2">
           <div class="text-sm text-gray-500">关注数</div>
-          <div class="font-semibold text-lg">{{ props.star_count }}</div>
+          <div class="font-semibold text-lg">{{ props.topic.follow_count }}</div>
         </div>
       </div>
     </div>
@@ -73,16 +73,9 @@
 
 <script setup lang="ts">
 import { inject, computed } from 'vue'
-import { updateStarTopic } from '@/api/user'
+import { followTopic } from '@/util/useFollow';
 const props: any = defineProps({
-  topic_id: String,
-  tag_list: Array,
-  title: String,
-  initiator: Object,
-  view_count: Number,
-  up_list: Array,
-  introduce: String,
-  star_count: Number
+  topic: Object
 })
 
 
@@ -91,24 +84,15 @@ const shiftEdit = () => {
   emit('useEdit')
 }
 
-const isStar = computed(() => {
-  return userInfo.value.star_list.indexOf(props.topic_id) > -1
-})
-
-const userInfo: any = inject('userInfo')
 const msg: any = inject('Message')
-const starSubmit = async (tid) => {
-  const params = new FormData();
-  params.append('tid', tid);
-  let { data: result } = await updateStarTopic(params);
+const followSubmit = async (tid) => {
+  const result = await followTopic(tid);
   if (result.code === 200) {
-    msg("success", result.data)
-    if (result.data === "取关成功") {
-      let index = userInfo.value.star_list.indexOf(tid)
-      userInfo.value.star_list.splice(index, 1);
-    } else {
-      userInfo.value.star_list.push(tid);
-    }
+    msg('success', result.message);
+    props.topic.isFollow = !props.topic.isFollow
+    props.topic.follow_count += result.data
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
 

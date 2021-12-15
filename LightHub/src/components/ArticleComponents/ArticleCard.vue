@@ -25,8 +25,8 @@
           <div class="flex items-center text-sm">
             <div
               class="flex mr-4 ring-1 ring-orange-500"
-              @click="upSubmit(article)"
-              :class="{ 'btn-primary': isThumb(index), 'btn-plain': !isThumb(index) }"
+              @click="upSubmit(article._id, index)"
+              :class="{ 'btn-primary': article.isUp, 'btn-plain': !article.isUp }"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@
                   d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
                 />
               </svg>
-              点赞{{ article.up_list.length }}
+              点赞{{ article.up_count }}
             </div>
 
             <router-link
@@ -101,12 +101,13 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
-import { upArticle } from '@/api/article';
+import { inject, ref } from 'vue'
+import { upArticle } from '@/util/useThumb'
 const props: any = defineProps({
   articleList: Array
 })
 
+const userInfo: any = inject('userInfo')
 
 const hoverInfo: any = inject('hoverInfo')
 const removeHoverInfo: any = inject('removeHoverInfo')
@@ -117,26 +118,19 @@ const fmt4Time = (create_time) => {
   return hours > 24 ? Math.floor(hours / 24) + "天前" : '1天内'
 }
 
-const isThumb = (index) => {
-  return props.articleList[index].up_list.indexOf(userInfo.value._id) > -1;
-}
 
-const userInfo: any = inject('userInfo')
 const msg: any = inject('Message')
-const upSubmit = async (article) => {
-  let params = new FormData();
-  params.append("_id", article._id);
-  let { data: result } = await upArticle(params);
+const upSubmit = async (aid, index) => {
+  const result = await upArticle(aid)
   if (result.code === 200) {
-    msg("success", result.data)
-    if (result.data === "已取消点赞") {
-      let index = article.up_list.indexOf(userInfo.value._id)
-      article.up_list.splice(index, 1)
-    } else {
-      article.up_list.push(userInfo.value._id)
-    }
+    msg('success', result.message);
+    props.articleList[index].isUp = !props.articleList[index].isUp
+    props.articleList[index].up_count += result.data
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
+
 
 </script>
 <style scoped>

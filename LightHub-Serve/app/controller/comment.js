@@ -14,7 +14,7 @@ const list = async ctx => {
     element.commenter = element.commenter[0]
   });
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult(result)
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
     ctx.body = ResultFactory.buildFailResult(result)
   }
@@ -26,7 +26,7 @@ const add = async ctx => {
   let result = await commentService.add(body)
   await articleService.update({"_id":body.aid},{$inc:{'comment_count':1}})
   if(result){
-    ctx.body =  ResultFactory.buildSuccessResult(result)
+    ctx.body =  ResultFactory.buildSuccessResult(undefined,result)
   }
 }
 
@@ -36,14 +36,14 @@ const remove = async ctx => {
   if(result.modifiedCount === 0){
     ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
-    ctx.body =  ResultFactory.buildSuccessResult("删除成功")
+    ctx.body =  ResultFactory.buildSuccessResult(undefined,"删除成功")
   }
 }
 
 const update = async ctx => {
   let comment = ctx.request.body
   let result = await commentService.update(comment)
-  ctx.body = ResultFactory.buildSuccessResult(result);
+  ctx.body = ResultFactory.buildSuccessResult(undefined,result);
 }
 
 const up_comment = async ctx => {
@@ -51,7 +51,7 @@ const up_comment = async ctx => {
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(result)
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }body = ResultFactory.buildFailResult("失败")
 }
 
@@ -60,7 +60,7 @@ const step_comment = async ctx => {
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(result)
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }
 }
 
@@ -70,7 +70,7 @@ const reply = async ctx => {
   body.reply_list = JSON.parse(body.reply_list);
   let result = await commentService.update(body)
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult("成功");
+    ctx.body = ResultFactory.buildSuccessResult(undefined,"成功");
   }else{
     ctx.body = ResultFactory.buildFilResult("失败");
   }

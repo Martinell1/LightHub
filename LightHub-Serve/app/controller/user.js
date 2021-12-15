@@ -21,7 +21,7 @@ const login = async ctx => {
   }
   let isEqual = await bcrypt.compare(body.password, user.password);
   if(isEqual){
-    return ctx.body = ResultFactory.buildSuccessResult(buildToken({"id":user._id}))
+    return ctx.body = ResultFactory.buildSuccessResult(undefined,buildToken({"id":user._id}))
   }else{
     return ctx.body = ResultFactory.buildFailResult("密码错误")
   }
@@ -56,20 +56,20 @@ const info = async ctx => {
       }
     )
     if(result){
-      ctx.body = ResultFactory.buildSuccessResult(result);
+      ctx.body = ResultFactory.buildSuccessResult(undefined,result);
     }
   }else{
     const token = ctx.query.token;
     let result = await userService.getInfoByToken(token);
     if(result){
-      return ctx.body = ResultFactory.buildSuccessResult(result);
+      return ctx.body = ResultFactory.buildSuccessResult(undefined,result);
     }
   }
 }
 
 const list = async ctx => {
   let result = await userService.list()
-  ctx.body = ResultFactory.buildSuccessResult(result)
+  ctx.body = ResultFactory.buildSuccessResult(undefined,result)
 }
 
 const update = async ctx => {
@@ -80,7 +80,7 @@ const update = async ctx => {
   await userService.findAndUpdate({"_id":uid},body)
   let result = await userService.findOne({"_id":uid})
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult(result);
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{
     ctx.body = ResultFactory.buildFailResult("更新失败");
   }
@@ -91,7 +91,7 @@ const follow_tag = async ctx => {
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(result);
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }
 }
 
@@ -100,16 +100,16 @@ const follow_user = async ctx => {
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(result);
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }
 }
 
-const star_topic = async ctx => {
-  const result = await follow_utils(ctx,'topic')
-  if(result === '出现错误'){
+const follow_topic = async ctx => {
+  const {message,data} = await follow_utils(ctx,'topic')
+  if(message === '出现错误'){
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(result);
+    ctx.body = ResultFactory.buildSuccessResult(message,data);
   }
 }
 
@@ -133,9 +133,8 @@ const action_list = async ctx => {
     item.topic = item.topic[0]
     return item
   });
-  console.log(result);
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult(result);
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{
     ctx.body = ResultFactory.buildFailResult("出现错误");
   }
@@ -150,6 +149,6 @@ module.exports = {
   info,
   follow_tag,
   follow_user,
-  star_topic,
+  follow_topic,
   action_list
 }

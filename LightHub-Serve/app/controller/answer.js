@@ -16,7 +16,7 @@ const saveOrUpdate = async ctx => {
     result = await answerService.add(body);
   }
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult("编辑成功");
+    ctx.body = ResultFactory.buildSuccessResult(undefined,"编辑成功");
   }else{
     ctx.body = ResultFactory.buildFailResult("编辑失败")
   }
@@ -29,7 +29,7 @@ const list = async ctx => {
     element.answerer = element.answerer[0]
   });
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult(result);
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{
     ctx.body = ResultFactory.buildFailResult("回答失败")
   }
@@ -43,7 +43,7 @@ const detail = async ctx => {
     element.answerer = element.answerer[0]
   });
   if(result[0]){
-    ctx.body = ResultFactory.buildSuccessResult(result[0]);
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result[0]);
   }else{
     ctx.body = ResultFactory.buildFailResult("回答失败")
   }
@@ -56,14 +56,14 @@ const remove = async ctx => {
   if(result.modifiedCount === 0){
     ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
-    ctx.body =  ResultFactory.buildSuccessResult("删除成功")
+    ctx.body =  ResultFactory.buildSuccessResult(undefined,"删除成功")
   }
 }
 
 const update = async ctx => {
   let answer = ctx.request.body
   let result = await answerService.update(answer)
-  ctx.body = ResultFactory.buildSuccessResult(result);
+  ctx.body = ResultFactory.buildSuccessResult(undefined,result);
 }
 
 const up_answer = async ctx => {
@@ -71,7 +71,7 @@ const up_answer = async ctx => {
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(result)
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }
 }
 
@@ -80,7 +80,7 @@ const step_answer = async ctx => {
   if(result === '出现错误'){
     ctx.body = ResultFactory.buildFailResult(result)
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(result)
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }
 }
 

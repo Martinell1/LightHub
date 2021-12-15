@@ -76,9 +76,15 @@ const up_utils = async(ctx,field) => {
   }
 
   if(result && isUp){
-    return "已取消点赞"
+    return {
+      message:"已取消点赞",
+      data:-1
+    }
   }else if(result && !isUp){
-    return '点赞成功'
+    return {
+      message:"点赞成功",
+      data:1
+    }
   }else{
     return '出现错误'
   }

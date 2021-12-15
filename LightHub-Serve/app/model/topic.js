@@ -21,7 +21,7 @@ const topicSchema = new Schema({
     type:Number,
     default:0
   },
-  star_count:{
+  follow_count:{
     type:Number,
     default:0
   },

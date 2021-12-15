@@ -12,11 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import UserInfo from '../Common/UserInfo.vue';
 const props: any = defineProps({
   reply_list: Array
 })
-console.log(props.reply_list);
 
 </script>
 <style  scoped>

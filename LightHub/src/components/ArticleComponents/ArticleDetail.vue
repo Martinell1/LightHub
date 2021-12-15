@@ -14,8 +14,8 @@
           </div>
         </div>
         <div v-if="!identify" @click="followSubmit()">
-          <div v-if="isFollow" class="btn-primary-mini">已关注</div>
-          <div v-if="!isFollow" class="btn-plain-mini ring-1 ring-orange-500">关注</div>
+          <div v-if="props.article.isFollow" class="btn-primary-mini">已关注</div>
+          <div v-if="!props.article.isFollow" class="btn-plain-mini ring-1 ring-orange-500">关注</div>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ import 'md-editor-v3/lib/style.css';
 import { fmt4Time } from '../../util/fmt4Time.js'
 import CommentList from '../CommentComponents/CommentList.vue';
 import CommentPublish from '../CommentComponents/CommentPublish.vue';
-import { updateFollowUser } from '@/api/user'
+import { followUser } from '@/util/useFollow'
 import ArticleSideAction from './ArticleSideAction.vue';
 const userInfo: any = inject('userInfo')
 const props: any = defineProps({
@@ -73,30 +73,17 @@ const identify = computed(() => {
   return userInfo.value._id === props.article.author_id
 })
 
-const index = computed(() => {
-  return userInfo.value.follows.indexOf(props.article.author_id)
-})
-
-const isFollow = computed(() => {
-  return userInfo.value.follows.indexOf(props.article.author_id) > -1
-})
-
 //关注
+const msg: any = inject('Message')
 const followSubmit = async () => {
-  const params = new FormData();
-  params.append('user_id', userInfo.value._id);
-  params.append('followed_user_id', props.article.author_id);
-  let { data: result } = await updateFollowUser(params);
-
+  const result = await followUser(props.article.author_id);
   if (result.code === 200) {
-    if (result.data === true) {
-      userInfo.value.follows.splice(index, 1);
-    } else {
-      userInfo.value.follows.push(props.article.author_id);
-      props.article.author.fans.push(userInfo.value._id)
-    }
+    msg('success', result.data);
+  } else {
+    msg('fail', '出现错误' + result.code);
   }
 }
+
 
 
 
