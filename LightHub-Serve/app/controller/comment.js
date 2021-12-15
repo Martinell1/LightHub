@@ -3,7 +3,9 @@ const ResultFactory = require('../result')
 const ObjectId = require('../config/db').Types.ObjectId
 const commentService = new CommentService();
 const {verify} = require('../utils/getToken')
-const {up_utils,step_utils} = require('../utils/thumbUtil')
+const {up_utils,step_utils} = require('../utils/thumbUtil');
+const ArticleService = require("../service/article");
+const articleService = new ArticleService()
 
 const list = async ctx => {
   const id = ObjectId(ctx.query.aid);
@@ -22,6 +24,7 @@ const list = async ctx => {
 const add = async ctx => {
   let body = ctx.request.body
   let result = await commentService.add(body)
+  await articleService.update({"_id":body.aid},{$inc:{'comment_count':1}})
   if(result){
     ctx.body =  ResultFactory.buildSuccessResult(result)
   }

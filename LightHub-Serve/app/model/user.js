@@ -63,10 +63,6 @@ const userSchema = new Schema({
     require:true,
     default:0
   },
-  collection_count:{
-    type:Number,
-    default:0
-  },
   answer_count:{
     type:Number,
     require:true,

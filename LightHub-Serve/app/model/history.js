@@ -4,10 +4,20 @@ const historySchema = new Schema({
   user_id:{
     type:Schema.Types.ObjectId
   },
-  action_list:{
-    type:Array,
-    default:[]
-  }
+  opt:{
+    type:String
+  },
+  field:{
+    type:String
+  },
+  target_id:{
+    type:Schema.Types.ObjectId
+  },
+  time:{
+    type:Date,
+    default:new Date().toLocaleString()
+  },
+  
 },{versionKey:false})
 
 const historyModel = model("history",historySchema)

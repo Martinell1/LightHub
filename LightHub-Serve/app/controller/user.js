@@ -7,7 +7,6 @@ const userService = new UserService();
 const tagService = new TagService();
 const topicService = new TopicService();
 const historyService = new HistoryService();
-
 const bcrypt = require('bcryptjs');
 const ObjectId = require('../config/db').Types.ObjectId
 const {buildToken,verify} = require('../utils/getToken')
@@ -126,11 +125,17 @@ const remove = async ctx => {
 
 const action_list = async ctx => {
   const id = ObjectId(verify(ctx.header.token).id)
-
   let result = await historyService.findDetail(id);
+  result.forEach(item => {
+    item.user = item.user[0]
+    item.tag = item.tag[0]
+    item.article = item.article[0]
+    item.topic = item.topic[0]
+    return item
+  });
   console.log(result);
   if(result){
-    ctx.body = ResultFactory.buildSuccessResult(result.action_list);
+    ctx.body = ResultFactory.buildSuccessResult(result);
   }else{
     ctx.body = ResultFactory.buildFailResult("出现错误");
   }

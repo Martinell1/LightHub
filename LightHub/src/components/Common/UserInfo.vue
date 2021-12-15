@@ -9,10 +9,6 @@
           :href="/user/ + currentUserInfo._id"
           class="mr-4 text-orange-600 font-semibold"
         >{{ currentUserInfo.nickname }}</a>
-        <!-- <router-link
-          :to="{ name: 'User', params: { 'id': currentUserInfo._id } }"
-          class="mr-4 text-orange-600 font-semibold"
-        >{{ currentUserInfo.nickname }}</router-link>-->
         <div class="text-sm text-gray-500">{{ currentUserInfo.introduce }}</div>
       </div>
     </div>

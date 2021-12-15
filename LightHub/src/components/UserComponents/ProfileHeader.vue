@@ -40,7 +40,7 @@
 import { ref, inject, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
 import { getOneById, updateFollowUser } from '@/api/user';
-
+import { followSubmit } from '@/util/useFollow'
 const userInfo: any = inject('userInfo')
 
 const route = useRoute()
@@ -80,19 +80,19 @@ const loadUserInfo = async () => {
   }
 }
 const msg: any = inject('Message')
-const followSubmit = async () => {
-  const opt: any = isFollow();
+// const followSubmit = async () => {
+//   const opt: any = isFollow();
 
-  const params = new FormData();
-  params.append('user_id', userInfo.value._id);
-  params.append('followed_user_id', currentUserInfo.value._id);
-  params.append('isFollow', opt);
-  let { data: result } = await updateFollowUser(params);
-  if (result.code === 200) {
-    msg("success", '成功')
-    userInfo.value.follows.push(currentUserInfo.value._id)
-  }
-}
+//   const params = new FormData();
+//   params.append('user_id', userInfo.value._id);
+//   params.append('followed_user_id', currentUserInfo.value._id);
+//   params.append('isFollow', opt);
+//   let { data: result } = await updateFollowUser(params);
+//   if (result.code === 200) {
+//     msg("success", '成功')
+//     userInfo.value.follows.push(currentUserInfo.value._id)
+//   }
+// }
 
 //是否关注
 const isFollow = () => {

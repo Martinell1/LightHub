@@ -24,6 +24,10 @@ class Service{
     { status : 0 } )
   }
 
+  delete(obj){
+    return this.model.deleteOne(obj);
+  }
+
   findAndUpdate(fndObj,updateObj){
     return this.model.findOneAndUpdate(fndObj,updateObj)
   }

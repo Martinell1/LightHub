@@ -28,7 +28,7 @@ const articleSchema = new Schema({
     type:Array,
     default:[]
   },
-  comments:{
+  comment_count:{
     type:Number,
     default:0
   },
