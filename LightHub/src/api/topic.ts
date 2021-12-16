@@ -8,6 +8,12 @@ const getTopicList: Function = async () => {
   return await axios.get("topic/list")
 }
 
+const getTopicListByInitiator: Function = async (id: String) => {
+  return await axios.get("topic/listByInitiator?id=" + id)
+}
+
+
+
 const getTopicById: Function = async (id: String) => {
   return await axios.get("topic/detail?id=" + id)
 }
@@ -21,5 +27,6 @@ export {
   addTopic,
   getTopicById,
   getTopicList,
+  getTopicListByInitiator,
   upTopic,
 }

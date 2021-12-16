@@ -39,7 +39,7 @@ class TopicService extends Service{
     ])
   }
 
-  async getTopicListWithUserInfo(id){
+  async getTopicListWithUserInfo(){
     return this.model.aggregate([
       {
         $lookup:{
@@ -66,6 +66,41 @@ class TopicService extends Service{
       }
     ])
   }
+
+  async getTopicListByInitiator(id){
+    return this.model.aggregate([
+      {
+        $match:{
+          initiator_id:id
+        }
+      },
+      {
+        $lookup:{
+          from: "users",
+          localField: "initiator_id",
+          foreignField: "_id",
+          as: "initiator",
+        }
+      },
+      {
+        $project:{
+          initiator: {
+            account:0,
+            password:0,
+            salt:0,
+            role:0,
+            tag_list:0,
+            gender:0,
+            phone:0,
+            email:0,
+            education:0,
+          }
+        }
+      }
+    ])
+  }
+
+  
 }
 
 module.exports = TopicService;

@@ -34,8 +34,24 @@ const list = async ctx => {
   }
 }
 
-const detail = async ctx => {
+const listByAuthor = async ctx => {
+  const id = ctx.query.id;
+  const user = await userService.getInfoByToken(ctx.header.token); 
+  let result = await articleService.getArticleListByAuthor(ObjectId(id));
+  result.forEach(element => {
+    element.isUp = element.up_list.some(item => item === user._id.toString())
+    element.up_count = element.up_list.length
+    delete element.up_list
+    element.author = element.author[0]
+  })
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult("获取信息失败")
+  }
+}
 
+const detail = async ctx => {
   const id = ObjectId(ctx.query.id);
   let result = await articleService.getArticleWithUserInfo(id)
   result = result[0]
@@ -96,6 +112,7 @@ const step_article = async ctx => {
 
 module.exports = {
   list,
+  listByAuthor,
   detail,
   add,
   remove,

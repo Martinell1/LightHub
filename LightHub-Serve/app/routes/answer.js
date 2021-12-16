@@ -4,6 +4,7 @@ const { answer } = require('../controller');
 const router = new Router();
 router.prefix('/answer')
       .get("/list",answer.list)
+      .get("/listByAnswerer",answer.listByAnswerer)
       .get("/detail",answer.detail)
       .post("/saveOrUpdate",answer.saveOrUpdate)
       .post("/up_answer",answer.up_answer)

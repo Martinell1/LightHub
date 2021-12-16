@@ -15,11 +15,29 @@ const list = async ctx => {
   const user = await userService.getInfoByToken(ctx.header.token);
   let result = await topicService.getTopicListWithUserInfo();
   result.forEach(element=>{
-    element.isUp = element.up_list.some(item => item === user._id)
+    element.isUp = element.up_list.some(item => item === user._id.toString())
     element.up_count = element.up_list.length
     delete element.up_list
     element.initiator = element.initiator[0]
-    result.isFollow = user.topic_list.some(item => item === element._id.toString())
+    element.isFollow = user.topic_list.some(item => item === element._id.toString())
+  })
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult(result)
+  }
+}
+
+const listByInitiator = async ctx => {
+  const id = ctx.query.id
+  const user = await userService.getInfoByToken(ctx.header.token);
+  let result = await topicService.getTopicListByInitiator(ObjectId(id));
+  result.forEach(element=>{
+    element.isUp = element.up_list.some(item => item === user._id.toString())
+    element.up_count = element.up_list.length
+    delete element.up_list
+    element.initiator = element.initiator[0]
+    element.isFollow = user.topic_list.some(item => item === element._id.toString())
   })
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
@@ -93,6 +111,7 @@ const up_topic = async ctx => {
 
 module.exports = {
   list,
+  listByInitiator,
   detail,
   add,
   remove,

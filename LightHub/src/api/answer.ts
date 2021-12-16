@@ -4,6 +4,10 @@ const getAnswerListById: Function = async (tid: String) => {
   return await axios.get("answer/list?tid=" + tid)
 }
 
+const getAnswerListByAnswerer: Function = async (id: String) => {
+  return await axios.get("answer/listByAnswerer?id=" + id)
+}
+
 const getAnswerByUserId: Function = async (tid: String, uid: String) => {
   return await axios.get("answer/detail?tid=" + tid + "&uid=" + uid)
 }
@@ -23,6 +27,7 @@ const stepAnswer: Function = async (params: Object) => {
 
 export {
   getAnswerListById,
+  getAnswerListByAnswerer,
   saveOrUpdateAnswer,
   upAnswer,
   stepAnswer,

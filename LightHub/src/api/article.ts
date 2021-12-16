@@ -4,6 +4,10 @@ const getArticleList: Function = async (tag: String) => {
   return await axios.get("article/list?tag=" + tag)
 }
 
+const getArticleListByAuthor: Function = async (id: String) => {
+  return await axios.get("article/listByAuthor?id=" + id)
+}
+
 const getArticleById: Function = async (id: String) => {
   return await axios.get("article/detail?id=" + id)
 }
@@ -23,6 +27,7 @@ const stepArticle: Function = async (params: Object) => {
 
 export {
   getArticleList,
+  getArticleListByAuthor,
   getArticleById,
   addArticle,
   upArticle,

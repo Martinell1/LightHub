@@ -35,6 +35,21 @@ const list = async ctx => {
   }
 }
 
+const listByAnswerer = async ctx => {
+  const id = ObjectId(ctx.query.id);
+  let result = await answerService.getAnswerListByAnswerer(id)
+  result.forEach(element => {
+    element.answerer = element.answerer[0]
+    element.topic = element.topic[0]
+  });
+  console.log(result);
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("回答失败")
+  }
+}
+
 const detail = async ctx => {
   let tid = ObjectId(ctx.query.tid);
   let uid = ObjectId(ctx.query.uid);
@@ -86,6 +101,7 @@ const step_answer = async ctx => {
 
 module.exports = {
   list,
+  listByAnswerer,
   saveOrUpdate,
   detail,
   up_answer,
