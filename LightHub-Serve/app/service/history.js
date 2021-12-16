@@ -67,7 +67,9 @@ class HistoryService extends Service{
           topic:{
             _id:1,
             title:1,
+            up_list:1,
             introduce:1,
+            follow_count:1,
           },
           tag:{
             _id:1,

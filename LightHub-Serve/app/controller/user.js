@@ -1,16 +1,20 @@
 const UserService = require("../service/user")
 const TagService = require("../service/tag");
 const TopicService = require("../service/topic");
+const ArticleService = require("../service/article");
 const HistoryService = require("../service/history");
 const ResultFactory = require('../result')
 const userService = new UserService();
 const tagService = new TagService();
 const topicService = new TopicService();
 const historyService = new HistoryService();
+const articleService = new ArticleService();
 const bcrypt = require('bcryptjs');
 const ObjectId = require('../config/db').Types.ObjectId
 const {buildToken,verify} = require('../utils/getToken')
-const {follow_utils} = require('../utils/followUtil')
+const {follow_utils} = require('../utils/followUtil');
+
+
 
 
 const login = async ctx => {
@@ -126,11 +130,25 @@ const remove = async ctx => {
 const action_list = async ctx => {
   const id = ObjectId(verify(ctx.header.token).id)
   let result = await historyService.findDetail(id);
+  const user = await userService.findOne({"_id":id});
   result.forEach(item => {
     item.user = item.user[0]
     item.tag = item.tag[0]
     item.article = item.article[0]
     item.topic = item.topic[0]
+    if(item.opt === 'thumb'){
+      if(item.field === 'article'){
+        item.article.isUp = item.article.up_list.some(item => item === id.toString())
+        item.article.up_count = item.article.up_list.length
+        delete item.article.up_list
+      }
+      if(item.field === 'topic'){
+        item.topic.isUp = item.topic.up_list.some(element => element === id.toString())
+        item.topic.isFollow = user.topic_list.some(element => item.topic._id.toString())
+        item.topic.up_count = item.topic.up_list.length
+        delete item.topic.up_list
+      }
+    }
     return item
   });
   if(result){

@@ -7,10 +7,21 @@ const lastModified = (schema, options) => {   
      this.modify_time = new Date;   
      next()   
   })   
-}  
+}
+
+const getIntroduece = (schema, options) => {   
+
+  schema.add({ introduce: String });    
+  
+  schema.pre('save', function (next) {   
+     this.introduce = this.content.slice(0,100)
+     next()   
+  })   
+}
  
 
 module.exports = {
-  lastModified
+  lastModified,
+  getIntroduece
 }   
  

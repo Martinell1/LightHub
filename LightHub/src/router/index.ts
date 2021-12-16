@@ -18,8 +18,6 @@ const routes: Array<RouteRecordRaw> = [
           header: () => import('../components/Common/MainHeader.vue')
         },
         redirect: to => {
-          // 方法接收目标路由作为参数
-          // return 重定向的字符串路径/路径对象
           return { name: 'Home', params: { 'tag': '' } }
         },
         children: [
@@ -41,6 +39,31 @@ const routes: Array<RouteRecordRaw> = [
             path: '',
             name: 'User',
             component: () => import('../components/UserComponents/UserPage.vue'),
+            redirect: to => {
+              return { name: 'MonmentList', params: { id: to.params.id } }
+            },
+            children: [
+              {
+                path: 'monment',
+                name: 'MonmentList',
+                component: () => import('../components/UserComponents/ActionList/MomentList.vue'),
+              },
+              {
+                path: 'article',
+                name: 'ArticleList',
+                component: () => import('../components/UserComponents/ActionList/ArticleList.vue'),
+              },
+              {
+                path: 'topic',
+                name: 'TopicList',
+                component: () => import('../components/UserComponents/ActionList/TopicList.vue'),
+              },
+              {
+                path: 'answer',
+                name: 'AnswerList',
+                component: () => import('../components/UserComponents/ActionList/AnswerList.vue'),
+              },
+            ]
           },
           {
             path: 'edit',
