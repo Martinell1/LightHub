@@ -27,11 +27,11 @@ const up_utils = async(ctx,field) => {
     isUp = topic.up_list.indexOf(uid)>-1;
     if(isUp){
       //取消赞
-      result = await topicService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid}})
+      result = await topicService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid},$inc:{"up_count":-1}})
       await historyService.delete({"user_id":uid,"opt":'thumb',"field":'topic','target_id':body._id})
     }else{
       //点赞
-      result = await topicService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid}})
+      result = await topicService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid},$inc:{"up_count":1}})
       await historyService.add({"user_id":uid,"opt":'thumb',"field":'topic','target_id':body._id})
     }
   }
@@ -41,10 +41,10 @@ const up_utils = async(ctx,field) => {
     let isUp = comment.up_list.indexOf(uid)>-1;
     if(isUp){
       //取消赞
-      result = await commentService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid}})
+      result = await commentService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid},$inc:{"up_count":-1}})
     }else{
       //点赞
-      result = await commentService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid}})
+      result = await commentService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid},$inc:{"up_count":1}})
     }
   }
 
@@ -53,12 +53,12 @@ const up_utils = async(ctx,field) => {
     isUp = article.up_list.indexOf(uid)>-1;
     if(isUp){
       //取消赞
-      result = await articleService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid}})
+      result = await articleService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid},$inc:{"up_count":-1}})
       await historyService.delete({"user_id":uid,"opt":'thumb',"field":'article','target_id':body._id})
 
     }else{
       //点赞
-      result = await articleService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid}})
+      result = await articleService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid},$inc:{"up_count":1}})
       await historyService.add({"user_id":uid,"opt":'thumb',"field":'article','target_id':body._id})
     }
   }
@@ -67,12 +67,13 @@ const up_utils = async(ctx,field) => {
     const answer = await answerService.findOne({"_id":body._id})
     isUp = answer.up_list.indexOf(uid)>-1;
     isStep = answer.step_list.indexOf(uid) > -1
+    const count = isStep ? 2 : 1
     if(isUp){
       //取消赞
-      result = await answerService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid}})
+      result = await answerService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid},$inc:{"up_count":-count}})
     }else{
       //点赞
-      result = await answerService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid}})
+      result = await answerService.findAndUpdate({"_id":body._id},{$push:{"up_list":uid},$pull:{"step_list":uid},$inc:{"up_count":count}})
     }
 
   }
@@ -102,10 +103,10 @@ const step_utils = async(ctx,field) => {
     isStep = comment.step_list.indexOf(uid)>-1;
     if(isStep){
       //取消点踩
-      result = await commentService.findAndUpdate({"_id":body._id},{$pull:{"step_list":uid}})
+      result = await commentService.findAndUpdate({"_id":body._id},{$pull:{"step_list":uid},$inc:{"up_count":1}})
     }else{
       //点踩
-      result = await commentService.findAndUpdate({"_id":body._id},{$push:{"step_list":uid},$pull:{"up_list":uid}})
+      result = await commentService.findAndUpdate({"_id":body._id},{$push:{"step_list":uid},$pull:{"up_list":uid},$inc:{"up_count":-1}})
     }
   }
 
@@ -114,10 +115,10 @@ const step_utils = async(ctx,field) => {
     isStep = article.step_list.indexOf(uid)>-1;
     if(isStep){
       //取消点踩
-      result = await articleService.findAndUpdate({"_id":body._id},{$pull:{"step_list":uid}})
+      result = await articleService.findAndUpdate({"_id":body._id},{$pull:{"step_list":uid},$inc:{"up_count":1}})
     }else{
       //点踩
-      result = await articleService.findAndUpdate({"_id":body._id},{$push:{"step_list":uid},$pull:{"up_list":uid}})
+      result = await articleService.findAndUpdate({"_id":body._id},{$push:{"step_list":uid},$pull:{"up_list":uid},$inc:{"up_count":-1}})
     }
   }
 
@@ -125,12 +126,13 @@ const step_utils = async(ctx,field) => {
     const answer = await answerService.findOne({"_id":body._id})
     isStep = answer.step_list.indexOf(uid) > -1
     isUp = answer.up_list.indexOf(uid) > -1
+    const count = isUp ? -2 : -1
     if(isStep){
       //取消点踩
-      result = await answerService.findAndUpdate({"_id":body._id},{$pull:{"step_list":uid}})
+      result = await answerService.findAndUpdate({"_id":body._id},{$pull:{"step_list":uid},$inc:{"up_count":-count}})
     }else{
       //点踩
-      result = await answerService.findAndUpdate({"_id":body._id},{$push:{"step_list":uid},$pull:{"up_list":uid}})
+      result = await answerService.findAndUpdate({"_id":body._id},{$push:{"step_list":uid},$pull:{"up_list":uid},$inc:{"up_count":count}})
     }
   }
   if(result && isStep){

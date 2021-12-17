@@ -11,7 +11,6 @@ class UserService extends Service{
     return await this.model.findOne({"_id":verify(token).id})
   }
 
-
 }
 
 module.exports = UserService;

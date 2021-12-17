@@ -16,6 +16,10 @@
     <div class="mx-2 ml-2">
       <ul class="text-sm leading-10">
         <li class="sidebar-item">
+          收藏集
+          <div>{{ userInfo.collection_count }}</div>
+        </li>
+        <li class="sidebar-item">
           关注标签
           <div>{{ userInfo.tag_list.length }}</div>
         </li>

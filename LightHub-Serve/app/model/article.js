@@ -5,11 +5,9 @@ const plugins = require('../plugins/article');
 const articleSchema = new Schema({
   id:{
     type:String,
-    require:true
   },
   title:{
     type:String,
-    require:true,
     default:"",
   },
   cover:{
@@ -21,7 +19,6 @@ const articleSchema = new Schema({
   },
   content:{
     type:String,
-    require:true,
     default:"",
   },
   tag_list:{
@@ -32,27 +29,34 @@ const articleSchema = new Schema({
     type:Number,
     default:0
   },
+  fav_count:{
+    type:Number,
+    default:0
+  },
   view_count:{
     type:Number,
-    require:true,
+    default:0
+  },
+  up_count:{
+    type:Number,
     default:0
   },
   up_list:{
     type:Array,
+    require:true,
     default:[]
   },
   step_list:{
     type:Array,
+    require:true,
     default:[]
   },
   status:{
     type:Number,
-    require:true,
     default:1
   },
   create_time:{
     type:Date,
-    require:true,
     default:new Date().toLocaleString()
   }
 },{versionKey:false})

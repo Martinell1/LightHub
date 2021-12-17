@@ -137,6 +137,36 @@ class ArticleService extends Service{
       }
     ])
   }
+
+  async getCreatorInfo(id){
+    return this.model.aggregate([
+      {
+        $match:{
+          author_id:id
+        }
+      },
+      {
+        $group:{
+          _id:'$author_id',
+          article_count:{
+            $sum:1
+          },
+          article_view_count:{
+            $sum:'$view_count'
+          },
+          article_up_count:{
+            $sum:'$up_count'
+          },
+          article_comment_count:{
+            $sum:'$comment_count'
+          },
+          article_fav_count:{
+            $sum:'$fav_count'
+          }
+        }
+      },
+    ])
+  }
 }
 
 module.exports = ArticleService;

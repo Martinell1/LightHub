@@ -43,6 +43,7 @@ const listByAuthor = async ctx => {
     element.up_count = element.up_list.length
     delete element.up_list
     element.author = element.author[0]
+    
   })
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)

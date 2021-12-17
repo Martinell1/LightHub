@@ -6,6 +6,9 @@ const userService = new UserService()
 const ObjectId = require('../config/db').Types.ObjectId
 const {verify} = require('../utils/getToken')
 const {up_utils,step_utils} = require('../utils/thumbUtil');
+const TopicService = require("../service/topic");
+const topicService = new TopicService()
+
 
 
 const saveOrUpdate = async ctx => {
@@ -17,6 +20,7 @@ const saveOrUpdate = async ctx => {
     result = await answerService.findAndUpdate({"topic_id":body.topic_id,"answerer_id":uid},{"content":body.content})
   }else{
     result = await answerService.add(body);
+    await topicService.findAndUpdate({"_id":body.topic_id},{$inc:{"answer_count":1}})
   }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,"编辑成功");

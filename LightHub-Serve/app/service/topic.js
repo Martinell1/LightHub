@@ -100,6 +100,36 @@ class TopicService extends Service{
     ])
   }
 
+  async getCreatorInfo(id){
+    return this.model.aggregate([
+      {
+        $match:{
+          initiator_id:id
+        }
+      },
+      {
+        $group:{
+          _id:'$initiator_id',
+          topic_count:{
+            $sum:1
+          },
+          topic_view_count:{
+            $sum:'$view_count'
+          },
+          topic_up_count:{
+            $sum:'$up_count'
+          },
+          topic_answer_count:{
+            $sum:'$answer_count'
+          },
+          topic_follow_count:{
+            $sum:'$follow_count'
+          }
+        }
+      },
+    ])
+  }
+
   
 }
 

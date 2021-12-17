@@ -60,14 +60,14 @@ const follow_utils = async(ctx,field) => {
     if(isFollow){
       //已关注，需要取关
       count = -1
-      result1 = await userService.findAndUpdate({"_id":user._id},{$pull:{"follows":followed_user._id}});  
-      result2 = await userService.findAndUpdate({"_id":followed_user._id},{$pull:{"fans":user._id}})
+      result1 = await userService.findAndUpdate({"_id":user._id},{$pull:{"follows":followed_user._id},$inc:{"follow_count":-1}});  
+      result2 = await userService.findAndUpdate({"_id":followed_user._id},{$pull:{"fans":user._id},$inc:{"fans_count":-1}})
       await historyService.delete({"user_id":user._id,"opt":'follow',"field":'user','target_id':body.followed_user_id})
     }else{
       //未关注，需要关注
       count = 1
-      result1 = await userService.findAndUpdate({"_id":user._id},{$push:{"follows":followed_user._id}});  
-      result2 = await userService.findAndUpdate({"_id":followed_user._id},{$push:{"fans":user._id}})
+      result1 = await userService.findAndUpdate({"_id":user._id},{$push:{"follows":followed_user._id},$inc:{"follow_count":1}});  
+      result2 = await userService.findAndUpdate({"_id":followed_user._id},{$push:{"fans":user._id},$inc:{"fans_count":1}})
       await historyService.add({"user_id":user._id,"opt":'follow',"field":'user','target_id':body.followed_user_id})
     }
   }

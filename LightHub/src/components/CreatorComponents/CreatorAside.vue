@@ -1,11 +1,13 @@
 <template>
-  <div class="card w-260 mr-5">
+  <div class="card w-260 mr-5" style="height:calc(100vh - 100px)">
     <div class="my-6">
       <div class="flex items-center">
         <img class="w-12 h-12 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
         <div class="text-gray-700">{{ userInfo.nickname }}</div>
       </div>
-      <div class="btn-primary mt-6">写文章</div>
+      <router-link :to="{ name: 'Editor' }">
+        <div class="btn-primary mt-6">写文章</div>
+      </router-link>
     </div>
     <div>
       <router-link class="side-item" :to="{ name: 'CreatorHome' }">

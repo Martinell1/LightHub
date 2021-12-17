@@ -6,13 +6,15 @@ const commentSchema = new Schema({
   },
   content:{
     type:String,
-    require:true,
     default:""
   },
   commenter_id:{
     type: Schema.Types.ObjectId,
-    require:true,
     default:""
+  },
+  up_count:{
+    type:Number,
+    default:0
   },
   reply_list:{
     type:Array,

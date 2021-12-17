@@ -9,11 +9,15 @@ const answerSchema = new Schema({
   },
   content:{
     type:String,
-    require:true,
+    default:""
   },
   comment_list:{
     type:Array,
     default:[]
+  },
+  up_count:{
+    type:Number,
+    default:0
   },
   up_list:{
     type:Array,
@@ -25,12 +29,10 @@ const answerSchema = new Schema({
   },
   status:{
     type:Number,
-    require:true,
     default:1,
   },
   create_time:{
     type:Date,
-    require:true,
     default:new Date().toLocaleString()
   }
 },{versionKey:false})

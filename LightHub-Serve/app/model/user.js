@@ -55,17 +55,22 @@ const userSchema = new Schema({
   },
   article_count:{
     type:Number,
-    require:true,
+    default:0
+  },
+  follow_count:{
+    type:Number,
+    default:0
+  },
+  fans_count:{
+    type:Number,
     default:0
   },
   topic_count:{
     type:Number,
-    require:true,
     default:0
   },
   answer_count:{
     type:Number,
-    require:true,
     default:0
   },
   gender:{

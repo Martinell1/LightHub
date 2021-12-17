@@ -21,26 +21,34 @@ const topicSchema = new Schema({
     type:Number,
     default:0
   },
+  up_count:{
+    type:Number,
+    default:0
+  },
+  answer_count:{
+    type:Number,
+    default:0
+  },
   follow_count:{
     type:Number,
     default:0
   },
   up_list:{
     type:Array,
+    require:true,
     default:[]
   },
   step_list:{
     type:Array,
+    require:true,
     default:[]
   },
   status:{
     type:Number,
-    require:true,
     default:1,
   },
   create_time:{
     type:Date,
-    require:true,
     default:new Date().toLocaleString()
   }
 },{versionKey:false})

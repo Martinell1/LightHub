@@ -9,6 +9,7 @@ const lastModified = (schema, options) => {   
   })   
 }
 
+
 const getIntroduece = (schema, options) => {   
 
   schema.add({ introduce: String });    

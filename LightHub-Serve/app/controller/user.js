@@ -139,18 +139,38 @@ const action_list = async ctx => {
     if(item.opt === 'thumb'){
       if(item.field === 'article'){
         item.article.isUp = item.article.up_list.some(item => item === id.toString())
-        item.article.up_count = item.article.up_list.length
         delete item.article.up_list
       }
       if(item.field === 'topic'){
         item.topic.isUp = item.topic.up_list.some(element => element === id.toString())
         item.topic.isFollow = user.topic_list.some(element => item.topic._id.toString())
-        item.topic.up_count = item.topic.up_list.length
         delete item.topic.up_list
       }
     }
     return item
   });
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("出现错误");
+  }
+}
+
+const getCreatorInfo = async ctx =>{
+  const id = ObjectId(verify(ctx.header.token).id)
+  let article = await articleService.getCreatorInfo(id);
+  article = article[0];
+  let topic =  await topicService.getCreatorInfo(id);
+  topic = topic[0];
+  const user = await userService.getInfoByToken(ctx.header.token);
+  let result = undefined;
+  if(article === undefined && topic === undefined){
+    result = "暂时未有数据"
+  }else{
+    result = Object.assign(article,topic)
+    result.fans_count = user.fans_count
+  }
+  console.log(result);
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{
@@ -168,5 +188,6 @@ module.exports = {
   follow_tag,
   follow_user,
   follow_topic,
-  action_list
+  action_list,
+  getCreatorInfo
 }

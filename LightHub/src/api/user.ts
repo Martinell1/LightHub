@@ -36,6 +36,10 @@ const getActionList: Function = async () => {
   return await axios.get("user/action_list")
 }
 
+const getCreatorInfo: Function = async () => {
+  return await axios.get("user/creator_info")
+}
+
 export {
   register,
   login,
@@ -45,5 +49,6 @@ export {
   updateFollowTag,
   updateFollowUser,
   updateFollowTopic,
-  getActionList
+  getActionList,
+  getCreatorInfo
 }
