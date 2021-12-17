@@ -1,6 +1,7 @@
 import { upTopic as apiUpTopic } from '@/api/topic';
 import { upArticle as apiUpArticle } from '@/api/article';
 import { upComment as apiUpComment } from '@/api/comment'
+import { upAnswer as apiUpAnswer ,stepAnswer as apiStepAnswer} from '@/api/answer'
 
 const upTopic = async (tid) => {
   const params = new FormData()
@@ -23,8 +24,25 @@ const upComment = async (comment) => {
   return result
 }
 
+const upAnswer = async (aid) => {
+  const params = new FormData()
+  params.append('_id', aid)
+  const { data: result } = await apiUpAnswer(params)
+  return result
+}
+
+const stepAnswer = async (aid) => {
+  const params = new FormData();
+  params.append("_id", aid);
+  const { data: result } = await apiStepAnswer(params);
+  return result
+}
+
+
 export {
   upTopic,
   upArticle,
-  upComment
+  upComment,
+  upAnswer,
+  stepAnswer
 }

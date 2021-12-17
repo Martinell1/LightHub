@@ -49,6 +49,7 @@
     </div>
   </div>
   <CollectionAdd
+    class="fixed top-80 -ml-16 mt-10"
     v-if="isCollection"
     :article_id="props.article._id"
     @useCollection="shiftCollection()"
@@ -56,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue'
+import { ref, inject } from 'vue'
 import { upArticle } from '@/util/useThumb'
 
 import CollectionAdd from '../CollectionComponents/CollectionAdd.vue';

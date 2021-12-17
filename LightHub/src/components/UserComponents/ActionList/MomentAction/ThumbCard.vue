@@ -24,7 +24,11 @@
     </div>
 
     <div v-if="props.data.field === 'topic'" class="flex justify-between text-gray-500">
-      <div class="moment-item" :class="{ 'text-orange-500': props.data.topic.isUp }">
+      <div
+        class="moment-item"
+        :class="{ 'text-orange-500': props.data.topic.isUp }"
+        @click="topicUpSubmit(props.data.topic._id)"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5 mr-1"
@@ -40,6 +44,7 @@
       <div
         class="moment-item border-l-2 border-r-2"
         :class="{ 'text-orange-500': props.data.topic.isFollow }"
+        @click="topicFollowSubmit(props.data.topic._id)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +77,11 @@
     </div>
 
     <div v-if="props.data.field === 'article'" class="flex justify-between text-gray-500">
-      <div class="moment-item" :class="{ 'text-orange-500': props.data.article.isUp }">
+      <div
+        class="moment-item"
+        :class="{ 'text-orange-500': props.data.article.isUp }"
+        @click="articleUpSubmit(props.data.article._id)"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5 mr-1"
@@ -85,7 +94,7 @@
         </svg>
         {{ props.data.article.up_count }}
       </div>
-      <div class="moment-item border-l-2 border-r-2">
+      <div class="moment-item border-l-2 border-r-2 relative" @click="shiftCollection()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5 mr-1"
@@ -98,6 +107,12 @@
         </svg>
         收藏
       </div>
+      <CollectionAdd
+        v-if="isCollection"
+        :article_id="props.data.article._id"
+        class="absolute ml-100"
+        @useCollection="shiftCollection()"
+      ></CollectionAdd>
       <div class="moment-item">
         <router-link
           :to="{ name: 'Article', params: { 'id': props.data.article._id } }"
@@ -124,14 +139,66 @@
 </template>
 
 <script setup lang="ts">
+import CollectionAdd from '@/components/CollectionComponents/CollectionAdd.vue';
+import { upArticle, upTopic } from '@/util/useThumb';
+import { followTopic } from '@/util/useFollow';
+import { ref, inject } from 'vue'
+
 const props: any = defineProps({
   data: Object
 })
 
+const isCollection = ref(false)
+
+const shiftCollection = () => {
+  isCollection.value = !isCollection.value
+}
+
+const msg: any = inject('Message')
+const topicUpSubmit = async (tid) => {
+  const result = await upTopic(tid)
+  if (result.code === 200) {
+    msg('success', result.message);
+    props.data.topic.isUp = !props.data.topic.isUp
+    props.data.topic.up_count += result.data
+  } else {
+    msg('fail', '出现错误' + result.code);
+  }
+}
+const topicFollowSubmit = async (tid) => {
+  const result = await followTopic(tid);
+  if (result.code === 200) {
+    msg('success', result.message);
+    props.data.topic.isFollow = !props.data.topic.isFollow
+    props.data.topic.follow_count += result.data
+  } else {
+    msg('fail', '出现错误' + result.code);
+  }
+}
+const articleUpSubmit = async (aid) => {
+  const result = await upArticle(aid)
+  if (result.code === 200) {
+    msg('success', result.message);
+    props.data.article.isUp = !props.data.article.isUp
+    props.data.article.up_count += result.data
+  } else {
+    msg('fail', '出现错误' + result.code);
+  }
+}
+const articleFollowSubmit = async (aid) => {
+  // const result = await followArticle(aid);
+  // if (result.code === 200) {
+  //   msg('success', result.message);
+  //   props.data.article.isFollow = !props.data.article.isFollow
+  //   props.data.article.follow_count += result.data
+  // } else {
+  //   msg('fail', '出现错误' + result.code);
+  // }
+}
 
 </script>
 <style  scoped>
 .moment-item {
-  @apply w-full text-center text-sm my-2 flex justify-center items-center;
+  @apply w-full text-center text-sm my-2 flex justify-center items-center cursor-pointer;
 }
 </style>

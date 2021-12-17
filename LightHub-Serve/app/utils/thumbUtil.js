@@ -19,8 +19,9 @@ const {verify} = require('./getToken')
 const up_utils = async(ctx,field) => {
   const body = ctx.request.body;
   const uid = verify(ctx.header.token).id
-  let result = undefined;
-  let isUp = undefined;
+  let result = undefined
+  let isUp = undefined
+  let isStep = undefined
   if(field === 'topic'){
     const topic = await topicService.findOne({"_id":body._id})
     isUp = topic.up_list.indexOf(uid)>-1;
@@ -65,6 +66,7 @@ const up_utils = async(ctx,field) => {
   else if(field === 'answer'){
     const answer = await answerService.findOne({"_id":body._id})
     isUp = answer.up_list.indexOf(uid)>-1;
+    isStep = answer.step_list.indexOf(uid) > -1
     if(isUp){
       //取消赞
       result = await answerService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid}})
@@ -83,7 +85,7 @@ const up_utils = async(ctx,field) => {
   }else if(result && !isUp){
     return {
       message:"点赞成功",
-      data:1
+      data:isStep ? 2 : 1
     }
   }else{
     return '出现错误'
@@ -93,7 +95,8 @@ const up_utils = async(ctx,field) => {
 const step_utils = async(ctx,field) => {
   const body = ctx.request.body;
   const uid = verify(ctx.header.token).id
-  let isStep = undefined;
+  let isStep = undefined
+  let isUp = undefined
   if(field === 'comment'){
     const comment = await commentService.findOne({"_id":body._id})
     isStep = comment.step_list.indexOf(uid)>-1;
@@ -120,7 +123,8 @@ const step_utils = async(ctx,field) => {
 
   else if(field === 'answer'){
     const answer = await answerService.findOne({"_id":body._id})
-    isStep = article.step_list.indexOf(uid)>-1;
+    isStep = answer.step_list.indexOf(uid) > -1
+    isUp = answer.up_list.indexOf(uid) > -1
     if(isStep){
       //取消点踩
       result = await answerService.findAndUpdate({"_id":body._id},{$pull:{"step_list":uid}})
@@ -129,11 +133,16 @@ const step_utils = async(ctx,field) => {
       result = await answerService.findAndUpdate({"_id":body._id},{$push:{"step_list":uid},$pull:{"up_list":uid}})
     }
   }
-
   if(result && isStep){
-    return "已取消点踩"
+    return {
+      message:"已取消点踩",
+      data:1
+    }
   }else if(result && !isStep){
-    return '踩了一下'
+    return {
+      message:"踩了一下",
+      data:isUp ? -2 : -1
+    }
   }else{
     return '出现错误'
   }

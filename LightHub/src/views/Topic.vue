@@ -4,7 +4,7 @@
   <div class="flex answer_layout mt-4">
     <div class="w-700">
       <AnswerTopic v-if="isEdit" :topic_id="topic._id"></AnswerTopic>
-      <AnswerList :answer_list="answer_list"></AnswerList>
+      <AnswerList :answerList="answerList"></AnswerList>
     </div>
     <div class="w-260"></div>
   </div>
@@ -16,7 +16,7 @@ import { getTopicById } from '@/api/topic';
 import { getAnswerListById } from '@/api/answer';
 import { useRoute } from 'vue-router';
 import TopicHeader from '@/components/TopicComponents/TopicHeader.vue';
-import AnswerList from '@/components/TopicComponents/AnswerList.vue';
+import AnswerList from '@/components/TopicComponents/AnswerCard.vue';
 import AnswerTopic from '@/components/TopicComponents/AnswerTopic.vue';
 const route = useRoute();
 const id = route.params.id;
@@ -36,11 +36,11 @@ const loadTopic = async () => {
   }
 }
 
-const answer_list = ref([])
+const answerList = ref([])
 const loadAnswerList = async () => {
   let { data: result } = await getAnswerListById(id);
   if (result.code === 200) {
-    answer_list.value = result.data
+    answerList.value = result.data
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed card w-80 flex flex-col z-20 top-80 -ml-16 mt-10">
+  <div class="card w-80 flex flex-col z-20">
     <div class="h-9 flex justify-center items-center border-b-2 border-gray-100">
       <h1 class="font-semibold text-sm">添加到收藏集</h1>
     </div>

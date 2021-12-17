@@ -1,9 +1,12 @@
 const AnswerService = require("../service/answer")
+const UserService = require("../service/user");
 const ResultFactory = require('../result')
 const answerService = new AnswerService();
+const userService = new UserService()
 const ObjectId = require('../config/db').Types.ObjectId
 const {verify} = require('../utils/getToken')
-const {up_utils,step_utils} = require('../utils/thumbUtil')
+const {up_utils,step_utils} = require('../utils/thumbUtil');
+
 
 const saveOrUpdate = async ctx => {
   let body = ctx.request.body;
@@ -27,6 +30,9 @@ const list = async ctx => {
   let result = await answerService.getAnswerListByTopicId(id)
   result.forEach(element => {
     element.answerer = element.answerer[0]
+    element.isUp = element.up_list.some(item => item === verify(ctx.header.token).id)
+    element.isStep = element.step_list.some(item => item === verify(ctx.header.token).id)
+    element.up_count = element.up_list.length - element.step_list.length;
   });
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);
@@ -41,8 +47,10 @@ const listByAnswerer = async ctx => {
   result.forEach(element => {
     element.answerer = element.answerer[0]
     element.topic = element.topic[0]
+    element.isUp = element.up_list.some(item => item === verify(ctx.header.token).id)
+    element.isStep = element.step_list.some(item => item === verify(ctx.header.token).id)
+    element.up_count = element.up_list.length - element.step_list.length;
   });
-  console.log(result);
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{
@@ -82,20 +90,21 @@ const update = async ctx => {
 }
 
 const up_answer = async ctx => {
-  const result = await up_utils(ctx,'answer');
-  if(result === '出现错误'){
-    ctx.body = ResultFactory.buildFailResult(result)
+  const {message,data} = await up_utils(ctx,'answer');
+  if(message === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(message)
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+    ctx.body = ResultFactory.buildSuccessResult(message,data)
   }
 }
 
+
 const step_answer = async ctx => {
-  const result = await step_utils(ctx,'answer');
-  if(result === '出现错误'){
-    ctx.body = ResultFactory.buildFailResult(result)
+  const {message,data} = await step_utils(ctx,'answer');
+  if(message === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(message)
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+    ctx.body = ResultFactory.buildSuccessResult(message,data)
   }
 }
 
