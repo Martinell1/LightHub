@@ -7,8 +7,9 @@
     />
     <div class="flex items-center">
       <TagAdd @collection="getTagList"></TagAdd>
-      <div class="btn-plain ring-1 ring-orange-600 mx-4">草稿箱</div>
-      <div class="btn-primary" @click="articleSubmit()">发布</div>
+      <div class="btn-plain ring-1 ring-orange-600" @click="saveSubmit()">保存</div>
+      <div class="btn-plain ring-1 ring-orange-600 mx-4" @click="articleSubmit()">发布</div>
+      <div class="btn-primary ring-1 ring-orange-600">草稿箱</div>
       <img class="w-8 h-8 rounded-full my-4 ml-4" src="../../assets/images/login-bg.jpg" />
     </div>
   </div>
@@ -33,15 +34,33 @@ const getTagList = (tagList) => {
 const msg: any = inject('Message')
 const router = useRouter()
 const title = ref('')
+
+const saveSubmit = async () => {
+  const params: any = new FormData();
+  params.append('status', 2);
+  params.append('title', title.value);
+  params.append('content', store.state.articleText);
+  params.append('tag_list', JSON.stringify(currentTagList.value));
+
+  let { data: result } = await addArticle(params);
+  if (result.code === 200) {
+    msg('success', '保存成功')
+    router.push({
+      name: 'CreatorHome',
+      params: { id: userInfo.value._id }
+    })
+  }
+}
+
+
 const articleSubmit = async () => {
   if (store.state.articleText === '') {
     msg('fail', '内容不可为空')
     return
   }
-  const params = new FormData();
+  const params: any = new FormData();
   params.append('title', title.value);
   params.append('content', store.state.articleText);
-  params.append('author_id', userInfo.value._id);
   params.append('tag_list', JSON.stringify(currentTagList.value));
 
   let { data: result } = await addArticle(params);

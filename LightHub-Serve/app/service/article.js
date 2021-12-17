@@ -10,7 +10,8 @@ class ArticleService extends Service{
     return this.model.aggregate([
       {
         $match:{
-          _id:id
+          _id:id,
+          status:1
         }
       },
       {
@@ -45,6 +46,11 @@ class ArticleService extends Service{
   async getArticleListWithUserInfo(){
     return this.model.aggregate([
       {
+        $match:{
+          status:1
+        }
+      },
+      {
         $lookup:{
           from: "users",
           localField: "author_id",
@@ -74,7 +80,8 @@ class ArticleService extends Service{
     return this.model.aggregate([
       {
         $match:{
-          author_id:id
+          author_id:id,
+          status:1
         }
       },
       {
@@ -109,7 +116,8 @@ class ArticleService extends Service{
         $match:{
          tag_list:{
             $in:tagList
-         }
+         },
+         status:1
         }
       },
       {
@@ -142,7 +150,7 @@ class ArticleService extends Service{
     return this.model.aggregate([
       {
         $match:{
-          author_id:id
+          author_id:id,
         }
       },
       {
@@ -165,6 +173,17 @@ class ArticleService extends Service{
           }
         }
       },
+    ])
+  }
+
+  async getDraftArticle(id){
+    return this.model.aggregate([
+      {
+        $match:{
+          author_id:id,
+          status:2,
+        }
+      }
     ])
   }
 }

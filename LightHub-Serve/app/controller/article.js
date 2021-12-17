@@ -75,6 +75,7 @@ const add = async ctx => {
   body.tag_list.forEach(async element => {
     let tag = await tagService.findAndUpdate({'name':element},{$inc:{'article_count':1}})
   });
+  body.author_id = uid
   let result = await articleService.add(body)
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)

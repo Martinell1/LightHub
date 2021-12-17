@@ -160,6 +160,7 @@ const getCreatorInfo = async ctx =>{
   const id = ObjectId(verify(ctx.header.token).id)
   let article = await articleService.getCreatorInfo(id);
   article = article[0];
+  let draft = await articleService.getDraftArticle(id)
   let topic =  await topicService.getCreatorInfo(id);
   topic = topic[0];
   const user = await userService.getInfoByToken(ctx.header.token);
@@ -169,8 +170,8 @@ const getCreatorInfo = async ctx =>{
   }else{
     result = Object.assign(article,topic)
     result.fans_count = user.fans_count
+    result.draft_count = draft.length
   }
-  console.log(result);
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{

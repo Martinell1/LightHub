@@ -13,6 +13,10 @@
         <div class="text-4xl font-semibold">{{ creatorInfo.article_count }}</div>
       </div>
       <div class="data-card">
+        <div class="text-sm">草稿箱</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.draft_count }}</div>
+      </div>
+      <div class="data-card">
         <div class="text-sm">文章阅读数</div>
         <div class="text-4xl font-semibold">{{ creatorInfo.article_view_count }}</div>
       </div>
