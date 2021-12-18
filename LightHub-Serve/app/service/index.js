@@ -3,6 +3,10 @@ class Service{
     this.model = model
   }
 
+  findAll(obj,fields){
+    return this.model.find(obj,fields);
+  }
+
   findOne(obj,fields){
     obj.status = 1
     return this.model.findOne(obj,fields);
@@ -21,16 +25,16 @@ class Service{
     return this.model.create(obj);
   }
 
-  remove(id){
-    return this.model.updateOne({_id:id},{ status : 0 } )
+  remove(obj){
+    return this.model.updateMany(obj,{ status : 0 } )
   }
 
   delete(obj){
-    return this.model.deleteOne(obj);
+    return this.model.deleteMany(obj);
   }
 
-  findAndUpdate(findObj,updateObj){
-    findObj.status = 1
+  findAndUpdate(findObj,updateObj,status=1){
+    findObj.status = status
     return this.model.findOneAndUpdate(findObj,updateObj)
   }
 

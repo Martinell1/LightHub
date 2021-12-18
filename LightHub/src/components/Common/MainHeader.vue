@@ -40,13 +40,14 @@
           class="absolute rounded bg-gray-50 -ml-24 text-gray-500 ring-2 ring-gray-200 text-sm z-50"
         >
           <li class="user-opt-item">
-            <router-link to="/editor">写文章</router-link>
-          </li>
-          <li class="user-opt-item border-b-2 border-gray-100">草稿箱</li>
-          <li class="user-opt-item">
             <router-link :to="{ name: 'User', params: { 'id': userInfo.id } }">我的主页</router-link>
           </li>
-          <li class="user-opt-item border-b-2 border-gray-100">我赞过的</li>
+          <li class="user-opt-item">
+            <router-link :to="{ name: 'CreatorHome', params: { 'id': userInfo.id } }">创作者中心</router-link>
+          </li>
+          <li class="user-opt-item">
+            <router-link to="/editor">写文章</router-link>
+          </li>
           <li class="user-opt-item" @click="exit()">退出</li>
         </ul>
       </div>

@@ -53,7 +53,6 @@ defineExpose({
   setUserInfo,
 })
 
-const emit = defineEmits(['close'])
 //编辑框的工具栏
 const toolBars: any = [
   'bold',

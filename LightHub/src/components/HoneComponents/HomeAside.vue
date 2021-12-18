@@ -1,6 +1,6 @@
 <template>
   <aside class="ml-20p w-280 flex-col">
-    <div class="card p-4">
+    <div class="card px-5 p-4">
       <div class="flex justify-between">
         <div class="flex items-center text-sm">
           <svg
@@ -80,7 +80,7 @@
       >进入创作中心></a>
     </div>
 
-    <div class="card py-2 mt-4">
+    <div class="card px-5 py-2 mt-4">
       <ul class="text-sm leading-10">
         <li class="sidebar-item">
           <div class="flex items-center">

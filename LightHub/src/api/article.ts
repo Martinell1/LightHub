@@ -24,6 +24,14 @@ const stepArticle: Function = async (params: Object) => {
   return await axios.post("article/step_article", params)
 }
 
+const creator_article_list: Function = async () => {
+  return await axios.get("article/creator_article_list")
+}
+
+const remove_article: Function = async (params: Object) => {
+  return await axios.post("article/remove", params)
+}
+
 
 export {
   getArticleList,
@@ -32,4 +40,6 @@ export {
   addArticle,
   upArticle,
   stepArticle,
+  creator_article_list,
+  remove_article
 }

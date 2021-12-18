@@ -1,7 +1,7 @@
 <template>
   <div class="creator_layout">
     <CreatorAside></CreatorAside>
-    <div class="w-700 ml-5">
+    <div class="w-900 ml-5">
       <router-view></router-view>
     </div>
   </div>

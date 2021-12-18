@@ -6,12 +6,12 @@ class ArticleService extends Service{
     super(article)
   }
 
-  async getArticleWithUserInfo(id){
+  async getArticleWithUserInfo(id,status=1){
     return this.model.aggregate([
       {
         $match:{
           _id:id,
-          status:1
+          status:status
         }
       },
       {
@@ -182,6 +182,13 @@ class ArticleService extends Service{
         $match:{
           author_id:id,
           status:2,
+        }
+      },
+      {
+        $project:{
+          title:1,
+          status:1,
+          create_time:1,
         }
       }
     ])

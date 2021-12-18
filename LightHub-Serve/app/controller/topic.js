@@ -82,7 +82,7 @@ const add = async ctx => {
 
 const remove = async ctx => {
   const id = ctx.request.body
-  let result = await topicService.remove(id);
+  let result = await topicService.remove({"_id":id});
   if(result.modifiedCount === 0){
     ctx.body = ResultFactory.buildFailResult("删除失败")
   }else{

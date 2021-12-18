@@ -2,12 +2,15 @@ const ArticleService = require("../service/article")
 const UserService = require("../service/user");
 const TagService = require("../service/tag")
 const ResultFactory = require('../result')
+const HistoryService = require("../service/history");
 const articleService = new ArticleService();
 const userService = new UserService();
 const tagService = new TagService()
+const historyService = new HistoryService();
 const ObjectId = require('../config/db').Types.ObjectId
 const {verify} = require('../utils/getToken')
-const {up_utils,step_utils} = require('../utils/thumbUtil')
+const {up_utils,step_utils} = require('../utils/thumbUtil');
+
 
 
 const list = async ctx => {
@@ -54,7 +57,7 @@ const listByAuthor = async ctx => {
 
 const detail = async ctx => {
   const id = ObjectId(ctx.query.id);
-  let result = await articleService.getArticleWithUserInfo(id)
+  let result = await articleService.getArticleWithUserInfo(id,2)
   result = result[0]
   result.author = result.author[0]
   result.isUp = result.up_list.some(item => item === verify(ctx.header.token).id)
@@ -71,20 +74,34 @@ const add = async ctx => {
   let body = ctx.request.body
   const uid = verify(ctx.header.token).id
   body.tag_list = JSON.parse(body.tag_list)
-  let user = await userService.findAndUpdate({'_id':uid},{$inc:{'article_count':1}})
-  body.tag_list.forEach(async element => {
-    let tag = await tagService.findAndUpdate({'name':element},{$inc:{'article_count':1}})
-  });
   body.author_id = uid
-  let result = await articleService.add(body)
+  let result = undefined;
+  if(body._id){
+    result = await articleService.findAndUpdate({"_id":body._id},body,2)
+  }else{
+    result = await articleService.add(body)
+  }
+  await userService.findAndUpdate({'_id':uid},{$inc:{'article_count':1}})
+  body.tag_list.forEach(async element => {
+    await tagService.findAndUpdate({'name':element},{$inc:{'article_count':1}})
+  });
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body =  ResultFactory.buildSuccessResult(undefined,"出现错误")
   }
 }
 
 const remove = async ctx => {
-  const id = ctx.request.body
-  let result = await articleService.remove(id);
+  const aid = ctx.request.body.aid
+  const uid = verify(ctx.header.token).id;
+  const article = await articleService.findOne({"_id":aid},{"author_id":1})
+  let result = undefined;
+  if(uid === article.author_id.toString()){
+    let temp = await historyService.delete({"target_id":aid})
+
+    result = await articleService.remove({"_id":aid});
+  }
   if(result.modifiedCount === 0){
     ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
@@ -110,6 +127,22 @@ const step_article = async ctx => {
   }
 }
 
+const creator_article_list = async ctx => {
+  const id = verify(ctx.header.token).id;
+  let article = await articleService.find({"author_id":id},{'title':1,'status':1,'create_time':1})
+  let draft = await articleService.getDraftArticle(ObjectId(id))
+  let result = {
+    'article_list' : article,
+    'draft_list' : draft
+  }
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult('出现错误')
+  }
+}
+
+
 
 
 module.exports = {
@@ -120,4 +153,5 @@ module.exports = {
   remove,
   up_article,
   step_article,
+  creator_article_list
 }

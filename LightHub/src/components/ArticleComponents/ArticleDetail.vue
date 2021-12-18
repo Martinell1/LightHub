@@ -1,6 +1,6 @@
 <template>
   <ArticleSideAction :article="props.article"></ArticleSideAction>
-  <div class="card">
+  <div class="card px-5">
     <article class="py-6">
       <div class="flex justify-between items-center mb-6">
         <div class="flex items-center">

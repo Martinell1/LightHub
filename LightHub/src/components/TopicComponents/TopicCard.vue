@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card px-5">
     <div v-for="(topic,index) in props.topicList" class="py-4 border-b-2 last">
       <div
         class="flex items-center relative"

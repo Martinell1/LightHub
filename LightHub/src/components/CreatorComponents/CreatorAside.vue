@@ -1,5 +1,5 @@
 <template>
-  <div class="card w-260 mr-5" style="height:calc(100vh - 100px)">
+  <div class="card px-5 w-260 mr-5" style="height:calc(100vh - 100px)">
     <div class="my-6">
       <div class="flex items-center">
         <img class="w-12 h-12 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />

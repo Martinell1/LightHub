@@ -119,7 +119,7 @@ const follow_topic = async ctx => {
 
 const remove = async ctx => {
   const id = verify(ctx.header.token).id
-  let result = await userService.remove(id);
+  let result = await userService.remove({"_id":id});
   if(result.modifiedCount === 0){
     ctx.body = ResultFactory.buildFailResult("删除失败")
   }else{

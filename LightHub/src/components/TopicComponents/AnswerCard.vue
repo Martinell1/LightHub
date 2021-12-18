@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col mb-4 card">
+  <div class="flex flex-col mb-4 card px-5">
     <div
       v-for="(answer,index) in props.answerList"
       class="border-b-2 mt-4 border-gray-100 relative"

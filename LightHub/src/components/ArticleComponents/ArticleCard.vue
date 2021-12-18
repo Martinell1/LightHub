@@ -1,5 +1,5 @@
 <template>
-  <div class="w-700 card">
+  <div class="w-700 card px-5">
     <div v-for="(article,index) in props.articleList" :key="index" class="py-4 border-b-2 last">
       <div
         class="flex mb-2 text-sm text-gray-600 relative"

@@ -1,9 +1,9 @@
 <template>
-  <div class="card flex-col flex">
+  <div class="card px-5 flex-col flex" style="height:calc(100vh - 100px)">
     <div>
       <h1 class="text-xl py-2 text-gray-500">数据概览</h1>
     </div>
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap justify-between">
       <div class="data-card">
         <div class="text-sm">关注数</div>
         <div class="text-4xl font-semibold">{{ creatorInfo.fans_count }}</div>
@@ -75,10 +75,6 @@ onMounted(() => {
 </script>
 <style scoped>
 .data-card {
-  @apply bg-gray-200 p-4 flex flex-col w-80 rounded-lg mb-5;
-}
-
-.data-card:nth-child(odd) {
-  @apply mr-5;
+  @apply bg-gray-200 p-4 flex flex-col  w-64 rounded-lg mb-5;
 }
 </style>

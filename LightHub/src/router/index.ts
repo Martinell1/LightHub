@@ -91,7 +91,7 @@ const routes: Array<RouteRecordRaw> = [
         ]
       },
       {
-        path: 'editor',
+        path: 'editor/:aid?',
         name: 'Editor',
         components: {
           default: () => import('../views/Editor.vue'),

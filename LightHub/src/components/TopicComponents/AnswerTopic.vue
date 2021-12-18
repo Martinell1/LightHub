@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col card">
+  <div class="flex flex-col card px-5">
     <div class="border-b-2 border-gray-100">
       <h1 class="text-xl font-semibold mt-4 mb-3 text-gray-500">回答问题</h1>
     </div>

@@ -16,24 +16,36 @@
 </template>
  
 <script setup lang="ts">
-import { ref, inject } from 'vue';
+import { ref, inject, watch } from 'vue';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { addArticle } from '@/api/article';
 import TagAdd from '../TagComponents/TagAdd.vue';
 const store = useStore();
+const route = useRoute();
+const router = useRouter()
 
+const msg: any = inject('Message')
 const userInfo: any = inject('userInfo')
 
+
+
+
+const _id = ref('')
+
+const title = ref('')
 
 //接受tagList
 const currentTagList: any = ref([])
 const getTagList = (tagList) => {
   currentTagList.value = tagList
 }
-const msg: any = inject('Message')
-const router = useRouter()
-const title = ref('')
+
+if (route.params.aid) {
+  _id.value = store.state.editArticle._id;
+  title.value = store.state.editArticle.title;
+}
 
 const saveSubmit = async () => {
   const params: any = new FormData();
@@ -59,6 +71,11 @@ const articleSubmit = async () => {
     return
   }
   const params: any = new FormData();
+  if (_id.value) {
+    params.append('_id', _id.value)
+  }
+
+  params.append('status', 1);
   params.append('title', title.value);
   params.append('content', store.state.articleText);
   params.append('tag_list', JSON.stringify(currentTagList.value));
