@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { getTopicById } from '@/api/topic';
 import { getAnswerListById } from '@/api/answer';
 import { useRoute } from 'vue-router';
@@ -43,6 +43,13 @@ const loadAnswerList = async () => {
     answerList.value = result.data
   }
 }
+
+const answerSuccess = () => {
+  loadAnswerList()
+  shiftEdit()
+}
+
+provide('refreshAnswer', answerSuccess)
 
 onMounted(async () => {
   loadTopic()

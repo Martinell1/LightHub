@@ -32,6 +32,7 @@ const loadArticle = async () => {
   let { data: result } = await getArticleById(id);
   if (result.code === 200) {
     article.value = result.data
+
   }
 }
 
@@ -40,6 +41,8 @@ const loadCommentList = async () => {
   let { data: result } = await getCommentList(id);
   if (result.code === 200) {
     comment_list.value = result.data
+    console.log(comment_list.value);
+
   }
 }
 

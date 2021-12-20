@@ -1,6 +1,9 @@
 const {Schema,model} = require("../config/db.js")
 
 const commentSchema = new Schema({
+  article_id:{
+    type:Schema.Types.ObjectId
+  },
   target_id:{
     type:Schema.Types.ObjectId
   },
@@ -10,15 +13,11 @@ const commentSchema = new Schema({
   },
   commenter_id:{
     type: Schema.Types.ObjectId,
-    default:""
+    ref:'User'
   },
   up_count:{
     type:Number,
     default:0
-  },
-  reply_list:{
-    type:Array,
-    default:[]
   },
   up_list:{
     type:Array,

@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, computed } from 'vue'
+import { inject } from 'vue'
 import { followTopic } from '@/util/useFollow';
 const props: any = defineProps({
   topic: Object

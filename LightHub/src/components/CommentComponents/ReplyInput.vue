@@ -17,14 +17,10 @@
               d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
             />
           </svg>
-          {{ props.comment.up_list.length }}
+          {{ props.target_comment.up_list.length }}
         </div>
       </div>
-      <div
-        v-show="!replyShow"
-        class="text-xs text-gray-500 cursor-pointer"
-        @click="replyShow = true"
-      >
+      <div v-show="!isShow" class="text-xs text-gray-500 cursor-pointer" @click="isShow = true">
         <div class="flex">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,11 +38,7 @@
           </svg>回复
         </div>
       </div>
-      <div
-        v-show="replyShow"
-        class="text-xs text-gray-500 cursor-pointer"
-        @click="replyShow = false"
-      >
+      <div v-show="isShow" class="text-xs text-gray-500 cursor-pointer" @click="isShow = false">
         <div class="flex">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,9 +58,9 @@
       </div>
     </div>
 
-    <div v-show="replyShow" class="mt-4 px-4 pt-4 bg-gray-100 mb-1 rounded">
+    <div v-show="isShow" class="mt-4 px-4 pt-4 bg-gray-100 mb-1 rounded">
       <input
-        v-model="reply.content"
+        v-model="comment.content"
         class="bg-gray-50 outline-none w-full px-3 py-2 rounded border-2 h-9 focus:border-orange-500"
         placeholder="输入评论"
       />
@@ -76,7 +68,7 @@
         <div class="text-gray-500 ml-14 opacity-0">按Enter键发送</div>
         <div
           class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-orange-500 cursor-pointer"
-          @click="replySubmit()"
+          @click="commmentSubmit()"
         >发表评论</div>
       </div>
     </div>
@@ -84,12 +76,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, inject, computed } from 'vue'
-import { replyComment } from '@/api/comment';
+import { ref, inject, computed } from 'vue'
+import { addComment } from '@/api/comment';
 import { upComment } from '@/util/useThumb'
 
 const props: any = defineProps({
-  comment: Object
+  target_comment: Object
 })
 const msg: any = inject('Message')
 const userInfo: any = inject('userInfo')
@@ -103,38 +95,29 @@ const upSubmit = async (cid) => {
 }
 
 const isFollow = computed(() => {
-  return props.comment.up_list.indexOf(userInfo.value._id) > -1
+  return props.target_comment.up_list.indexOf(userInfo.value._id) > -1
 })
 
 
-const replyShow = ref(false)
-const reply = reactive({
-  content: "",
-  replyer: {
-    "_id": userInfo.value._id,
-    "nickname": userInfo.value.nickname,
-    "avater": userInfo.value.avater,
-    "introduce": userInfo.value.introduce,
-    "follows": userInfo.value.follows,
-    "fans": userInfo.value.fans,
-    "article_count": userInfo.value.article_count,
-    "topic_count": userInfo.value.topic_count,
-    "answer_count": userInfo.value.answer_count,
-    "create_time": userInfo.value.create_time
-  },
-  create_time: new Date().toLocaleString()
-})
+const isShow = ref(false)
 
-const replySubmit = async () => {
-  reply.replyer = userInfo.value;
-  props.comment.reply_list.push(reply)
+const comment: any = ref({})
 
-  const params = new FormData();
-  params.append("_id", props.comment._id)
-  params.append("reply_list", JSON.stringify(props.comment.reply_list))
-  let { data: result } = await replyComment(params);
+const commmentSubmit = async () => {
+  console.log(props.target_comment);
+
+  if (comment.value.content === '') {
+    msg('fail', '内容不能为空')
+    return
+  }
+
+  const params = new FormData()
+  params.append("target_id", props.target_comment._id)
+  params.append("article_id", props.target_comment.article_id)
+  params.append("content", comment.value.content)
+  let { data: result } = await addComment(params);
   if (result.code === 200) {
-    msg("success", "回复成功")
+    msg('success', '发布成功')
   }
 }
 </script>

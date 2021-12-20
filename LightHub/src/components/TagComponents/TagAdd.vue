@@ -4,7 +4,7 @@
       <ul class="flex flex-wrap">
         <li
           class="mr-2 my-1 py-2 px-4 rounded-full bg-orange-100 text-orange-600 cursor-pointer flex items-center"
-          v-for="tag in currentTagList"
+          v-for="tag in tag_list"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@
           v-show="isShow.message"
           @click="isShow.message = false; isShow.input = true"
           class="font-semibold text-orange-600 text-sm cursor-pointer my-auto mr-4 py-2"
-        >+添加话题{{ currentTagList.length }}/5</div>
+        >+添加话题{{ tag_list.length }}/5</div>
         <div v-show="isShow.input" class="relative mr-4 z-10">
           <input
             v-model="tagKey"
@@ -39,7 +39,7 @@
           >
             <li
               v-for="tag in tagList"
-              @click="appendList(tag); tagSubmit()"
+              @click="appendList(tag)"
               class="py-2 px-4 bg-gray-50 text-gray-800 w-40 hover:bg-gray-200"
             >{{ tag }}</li>
           </div>
@@ -52,6 +52,8 @@
 <script setup lang="ts">
 import { ref, reactive, watch, inject, onMounted } from 'vue'
 import { getTagList } from '@/api/tag'
+const tag_list: any = inject('tag_list')
+
 const isShow = reactive({
   message: true,
   input: false
@@ -94,14 +96,11 @@ watch(tagKey, () => {
 
 //将被选中的Tag加入当前List
 
-
-const currentTagList: any = ref([])
-
 const appendList = (tag) => {
-  let result = currentTagList.value.find(element => element === tag)
+  let result = tag_list.value.find(element => element === tag)
   if (!result) {
-    if (currentTagList.value.length < 5) {
-      currentTagList.value.push(tag)
+    if (tag_list.value.length < 5) {
+      tag_list.value.push(tag)
       tagKey.value = ''
       openSelect.value = false
       isShow.message = true
@@ -112,12 +111,12 @@ const appendList = (tag) => {
 
 //删除标签
 const delTag = tag => {
-  let index = currentTagList.value.findIndex(element => element === tag);
-  currentTagList.value.splice(index, 1)
+  let index = tag_list.value.findIndex(element => element === tag);
+  tag_list.value.splice(index, 1)
 }
 
 //监听currentTagList的长度
-watch(() => [...currentTagList.value], (newValue, oldValue) => {
+watch(() => [...tag_list.value], (newValue, oldValue) => {
   console.log(newValue.length);
   if (newValue.length === 5) {
     isShow.message = false
@@ -127,11 +126,6 @@ watch(() => [...currentTagList.value], (newValue, oldValue) => {
   }
 })
 
-//返回数据给上层组件
-const emit = defineEmits(['collection'])
-const tagSubmit = () => {
-  emit('collection', currentTagList.value)
-}
 
 </script>
 <style  scoped>

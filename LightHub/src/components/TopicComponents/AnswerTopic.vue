@@ -31,6 +31,8 @@ const props: any = defineProps({
 
 const userInfo: any = inject('userInfo')
 
+const loadAnswerList: any = inject('refreshAnswer')
+
 const answer_content = ref('')
 
 const msg: any = inject('Message')
@@ -43,6 +45,7 @@ const answerSubmit = async () => {
   let { data: result } = await saveOrUpdateAnswer(params);
   if (result.code === 200) {
     msg("success", '回答成功')
+    loadAnswerList()
   }
 }
 

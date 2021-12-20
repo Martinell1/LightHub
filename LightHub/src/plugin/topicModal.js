@@ -4,16 +4,18 @@ import {h,render} from 'vue'
 export default {
   install: (app) => {
 
-    const topic = (userInfo)=>{
+    const topic = (topicInfo)=>{
 
-      console.log(userInfo);
+      console.log(topicInfo);
       const container = document.createElement('div')
      
       const topicVNode = h(TopicModal)
 
       render(topicVNode, container)
-
-      topicVNode.component.exposed.setUserInfo(userInfo)
+      
+      if(topicInfo){
+        topicVNode.component.exposed.setTopic(topicInfo)
+      }
 
       document.body.appendChild(container)
     }

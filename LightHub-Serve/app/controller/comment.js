@@ -10,29 +10,43 @@ const articleService = new ArticleService()
 const list = async ctx => {
   const id = ObjectId(ctx.query.aid);
   let result = await commentService.getCommentListWithUserInfo(id);
+  for(let i=0,len=result.length;i<len;i++){
+    result[i].commenter = result[i].commenter[0]
+    result[i].reply_list = await commentService.getCommentListWithUserInfo(id,result[i]._id)
+  }
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult(result)
+  }
+}
+
+const listByUser = async ctx => {
+  const uid = ObjectId(verify(ctx.header.token).id)
+  let result = await commentService.getCommentListByUser(uid);
   result.forEach(element => {
-    element.commenter = element.commenter[0]
+    element.article = element.article[0]
   });
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
     ctx.body = ResultFactory.buildFailResult(result)
   }
-
 }
 
 const add = async ctx => {
   let body = ctx.request.body
+  body.commenter_id = verify(ctx.header.token).id
   let result = await commentService.add(body)
-  await articleService.update({"_id":body.aid},{$inc:{'comment_count':1}})
+  await articleService.update({"_id":body.article_id},{$inc:{'comment_count':1}})
   if(result){
     ctx.body =  ResultFactory.buildSuccessResult(undefined,result)
   }
 }
 
 const remove = async ctx => {
-  const id = ctx.request.body
-  let result = await commentService.remove({"_id":id});
+  const cid = ObjectId(ctx.request.body.cid)
+  let result = await commentService.remove({"_id":cid});
   if(result.modifiedCount === 0){
     ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
@@ -80,6 +94,7 @@ const reply = async ctx => {
 
 module.exports = {
   list,
+  listByUser,
   add,
   remove,
   update,

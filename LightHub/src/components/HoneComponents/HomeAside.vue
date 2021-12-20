@@ -17,7 +17,7 @@
         <span class="text-gray-400 text-sm my-auto">草稿箱</span>
       </div>
       <div class="flex my-4 justify-between text-sm">
-        <div class="item" @click="topicModal(userInfo)">
+        <div class="item" @click="topicModal()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="item-icon bg-blue-200 text-blue-500"

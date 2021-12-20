@@ -12,6 +12,7 @@ export default createStore({
     editArticle: {
       _id: '',
       title: '',
+      tag_list: [],
     }
   },
   mutations: {

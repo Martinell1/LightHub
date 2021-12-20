@@ -4,6 +4,7 @@ const { comment } = require('../controller');
 const router = new Router();
 router.prefix('/comment')
       .get("/list",comment.list)
+      .get("/listByUser",comment.listByUser)
       .post("/add",comment.add)
       .post("/up_comment",comment.up_comment)
       .post("/step_comment",comment.step_comment)

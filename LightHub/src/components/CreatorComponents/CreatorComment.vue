@@ -1,15 +1,15 @@
 <template>
   <div class="card" style="height:calc(100vh - 100px)">
     <div class="flex py-2 text-gray-500">
-      <div class="p-2 ml-5 cursor-pointer border-b-2 border-orange-500">话题列表</div>
+      <div class="p-2 ml-5 cursor-pointer border-b-2 border-orange-500">评论列表</div>
     </div>
     <div
-      v-for="(topic,index) in topic_list"
+      v-for="(comment,index) in comment_list"
       class="py-4 border-b-2 px-5 border-gray-100 cursor-pointer hover:bg-gray-100 last"
     >
       <div class="flex justify-between mb-2">
-        <router-link :to="{ name: 'Topic', params: { id: topic._id } }">
-          <div>{{ topic.title }}</div>
+        <router-link :to="{ name: 'Article', params: { id: comment.article._id } }">
+          <div>{{ comment.article.title }}</div>
         </router-link>
         <div class="relative" @click="showDrop(index)">
           <svg
@@ -23,22 +23,21 @@
             />
           </svg>
           <div v-if="isShow[index]" class="absolute card w-12 text-center py-1">
-            <div class="px-2 py-1 text-sm" @click="topicModal(topic)">编辑</div>
+            <div class="px-2 py-1 text-sm" @click="editComment(comment)">编辑</div>
 
-            <div class="px-2 py-1 cursor-pointer text-sm" @click="removeTopic(topic._id)">删除</div>
+            <div class="px-2 py-1 cursor-pointer text-sm" @click="removeSubmit(comment._id)">删除</div>
           </div>
         </div>
       </div>
 
-      <div class="text-gray-500 text-sm">{{ topic.create_time }}</div>
+      <div class="text-gray-500 text-sm">{{ comment.create_time }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { creator_topic_list, remove_topic } from '@/api/topic';
-import { ref, onMounted, inject } from 'vue'
-const topicModal: any = inject('TopicModal');
+import { getCommentListByUser, removeComment } from '@/api/comment';
+import { ref, onMounted } from 'vue'
 
 const isShow: any = ref([])
 
@@ -50,24 +49,33 @@ const showDrop = (index) => {
   }
 }
 
-const topic_list: any = ref([])
-const loadTopicList = async () => {
-  let { data: result } = await creator_topic_list();
-  topic_list.value = result.data
+const comment_list: any = ref([])
+const loadCommentList = async () => {
+  let { data: result } = await getCommentListByUser();
+  comment_list.value = result.data
 }
 
-const removeTopic = async (tid) => {
+const editComment = async (tid) => {
   const params = new FormData();
   params.append("tid", tid)
-  let { data: result } = await remove_topic(params)
+  let { data: result } = await getCommentListByUser(params)
   if (result.code === 200) {
-    loadTopicList()
+    loadCommentList()
+  }
+}
+
+const removeSubmit = async (cid) => {
+  const params = new FormData();
+  params.append("cid", cid)
+  let { data: result } = await removeComment(params)
+  if (result.code === 200) {
+    loadCommentList()
   }
 }
 
 
 onMounted(async () => {
-  loadTopicList()
+  loadCommentList()
 })
 
 

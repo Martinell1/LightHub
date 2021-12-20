@@ -5,6 +5,7 @@ const router = new Router();
 router.prefix('/topic')
       .get("/list",topic.list)
       .get("/listByInitiator",topic.listByInitiator)
+      .get("/creator_topic_list",topic.creator_topic_list)
       .get("/detail",topic.detail)
       .post("/add",topic.add)
       .post("/up_topic",topic.up_topic)

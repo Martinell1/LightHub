@@ -6,17 +6,16 @@
       placeholder="请输入标题..."
     />
     <div class="flex items-center">
-      <TagAdd @collection="getTagList"></TagAdd>
+      <TagAdd></TagAdd>
       <div class="btn-plain ring-1 ring-orange-600" @click="saveSubmit()">保存</div>
       <div class="btn-plain ring-1 ring-orange-600 mx-4" @click="articleSubmit()">发布</div>
-      <div class="btn-primary ring-1 ring-orange-600">草稿箱</div>
       <img class="w-8 h-8 rounded-full my-4 ml-4" src="../../assets/images/login-bg.jpg" />
     </div>
   </div>
 </template>
  
 <script setup lang="ts">
-import { ref, inject, watch } from 'vue';
+import { ref, inject, provide } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
@@ -29,22 +28,17 @@ const router = useRouter()
 const msg: any = inject('Message')
 const userInfo: any = inject('userInfo')
 
-
-
-
 const _id = ref('')
 
 const title = ref('')
 
-//接受tagList
-const currentTagList: any = ref([])
-const getTagList = (tagList) => {
-  currentTagList.value = tagList
-}
+const tag_list: any = ref([])
+provide('tag_list', tag_list)
 
 if (route.params.aid) {
   _id.value = store.state.editArticle._id;
   title.value = store.state.editArticle.title;
+  tag_list.value = store.state.editArticle.tag_list
 }
 
 const saveSubmit = async () => {
@@ -52,7 +46,7 @@ const saveSubmit = async () => {
   params.append('status', 2);
   params.append('title', title.value);
   params.append('content', store.state.articleText);
-  params.append('tag_list', JSON.stringify(currentTagList.value));
+  params.append('tag_list', JSON.stringify(tag_list.value));
 
   let { data: result } = await addArticle(params);
   if (result.code === 200) {
@@ -78,7 +72,7 @@ const articleSubmit = async () => {
   params.append('status', 1);
   params.append('title', title.value);
   params.append('content', store.state.articleText);
-  params.append('tag_list', JSON.stringify(currentTagList.value));
+  params.append('tag_list', JSON.stringify(tag_list.value));
 
   let { data: result } = await addArticle(params);
   if (result.code === 200) {

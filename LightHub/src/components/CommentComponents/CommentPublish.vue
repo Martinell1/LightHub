@@ -39,7 +39,7 @@ const commmentSubmit = async () => {
 
   const params = new FormData()
 
-  params.append("target_id", props.article_id)
+  params.append("article_id", props.article_id)
   params.append("commenter_id", userInfo.value._id)
   params.append("content", comment_content.value)
   let { data: result } = await addComment(params);

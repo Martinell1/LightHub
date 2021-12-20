@@ -57,7 +57,8 @@ const listByAuthor = async ctx => {
 
 const detail = async ctx => {
   const id = ObjectId(ctx.query.id);
-  let result = await articleService.getArticleWithUserInfo(id,2)
+  let result = await articleService.getArticleWithUserInfo(id)
+  // let result = await articleService.getArticleWithUserInfo(id,2)
   result = result[0]
   result.author = result.author[0]
   result.isUp = result.up_list.some(item => item === verify(ctx.header.token).id)
@@ -129,7 +130,7 @@ const step_article = async ctx => {
 
 const creator_article_list = async ctx => {
   const id = verify(ctx.header.token).id;
-  let article = await articleService.find({"author_id":id},{'title':1,'status':1,'create_time':1})
+  let article = await articleService.find({"author_id":id},{'title':1,'tag_list':1,'status':1,'create_time':1})
   let draft = await articleService.getDraftArticle(ObjectId(id))
   let result = {
     'article_list' : article,

@@ -66,14 +66,22 @@ const detail = async ctx => {
 const add = async ctx => {
   const uid = verify(ctx.header.token).id
   let body = ctx.request.body
-  let user = await userService.update({"_id":uid},{$inc:{'topic_count':1}})
   body.tag_list = JSON.parse(body.tag_list)
+  body.initiator_id = uid
+  let result = undefined
+  if(body._id){
+    //更新
+    result = await topicService.findAndUpdate({"_id":body._id},body)
+  }else{
+    //新增
+    result = await topicService.add(body)
+    const user = await userService.update({"_id":uid},{$inc:{'topic_count':1}})
+  }
   body.tag_list.forEach(async element => {
-    let tag = await tagService.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
+    await tagService.findAndUpdate({'name':element},{$inc:{'topic_count':1}})
   });
-  let result = await topicService.add(body)
   if(result){
-    ctx.body =  ResultFactory.buildSuccessResult(undefined,result)
+    ctx.body =  ResultFactory.buildSuccessResult(undefined,'成功')
   }else{
     ctx.body =  ResultFactory.buildFailResult(result)
   }
@@ -81,12 +89,18 @@ const add = async ctx => {
 }
 
 const remove = async ctx => {
-  const id = ctx.request.body
-  let result = await topicService.remove({"_id":id});
+  const tid = ctx.request.body.tid
+  const uid = verify(ctx.header.token).id;
+  const topic = await topicService.findOne({"_id":tid},{"initiator_id":1})
+  let result = undefined;
+  if(uid === topic.initiator_id.toString()){
+    let temp = await historyService.delete({"target_id":tid})
+    result = await topicService.remove({"_id":tid});
+  }
   if(result.modifiedCount === 0){
-    ctx.body = ResultFactory.buildFailResult("删除失败")
+    ctx.body =  ResultFactory.buildFailResult("删除失败")
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(undefined,"删除成功")
+    ctx.body =  ResultFactory.buildSuccessResult(undefined,"删除成功")
   }
 }
 
@@ -107,12 +121,24 @@ const up_topic = async ctx => {
   }
 }
 
+const creator_topic_list = async ctx => {
+  const id = verify(ctx.header.token).id;
+  let result = await topicService.find({"initiator_id":id},{'title':1,'introduce':1,'tag_list':1,'create_time':1})
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult('出现错误')
+  }
+}
+
+
 
 
 
 module.exports = {
   list,
   listByInitiator,
+  creator_topic_list,
   detail,
   add,
   remove,
