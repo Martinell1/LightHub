@@ -12,8 +12,10 @@ const {up_utils} = require('../utils/thumbUtil')
 
 
 const list = async ctx => {
+  let page = ctx.query.page;
+  console.log(page);
   const user = await userService.getInfoByToken(ctx.header.token);
-  let result = await topicService.getTopicListWithUserInfo();
+  let result = await topicService.getTopicListWithUserInfo(page);
   result.forEach(element=>{
     element.isUp = element.up_list.some(item => item === user._id.toString())
     element.up_count = element.up_list.length
@@ -30,8 +32,9 @@ const list = async ctx => {
 
 const listByInitiator = async ctx => {
   const id = ctx.query.id
+  const page = ctx.query.page
   const user = await userService.getInfoByToken(ctx.header.token);
-  let result = await topicService.getTopicListByInitiator(ObjectId(id));
+  let result = await topicService.getTopicListByInitiator(ObjectId(id),page);
   result.forEach(element=>{
     element.isUp = element.up_list.some(item => item === user._id.toString())
     element.up_count = element.up_list.length
@@ -122,8 +125,11 @@ const up_topic = async ctx => {
 }
 
 const creator_topic_list = async ctx => {
+  const page = ctx.query.page
   const id = verify(ctx.header.token).id;
   let result = await topicService.find({"initiator_id":id},{'title':1,'introduce':1,'tag_list':1,'create_time':1})
+                                 .skip((page-1)*10)
+                                 .limit(10)
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{

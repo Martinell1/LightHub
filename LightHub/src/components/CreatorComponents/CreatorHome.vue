@@ -1,5 +1,5 @@
 <template>
-  <div class="card px-5 flex-col flex" style="height:calc(100vh - 100px)">
+  <div class="card px-5 flex-col flex" style="min-height:calc(100vh - 100px)">
     <div>
       <h1 class="text-xl py-2 text-gray-500">数据概览</h1>
     </div>

@@ -15,14 +15,18 @@ const {up_utils,step_utils} = require('../utils/thumbUtil');
 
 const list = async ctx => {
   let tag = ctx.query.tag;
+  let page = ctx.query.page;
   const userInfo = await userService.getInfoByToken(ctx.header.token);
   let result = []
   if(tag===''){
-    result = await articleService.getArticleListWithUserInfo();
-  }else{
-    
+    result = await articleService.getArticleListWithUserInfo(page);
+  }else if(tag==='following'){
     const tagList = userInfo.tag_list;
-    result = await articleService.getArticleListByTag(tagList);
+    result = await articleService.getArticleListByTag(tagList,page);
+  }else {
+    const tagList = []
+    tagList.push(tag)
+    result = await articleService.getArticleListByTag(tagList,page);
   }
   result.forEach(element=>{
     element.isUp = element.up_list.some(item => item === userInfo._id.toString())
@@ -30,6 +34,9 @@ const list = async ctx => {
     delete element.up_list
     element.author = element.author[0]
   })
+  if(result.length === 0){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,'翻到底了')
+  }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
@@ -39,8 +46,9 @@ const list = async ctx => {
 
 const listByAuthor = async ctx => {
   const id = ctx.query.id;
+  const page = ctx.query.page
   const user = await userService.getInfoByToken(ctx.header.token); 
-  let result = await articleService.getArticleListByAuthor(ObjectId(id));
+  let result = await articleService.getArticleListByAuthor(ObjectId(id),page);
   result.forEach(element => {
     element.isUp = element.up_list.some(item => item === user._id.toString())
     element.up_count = element.up_list.length
@@ -70,6 +78,18 @@ const detail = async ctx => {
     ctx.body = ResultFactory.buildFailResult("请求发生错误")
   }
 }
+const save = async ctx => {
+  let body = ctx.request.body
+  const uid = verify(ctx.header.token).id
+  body.tag_list = JSON.parse(body.tag_list)
+  body.author_id = uid
+  let result = await articleService.add(body);
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body =  ResultFactory.buildSuccessResult(undefined,"出现错误")
+  }
+}
 
 const add = async ctx => {
   let body = ctx.request.body
@@ -78,7 +98,7 @@ const add = async ctx => {
   body.author_id = uid
   let result = undefined;
   if(body._id){
-    result = await articleService.findAndUpdate({"_id":body._id},body,2)
+    result = await articleService.findAndUpdate({"_id":body._id},body)
   }else{
     result = await articleService.add(body)
   }
@@ -130,12 +150,21 @@ const step_article = async ctx => {
 
 const creator_article_list = async ctx => {
   const id = verify(ctx.header.token).id;
-  let article = await articleService.find({"author_id":id},{'title':1,'tag_list':1,'status':1,'create_time':1})
-  let draft = await articleService.getDraftArticle(ObjectId(id))
-  let result = {
-    'article_list' : article,
-    'draft_list' : draft
+  const page = ctx.query.page;
+  let result = await articleService.find({"author_id":id},{'title':1,'tag_list':1,'status':1,'create_time':1})
+                                    .skip((page-1)*10)
+                                    .limit(10)
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
+  }else{
+    ctx.body = ResultFactory.buildFailResult('出现错误')
   }
+}
+
+const creator_draft_list = async ctx => {
+  const id = verify(ctx.header.token).id;
+  const page = ctx.query.page;
+  let result = await articleService.getDraftArticle(ObjectId(id),page)
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
@@ -150,9 +179,11 @@ module.exports = {
   list,
   listByAuthor,
   detail,
+  save,
   add,
   remove,
   up_article,
   step_article,
-  creator_article_list
+  creator_article_list,
+  creator_draft_list
 }

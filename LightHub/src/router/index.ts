@@ -149,6 +149,11 @@ const routes: Array<RouteRecordRaw> = [
             name: 'CreatorComment',
             component: () => import('../components/CreatorComponents/CreatorComment.vue'),
           },
+          {
+            path: 'collection',
+            name: 'CreatorCollection',
+            component: () => import('../components/CreatorComponents/CreatorCollection.vue'),
+          },
         ]
       }
     ]

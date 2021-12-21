@@ -14,18 +14,39 @@
 import SecondNav from '../components/Common/SecondNav.vue';
 import HomeAside from '../components/HoneComponents/HomeAside.vue';
 import TopicCard from '../components/TopicComponents/TopicCard.vue';
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { getTopicList } from '@/api/topic'
-let topicList = ref([])
+let topicList: any = ref([])
+let page = 0;
 const loadTopicList = async () => {
-  let { data: result } = await getTopicList();
+  if (page === -1) {
+    return
+  }
+  let { data: result } = await getTopicList(++page);
   if (result.code === 200) {
-    topicList.value = result.data
+    if (result.data.length > 0) {
+      topicList.value = [...topicList.value, ...result.data]
+    }
+    else {
+      page = -1
+    }
+
   }
 }
 
 onMounted(async () => {
   loadTopicList()
+
+  window.onscroll = function () {
+    if (document.documentElement.clientHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
+      console.log('到底');
+      loadTopicList()
+    }
+  }
+})
+
+onBeforeUnmount(() => {
+  window.onscroll = null
 })
 
 </script>

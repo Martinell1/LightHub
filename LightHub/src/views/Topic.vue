@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, provide, onBeforeUnmount } from 'vue'
 import { getTopicById } from '@/api/topic';
 import { getAnswerListById } from '@/api/answer';
 import { useRoute } from 'vue-router';
@@ -37,10 +37,19 @@ const loadTopic = async () => {
 }
 
 const answerList = ref([])
+let page = 0
 const loadAnswerList = async () => {
-  let { data: result } = await getAnswerListById(id);
+  if (page === -1) {
+    return
+  }
+  let { data: result } = await getAnswerListById(id, ++page);
   if (result.code === 200) {
-    answerList.value = result.data
+    if (result.data.length > 0) {
+      answerList.value = result.data
+    } else {
+      page = -1
+    }
+
   }
 }
 
@@ -54,6 +63,16 @@ provide('refreshAnswer', answerSuccess)
 onMounted(async () => {
   loadTopic()
   loadAnswerList()
+
+  window.onscroll = function () {
+    if (document.documentElement.clientHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
+      loadAnswerList()
+    }
+  }
+})
+
+onBeforeUnmount(() => {
+  window.onscroll = null
 })
 
 </script>

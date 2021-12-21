@@ -13,23 +13,48 @@ import SecondNav from '../components/Common/SecondNav.vue';
 import HomeAside from '../components/HoneComponents/HomeAside.vue';
 import ArticleCard from '../components/ArticleComponents/ArticleCard.vue';
 import { useRoute } from 'vue-router';
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { getArticleList } from '@/api/article'
-let articleList = ref([])
-const loadArticleList = async () => {
-  let { data: result } = await getArticleList(route.params.tag);
+let articleList: any = ref([])
+let page = 0;
+let loadArticleList = async () => {
+  if (page === -1) {
+    return
+  }
+  let { data: result } = await getArticleList(route.params.tag, ++page);
   if (result.code === 200) {
-    articleList.value = result.data
+    if (result.data.length > 0) {
+      articleList.value = [...articleList.value, ...result.data]
+    }
+    else {
+      page = -1
+    }
   }
 }
 
+
 const route = useRoute()
 watch(route, () => {
+  articleList.value = []
+  page = 0
   loadArticleList()
 })
 
+
+
 onMounted(async () => {
   loadArticleList()
+
+  window.onscroll = function () {
+    if (document.documentElement.clientHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
+      loadArticleList()
+    }
+  }
+
+})
+
+onBeforeUnmount(() => {
+  window.onscroll = null
 })
 
 </script>

@@ -7,20 +7,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { getActionList } from '@/api/user';
 import ActionCard from './MomentAction/ActionCard.vue';
 
-const action_list = ref([])
+const action_list: any = ref([])
+let page = 0
 const loadActionList = async () => {
-  let { data: result } = await getActionList();
+  if (page === -1) {
+    return
+  }
+  let { data: result } = await getActionList(++page);
   if (result.code === 200) {
-    action_list.value = result.data
+    if (result.data.length > 0) {
+      action_list.value = [...action_list.value, ...result.data]
+    } else {
+      page = -1
+    }
+
   }
 }
 
 onMounted(async () => {
   loadActionList()
+  window.onscroll = function () {
+
+    if (document.documentElement.clientHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
+      loadActionList()
+    }
+  }
+
+})
+
+onBeforeUnmount(() => {
+  window.onscroll = null
 })
 </script>
 <style  scoped>

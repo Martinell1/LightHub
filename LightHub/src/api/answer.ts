@@ -4,8 +4,8 @@ const getAnswerListById: Function = async (tid: String) => {
   return await axios.get("answer/list?tid=" + tid)
 }
 
-const getAnswerListByAnswerer: Function = async (id: String) => {
-  return await axios.get("answer/listByAnswerer?id=" + id)
+const getAnswerListByAnswerer: Function = async (id: String, page: Number) => {
+  return await axios.get("answer/listByAnswerer?id=" + id + "&page=" + page)
 }
 
 const getAnswerByUserId: Function = async (tid: String, uid: String) => {

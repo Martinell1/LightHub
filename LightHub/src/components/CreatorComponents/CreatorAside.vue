@@ -1,5 +1,5 @@
 <template>
-  <div class="card px-5 w-260 mr-5" style="height:calc(100vh - 100px)">
+  <div class="card px-5 w-260 mr-5" style="min-height:calc(100vh - 100px)">
     <div class="my-6">
       <div class="flex items-center">
         <img class="w-12 h-12 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
@@ -85,7 +85,7 @@
       <router-link
         class="side-item"
         active-class="bg-orange-100 text-orange-600"
-        :to="{ name: 'CreatorHome' }"
+        :to="{ name: 'CreatorCollection' }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

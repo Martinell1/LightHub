@@ -9,8 +9,24 @@ const ArticleService = require("../service/article");
 const articleService = new ArticleService()
 
 const list = async ctx => {
-  let id = ctx.query.uid
+  const id = verify(ctx.header.token).id;
+  const page = ctx.query.page
   let result = await collectionService.find({"holder_id":id})
+                                      .skip((page-1)*10)
+                                      .limit(10)
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("出现错误")
+  }
+}
+
+const detail = async ctx => {
+  const id = ctx.query.id
+  let result = await collectionService.findOne({"_id":id})
+  for(let i = 0, len = result.article_list.length ; i < len ; i++){
+    result.article_list[i] = await articleService.findOne({"_id":result.article_list[i]},{"_id":1,"title":1})
+  }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{
@@ -33,6 +49,16 @@ const add = async ctx => {
   }
 }
 
+const update = async ctx => {
+  let body = ctx.request.body;
+  let result = await collectionService.findAndUpdate({"_id":body._id},body)
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,"添加成功");
+  }else{
+    ctx.body = ResultFactory.buildFailResult("添加失败")
+  }
+}
+
 const fav = async ctx => {
   let body = ctx.request.body;
   let cid = body.cid;
@@ -47,10 +73,26 @@ const fav = async ctx => {
   }
 }
 
+const remove = async ctx => {
+  let body = ctx.request.body;
+  let cid = body.cid;
+  let aid = body.aid;
+  let result = await collectionService.findAndUpdate({"_id":cid},{$pull:{"article_list":aid}})
+  await articleService.findAndUpdate({"_id":aid},{$inc:{"fav_count":-1}})
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,"添加成功");
+  }else{
+    ctx.body = ResultFactory.buildFailResult("添加失败")
+  }
+}
+
 
 
 module.exports = {
   list,
   add,
-  fav
+  update,
+  fav,
+  detail,
+  remove
 }

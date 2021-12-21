@@ -22,11 +22,13 @@ const list = async ctx => {
 }
 
 const listByUser = async ctx => {
+  const page = ctx.query.page;
   const uid = ObjectId(verify(ctx.header.token).id)
   let result = await commentService.getCommentListByUser(uid);
   result.forEach(element => {
     element.article = element.article[0]
   });
+  result = result.splice(10*(page-1),10*page)
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
@@ -56,17 +58,22 @@ const remove = async ctx => {
 
 const update = async ctx => {
   let comment = ctx.request.body
-  let result = await commentService.update(comment)
-  ctx.body = ResultFactory.buildSuccessResult(undefined,result);
+  let result = await commentService.findAndUpdate({"_id":comment._id},comment)
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,'修改成功');
+  }else{
+    ctx.body =  ResultFactory.buildFailResult("修改成功")
+  }
+ 
 }
 
 const up_comment = async ctx => {
-  const result = await up_utils(ctx,'comment');
-  if(result === '出现错误'){
-    ctx.body = ResultFactory.buildFailResult(result)
+  const {message,data} = await up_utils(ctx,'comment');
+  if(message === '出现错误'){
+    ctx.body = ResultFactory.buildFailResult(message)
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
-  }body = ResultFactory.buildFailResult("失败")
+    ctx.body = ResultFactory.buildSuccessResult(message,data)
+  }
 }
 
 const step_comment = async ctx => {

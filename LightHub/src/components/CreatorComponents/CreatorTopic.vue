@@ -1,5 +1,5 @@
 <template>
-  <div class="card" style="height:calc(100vh - 100px)">
+  <div class="card" style="min-height:calc(100vh - 100px)">
     <div class="flex py-2 text-gray-500">
       <div class="p-2 ml-5 cursor-pointer border-b-2 border-orange-500">话题列表</div>
     </div>
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { creator_topic_list, remove_topic } from '@/api/topic';
-import { ref, onMounted, inject } from 'vue'
+import { ref, onMounted, inject, onBeforeUnmount } from 'vue'
 const topicModal: any = inject('TopicModal');
 
 const isShow: any = ref([])
@@ -51,9 +51,20 @@ const showDrop = (index) => {
 }
 
 const topic_list: any = ref([])
+let page = 0;
 const loadTopicList = async () => {
-  let { data: result } = await creator_topic_list();
-  topic_list.value = result.data
+  if (page === -1) {
+    return
+  }
+  let { data: result } = await creator_topic_list(++page);
+  if (result.code === 200) {
+    if (result.data.length > 0) {
+      topic_list.value = [...topic_list.value, ...result.data]
+    } else {
+      page = -1
+    }
+  }
+
 }
 
 const removeTopic = async (tid) => {
@@ -68,8 +79,16 @@ const removeTopic = async (tid) => {
 
 onMounted(async () => {
   loadTopicList()
+  window.onscroll = function () {
+    if (document.documentElement.clientHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
+      loadTopicList()
+    }
+  }
 })
 
+onBeforeUnmount(() => {
+  window.onscroll = null
+})
 
 </script>
 <style scoped>

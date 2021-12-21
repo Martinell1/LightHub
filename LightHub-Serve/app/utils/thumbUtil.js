@@ -38,7 +38,7 @@ const up_utils = async(ctx,field) => {
   
   else if(field === 'comment'){
     const comment = await commentService.findOne({"_id":body._id})
-    let isUp = comment.up_list.indexOf(uid)>-1;
+    isUp = comment.up_list.indexOf(uid)>-1;
     if(isUp){
       //取消赞
       result = await commentService.findAndUpdate({"_id":body._id},{$pull:{"up_list":uid},$inc:{"up_count":-1}})

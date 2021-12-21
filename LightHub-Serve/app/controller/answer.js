@@ -47,7 +47,8 @@ const list = async ctx => {
 
 const listByAnswerer = async ctx => {
   const id = ObjectId(ctx.query.id);
-  let result = await answerService.getAnswerListByAnswerer(id)
+  const page = ctx.query.page
+  let result = await answerService.getAnswerListByAnswerer(id,page)
   result.forEach(element => {
     element.answerer = element.answerer[0]
     element.topic = element.topic[0]

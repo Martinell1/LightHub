@@ -128,6 +128,7 @@ const remove = async ctx => {
 }
 
 const action_list = async ctx => {
+  const page = ctx.query.page;
   const id = ObjectId(verify(ctx.header.token).id)
   let result = await historyService.findDetail(id);
   const user = await userService.findOne({"_id":id});
@@ -149,6 +150,7 @@ const action_list = async ctx => {
     }
     return item
   });
+  result = result.splice((page-1)*10,page*10)
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);
   }else{

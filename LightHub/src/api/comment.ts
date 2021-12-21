@@ -4,12 +4,16 @@ const getCommentList: Function = async (aid: String) => {
   return await axios.get("comment/list?aid=" + aid)
 }
 
-const getCommentListByUser: Function = async () => {
-  return await axios.get("comment/listByUser")
+const getCommentListByUser: Function = async (page: Number) => {
+  return await axios.get("comment/listByUser?page=" + page)
 }
 
 const addComment: Function = async (params: Object) => {
   return await axios.post("comment/add", params)
+}
+
+const updateComment: Function = async (params: Object) => {
+  return await axios.post("comment/update", params)
 }
 
 const upComment: Function = async (params: Object) => {
@@ -34,6 +38,7 @@ export {
   addComment,
   getCommentList,
   getCommentListByUser,
+  updateComment,
   upComment,
   stepComment,
   replyComment,

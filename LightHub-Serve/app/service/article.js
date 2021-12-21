@@ -2,9 +2,13 @@ const {article} = require('../model')
 const Service = require('./')
 
 class ArticleService extends Service{
+
   constructor(){
     super(article)
+    this.count = 10
   }
+
+
 
   async getArticleWithUserInfo(id){
     return this.model.aggregate([
@@ -42,12 +46,19 @@ class ArticleService extends Service{
     ])
   }
 
-  async getArticleListWithUserInfo(){
+  async getArticleListWithUserInfo(page){
+    let skip = (page - 1)*this.count
     return this.model.aggregate([
       {
         $match:{
           status:1
         }
+      },
+      {
+        $skip:skip
+      },
+      {
+        $limit:this.count
       },
       {
         $lookup:{
@@ -75,7 +86,8 @@ class ArticleService extends Service{
     ])
   }
 
-  async getArticleListByAuthor(id){
+  async getArticleListByAuthor(id,page){
+    let skip = (page - 1)*this.count
     return this.model.aggregate([
       {
         $match:{
@@ -84,6 +96,12 @@ class ArticleService extends Service{
         }
       },
       {
+        $skip:skip
+      },
+      {
+        $limit:this.count
+      },
+      {
         $lookup:{
           from: "users",
           localField: "author_id",
@@ -109,7 +127,8 @@ class ArticleService extends Service{
     ])
   }
 
-  async getArticleListByTag(tagList){
+  async getArticleListByTag(tagList,page){
+    let skip = (page - 1)*this.count
     return this.model.aggregate([
       {
         $match:{
@@ -118,6 +137,12 @@ class ArticleService extends Service{
          },
          status:1
         }
+      },
+      {
+        $skip:skip
+      },
+      {
+        $limit:this.count
       },
       {
         $lookup:{
@@ -175,13 +200,21 @@ class ArticleService extends Service{
     ])
   }
 
-  async getDraftArticle(id){
+  async getDraftArticle(id,page){
+    console.log(page);
+    let skip = (page - 1)*this.count
     return this.model.aggregate([
       {
         $match:{
           author_id:id,
           status:2,
         }
+      },
+      {
+        $skip:skip
+      },
+      {
+        $limit:this.count
       },
       {
         $project:{

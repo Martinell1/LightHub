@@ -4,6 +4,7 @@ const Service = require('./')
 class TopicService extends Service{
   constructor(){
     super(topic)
+    this.count = 5
   }
 
   async getTopicWithAnswer(id){
@@ -39,7 +40,8 @@ class TopicService extends Service{
     ])
   }
 
-  async getTopicListWithUserInfo(){
+  async getTopicListWithUserInfo(page){
+    let skip = (page - 1) * this.count
     return this.model.aggregate([
       {
         $lookup:{
@@ -48,6 +50,12 @@ class TopicService extends Service{
           foreignField: "_id",
           as: "initiator",
         }
+      },
+      {
+        $skip:skip
+      },
+      {
+        $limit:this.count
       },
       {
         $project:{
@@ -67,12 +75,19 @@ class TopicService extends Service{
     ])
   }
 
-  async getTopicListByInitiator(id){
+  async getTopicListByInitiator(id,page){
+    let skip = (page - 1) * this.count
     return this.model.aggregate([
       {
         $match:{
           initiator_id:id
         }
+      },
+      {
+        $skip:skip
+      },
+      {
+        $limit:this.count
       },
       {
         $lookup:{

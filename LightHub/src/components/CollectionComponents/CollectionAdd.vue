@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { addCollection, getCollectionListByUserId, favArticle } from '@/api/collection';
+import { addCollection, getCollectionList, favArticle } from '@/api/collection';
 const props: any = defineProps({
   article_id: String
 })
@@ -80,7 +80,6 @@ const addCollectionSubmit = async () => {
 const favArticleSubmit = async (cid) => {
   const params = new FormData();
   params.append("cid", cid)
-  params.append("uid", store.state.userInfo.id)
   params.append("aid", props.article_id)
   let { data: result } = await favArticle(params);
   if (result.code === 2000) {
@@ -91,7 +90,7 @@ const favArticleSubmit = async (cid) => {
 
 const collection_list = ref([])
 const loadCollectionList = async () => {
-  let { data: result } = await getCollectionListByUserId(store.state.userInfo.id);
+  let { data: result } = await getCollectionList();
   if (result.code === 200) {
     collection_list.value = result.data
   }

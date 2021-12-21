@@ -37,6 +37,7 @@ const commmentSubmit = async () => {
     return
   }
 
+
   const params = new FormData()
 
   params.append("article_id", props.article_id)

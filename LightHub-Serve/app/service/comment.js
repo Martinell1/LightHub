@@ -7,7 +7,6 @@ class CommentService extends Service{
   }
 
   async getCommentListWithUserInfo(article_id=null,target_id=null){
-    console.log(article_id,target_id);
     return this.model.aggregate([
       {
         $match:{

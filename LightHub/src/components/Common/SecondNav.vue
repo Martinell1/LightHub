@@ -9,10 +9,10 @@
         >推荐</router-link>
         <router-link
           v-for="tag in tagList"
-          :to="{ name: 'Home', params: { 'tag': tag } }"
+          :to="{ name: 'Home', params: { 'tag': tag.tag } }"
           class="tag-item"
           active-class=" text-orange-500"
-        >{{ tag }}</router-link>
+        >{{ tag.name }}</router-link>
       </div>
 
       <div class="mr-4 text-sm leading-12 cursor-pointer text-gray-500 hover:text-orange-500">
@@ -39,13 +39,34 @@ const props: any = defineProps({
 })
 
 const tagList = reactive([
-  "关注",
-  "前端",
-  "后端",
-  "人工智能",
-  "Android",
-  "iOS",
-  "开发工具"
+  {
+    name: "关注",
+    tag: 'following'
+  },
+  {
+    name: "前端",
+    tag: 'frontend'
+  },
+  {
+    name: "后端",
+    tag: 'backend'
+  },
+  {
+    name: "人工智能",
+    tag: 'ai'
+  },
+  {
+    name: "Android",
+    tag: 'android'
+  },
+  {
+    name: "iOS",
+    tag: 'ios'
+  },
+  {
+    name: "开发工具",
+    tag: 'freebie'
+  },
 ])
 
 </script>

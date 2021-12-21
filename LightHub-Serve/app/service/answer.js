@@ -4,6 +4,7 @@ const Service = require('./')
 class AnswerService extends Service{
   constructor(){
     super(answer)
+    this.count = 10
   }
 
   async getAnswerByUserId(tid,uid){
@@ -43,12 +44,19 @@ class AnswerService extends Service{
     ])
   }
 
-  async getAnswerListByAnswerer(id){
+  async getAnswerListByAnswerer(id,page){
+    let skip = (page - 1)*this.count
     return this.model.aggregate([
       {
         $match:{
           answerer_id:id
         }
+      },
+      {
+        $skip:skip
+      },
+      {
+        $limit:this.count
       },
       {
         $lookup:{

@@ -32,8 +32,8 @@ const updateFollowTopic: Function = async (params: Array<any>) => {
   return await axios.post("user/follow_topic", params)
 }
 
-const getActionList: Function = async () => {
-  return await axios.get("user/action_list")
+const getActionList: Function = async (page: Number) => {
+  return await axios.get("user/action_list?page=" + page)
 }
 
 const getCreatorInfo: Function = async () => {

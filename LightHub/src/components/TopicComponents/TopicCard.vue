@@ -109,10 +109,6 @@ const userInfo: any = inject('userInfo')
 const hoverInfo: any = inject('hoverInfo')
 const removeHoverInfo: any = inject('removeHoverInfo')
 
-setTimeout(() => {
-  console.log(props.topicList);
-}, 2009);
-
 
 const msg: any = inject("Message")
 const upSubmit = async (tid, index) => {
