@@ -49,7 +49,7 @@
         </div>
       </div>
     </article>
-    <CommentPublish :article_id="props.article._id" name="comment"></CommentPublish>
+    <CommentPublish :article_id="props.article._id" id="comment"></CommentPublish>
     <CommentList :commentList="props.commentList" ref="child"></CommentList>
   </div>
 </template>

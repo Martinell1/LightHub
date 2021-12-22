@@ -13,7 +13,6 @@ const {up_utils} = require('../utils/thumbUtil')
 
 const list = async ctx => {
   let page = ctx.query.page;
-  console.log(page);
   const user = await userService.getInfoByToken(ctx.header.token);
   let result = await topicService.getTopicListWithUserInfo(page);
   result.forEach(element=>{

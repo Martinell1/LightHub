@@ -15,7 +15,6 @@
         :toolbars="toolBars"
         style="height:160px"
       ></editor>
-      <!-- <TagAdd @collection="getChannelList"></TagAdd> -->
       <TagAdd></TagAdd>
       <div class="flex justify-end">
         <div
@@ -33,9 +32,7 @@
 
 <script setup lang="ts">
 import { addTopic } from '@/api/topic';
-import { log } from 'console';
-import Editor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+import Editor from '@/components/Common/Editor.vue';
 import { ref, reactive, provide } from 'vue'
 import TagAdd from '../TagComponents/TagAdd.vue';
 

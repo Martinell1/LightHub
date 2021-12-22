@@ -1,11 +1,11 @@
 <template>
-  <AnswerCard :answerList="answerList">
+  <!-- <AnswerCard :answerList="answerList">
     <template v-slot="topic">
       <router-link :to="{ 'name': 'Topic', params: { 'id': topic.id } }">
         <div class="text-xl font-semibold mb-2">{{ topic.title }}</div>
       </router-link>
     </template>
-  </AnswerCard>
+  </AnswerCard>-->
 </template>
 
 <script setup lang="ts">

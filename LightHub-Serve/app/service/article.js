@@ -200,7 +200,38 @@ class ArticleService extends Service{
     ])
   }
 
-  async getDraftArticle(id,page){
+  async getDraftArticle(id){
+    return this.model.aggregate([
+      {
+        $match:{
+          author_id:id,
+          status:2
+        }
+      },
+      {
+        $group:{
+          _id:'$author_id',
+          article_count:{
+            $sum:1
+          },
+          article_view_count:{
+            $sum:'$view_count'
+          },
+          article_up_count:{
+            $sum:'$up_count'
+          },
+          article_comment_count:{
+            $sum:'$comment_count'
+          },
+          article_fav_count:{
+            $sum:'$fav_count'
+          }
+        }
+      },
+    ])
+  }
+
+  async getDraftArticleList(id,page){
     console.log(page);
     let skip = (page - 1)*this.count
     return this.model.aggregate([

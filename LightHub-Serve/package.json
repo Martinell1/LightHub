@@ -12,7 +12,8 @@
     "koa-router": "^10.1.1",
     "koa2-cors": "^2.0.6",
     "mongoose": "^6.0.12",
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.14",
+    "qiniu": "^7.4.0"
   },
   "devDependencies": {},
   "scripts": {

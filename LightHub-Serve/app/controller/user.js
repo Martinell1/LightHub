@@ -170,9 +170,10 @@ const getCreatorInfo = async ctx =>{
   if(article === undefined && topic === undefined){
     result = "暂时未有数据"
   }else{
+    console.log(draft);
     result = Object.assign(article,topic)
     result.fans_count = user.fans_count
-    result.draft_count = draft.length
+    result.draft_count = draft[0].article_count
   }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);

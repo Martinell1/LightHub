@@ -1,5 +1,5 @@
 <template>
-  <editor v-model="text" style="height:calc(100vh - 4rem)"></editor>
+  <editor v-model="text" :preview="true" style="height:calc(100vh - 4rem)"></editor>
 </template>
 
 <script setup lang="ts">
@@ -7,8 +7,7 @@ import { getArticleById } from '@/api/article';
 import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import Editor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+import Editor from '@/components/Common/Editor.vue';
 import _ from 'lodash'
 const store = useStore();
 const route = useRoute();

@@ -14,9 +14,9 @@
         <img class="w-10 h-10 rounded-sm mr-4" src="@/assets/images/login-bg.jpg" />
         <div class="text-sm font-semibold">{{ answer.answerer.nickname }}</div>
       </div>
-      <div>
-        <p class="my-2">{{ answer.content }}</p>
-      </div>
+
+      <editor v-model="answer.content" :preview-only="true"></editor>
+
       <div class="text-gray-500 text-sm">编辑于{{ answer.create_time }}</div>
       <div class="flex mt-2 mb-4">
         <div
@@ -35,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import Editor from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 import { upAnswer, stepAnswer } from '@/util/useThumb';
 import { inject } from 'vue';
 

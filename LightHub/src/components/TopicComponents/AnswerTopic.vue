@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="my-2">
-      <editor v-model="answer_content" :preview="false"></editor>
+      <editor v-model="answer_content"></editor>
     </div>
     <div class="mt-2 mb-4 flex">
       <div class="btn-primary" @click="answerSubmit()">发布回答</div>
@@ -21,8 +21,7 @@
 
 <script setup lang="ts">
 import { ref, inject, onMounted } from 'vue'
-import Editor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+import Editor from '@/components/Common/Editor.vue';
 import { saveOrUpdateAnswer, getAnswerByUserId } from '@/api/answer';
 
 const props: any = defineProps({
@@ -55,6 +54,8 @@ const loadAnswer = async () => {
     answer_content.value = result.data.content
   }
 }
+
+
 
 onMounted(async () => {
   loadAnswer()

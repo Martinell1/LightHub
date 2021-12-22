@@ -164,7 +164,7 @@ const creator_article_list = async ctx => {
 const creator_draft_list = async ctx => {
   const id = verify(ctx.header.token).id;
   const page = ctx.query.page;
-  let result = await articleService.getDraftArticle(ObjectId(id),page)
+  let result = await articleService.getDraftArticleList(ObjectId(id),page)
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
