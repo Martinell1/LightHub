@@ -1,6 +1,6 @@
 <template>
   <div v-for="(comment,index) in props.reply_list" class="flex p-4 bg-gray-100 border-b-2 last">
-    <img class="w-9 h-9 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
+    <img class="w-9 h-9 rounded-full mr-2" :src="comment.commenter.avater" />
     <div class="flex flex-col w-full">
       <div class="font-semibold mr-4">{{ comment.commenter.nickname }}</div>
       <div class="flex items-center">
@@ -9,7 +9,7 @@
       <div class="py-2 text-sm">{{ comment.content }}</div>
       <div class="flex">
         <div class="text-xs text-gray-500 mr-4 cursor-pointer" @click="upSubmit(comment, index)">
-          <div class="flex" :class="{ 'text-orange-500': false }">
+          <div class="flex" :class="{ 'text-indigo-800': false }">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-4 w-4 mr-1"

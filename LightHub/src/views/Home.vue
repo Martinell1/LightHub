@@ -1,5 +1,6 @@
 <template>
   <SecondNav type="tagList"></SecondNav>
+
   <div class="home_layout">
     <main class="min-w-700">
       <ArticleCard :articleList="articleList"></ArticleCard>
@@ -15,6 +16,8 @@ import ArticleCard from '../components/ArticleComponents/ArticleCard.vue';
 import { useRoute } from 'vue-router';
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { getArticleList } from '@/api/article'
+import MainHeader from '@/components/Common/MainHeader.vue';
+import HeaderWraper from '@/components/Common/HeaderWraper.vue';
 let articleList: any = ref([])
 let page = 0;
 let loadArticleList = async () => {
@@ -25,6 +28,8 @@ let loadArticleList = async () => {
   if (result.code === 200) {
     if (result.data.length > 0) {
       articleList.value = [...articleList.value, ...result.data]
+      console.log(articleList.value);
+
     }
     else {
       page = -1
@@ -40,12 +45,16 @@ watch(route, () => {
   loadArticleList()
 })
 
+const showNav = ref(false)
+
 
 
 onMounted(async () => {
   loadArticleList()
 
   window.onscroll = function () {
+
+
     if (document.documentElement.clientHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
       loadArticleList()
     }

@@ -11,7 +11,7 @@
         </div>
 
         <div @click="followSubmit(tag._id)" class="mt-2">
-          <div v-if="!isFollow(tag.name)" class="btn-plain-mini ring-1 ring-orange-500">未关注</div>
+          <div v-if="!isFollow(tag.name)" class="btn-plain-mini ring-1 ring-indigo-800">未关注</div>
           <div v-if="isFollow(tag.name)" class="btn-primary-mini">已关注</div>
         </div>
       </div>
@@ -32,7 +32,7 @@ const userInfo: any = inject('userInfo')
 const followSubmit = async (tid) => {
   const result = await followTag(tid);
   if (result.code === 200) {
-    msg('success', result.data);
+    msg('success', result.message);
   } else {
     msg('fail', '出现错误' + result.code);
   }

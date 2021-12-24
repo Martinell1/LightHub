@@ -3,12 +3,12 @@
     <div class="flex py-2 text-gray-500">
       <div
         class="p-2 ml-5 cursor-pointer"
-        :class="{ 'border-b-2 border-orange-500 ': isArticle }"
+        :class="{ 'border-b-2 border-indigo-800 ': isArticle }"
         @click="isArticle = true; page = 0; article_list = []; loadArticleList()"
       >文章</div>
       <div
         class="p-2 mx-5 cursor-pointer"
-        :class="{ 'border-b-2 border-orange-500 ': !isArticle }"
+        :class="{ 'border-b-2 border-indigo-800 ': !isArticle }"
         @click="isArticle = false; page = 0; article_list = []; loadArticleList()"
       >草稿箱</div>
     </div>

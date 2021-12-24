@@ -62,7 +62,8 @@ const articleSchema = new Schema({
 },{versionKey:false})
 
 articleSchema.plugin(plugins.lastModified);
-articleSchema.plugin(plugins.getIntroduece);
+articleSchema.plugin(plugins.getIntrodueceAndCover);
+articleSchema.plugin(plugins.test);
 
 const articleModel = model("articles",articleSchema)
 

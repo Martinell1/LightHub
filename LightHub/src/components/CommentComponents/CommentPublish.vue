@@ -1,17 +1,17 @@
 <template>
   <div class="pb-4 border-b-2">
     <div class="flex">
-      <img class="w-9 h-9 rounded-full mr-4" src="@/assets/images/login-bg.jpg" />
+      <img class="w-9 h-9 rounded-full mr-4" :src="userInfo.avater" />
       <textarea
         v-model="comment_content"
-        class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-orange-500"
+        class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-indigo-800"
         placeholder="输入评论"
       ></textarea>
     </div>
     <div class="flex justify-between items-center">
       <div class="text-gray-500 ml-14 opacity-0">按Enter键发送</div>
       <div
-        class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-orange-500 cursor-pointer"
+        class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-indigo-800 cursor-pointer"
         @click="commmentSubmit()"
       >发表评论</div>
     </div>

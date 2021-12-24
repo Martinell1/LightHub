@@ -2,7 +2,7 @@
   <div class="fixed -ml-28 top-64">
     <div
       class="side-act-item"
-      :class="{ 'text-orange-500': props.article.isUp, ' text-gray-500': !props.article.isUp }"
+      :class="{ 'text-indigo-800': props.article.isUp, ' text-gray-500': !props.article.isUp }"
       @click="upSubmit()"
     >
       <div
@@ -90,6 +90,6 @@ const shiftCollection = () => {
 </script>
 <style  scoped>
 .side-act-item {
-  @apply w-9 h-9 rounded-full bg-gray-50 shadow flex justify-center items-center mb-4 cursor-pointer relative;
+  @apply w-10 h-10 rounded-full bg-gray-50 shadow flex justify-center items-center mb-4 cursor-pointer relative;
 }
 </style>

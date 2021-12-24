@@ -6,7 +6,7 @@
           <div class="flex">
             <div
               v-for="tag in props.tag_list"
-              class="btn-plain-mini ring-1 ring-orange-500"
+              class="btn-plain-mini ring-1 ring-indigo-800"
             >{{ tag }}</div>
           </div>
 
@@ -14,11 +14,16 @@
             <h1 class="text-2xl font-semibold">{{ props.topic.title }}</h1>
           </div>
 
-          <p class="mb-2">{{ props.topic.introduce }}</p>
+          <editor
+            class="mb-6"
+            v-model="props.topic.introduce"
+            previewOnly
+            style=" background-color: #f9fafb;"
+          ></editor>
 
           <div class="flex">
             <div
-              class="flex mr-4 ring-1 ring-orange-500"
+              class="flex mr-4 ring-1 ring-indigo-800"
               :class="{ 'btn-primary': props.topic.isFollow, 'btn-plain': !props.topic.isFollow }"
               @click="followSubmit(props.topic._id)"
             >
@@ -33,7 +38,7 @@
                 />
               </svg>关注问题
             </div>
-            <div class="btn-plain flex ring-1 ring-orange-500" @click="shiftEdit()">
+            <div class="btn-plain flex ring-1 ring-indigo-800" @click="shiftEdit()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 my-auto mr-1"
@@ -72,6 +77,8 @@
 </template>
 
 <script setup lang="ts">
+import Editor from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 import { inject } from 'vue'
 import { followTopic } from '@/util/useFollow';
 const props: any = defineProps({

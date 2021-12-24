@@ -18,7 +18,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app/app.js"
+    "dev": "nodemon app/app.js",
+    "build": "webpack"
   },
   "author": "yinshi",
   "license": "ISC"

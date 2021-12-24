@@ -53,6 +53,7 @@ class HistoryService extends Service{
           user:{
             _id:1,
             nickname:1,
+            avater:1,
             fans:1,
             article_count:1,
             topic_count:1,
@@ -61,7 +62,9 @@ class HistoryService extends Service{
           article:{
             _id:1,
             title:1,
+            cover:1,
             up_list:1,
+            up_count:1,
             comment_count:1,
           },
           topic:{
@@ -69,6 +72,7 @@ class HistoryService extends Service{
             title:1,
             up_list:1,
             introduce:1,
+            up_count:1,
             follow_count:1,
           },
           tag:{

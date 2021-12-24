@@ -7,7 +7,7 @@
         @mouseenter="hoverInfo(index, userInfo, topic.initiator)"
         @mouseleave="removeHoverInfo(index)"
       >
-        <img class="w-6 h-6 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
+        <img class="w-6 h-6 rounded-full mr-2 object-cover" :src="topic.initiator.avater" />
 
         <div class="font-semibold mr-4">{{ topic.initiator.nickname }}</div>
         <div class="text-sm text-gray-500">{{ topic.initiator.introduce }}</div>
@@ -16,11 +16,11 @@
         <div class="text-xl font-semibold my-2">{{ topic.title }}</div>
       </router-link>
 
-      <div class="h-12">{{ topic.introduce }}</div>
+      <div class="h-12">{{ fmtIntroduce(topic.introduce) }}</div>
       <div class="flex text-sm text-gray-500">
         <div class="flex">
           <div
-            class="flex mr-4 ring-1 ring-orange-500"
+            class="flex mr-4 ring-1 ring-indigo-800"
             :class="{ 'btn-primary': topic.isUp, 'btn-plain': !topic.isUp }"
             @click="upSubmit(topic._id, index)"
           >
@@ -40,7 +40,7 @@
 
         <div
           class="flex mr-5 items-center cursor-pointer"
-          :class="{ ' text-orange-500': topic.isFollow }"
+          :class="{ ' text-indigo-800': topic.isFollow }"
           @click="followSubmit(topic._id, index)"
         >
           <svg
@@ -103,6 +103,14 @@ import { followTopic } from '@/util/useFollow';
 const props: any = defineProps({
   topicList: Array
 })
+
+const fmtIntroduce = (introduce) => {
+  let result = introduce.replace(/[![].+\][\(]http\:\/\/qiniu\.kaijinx\.top\/.+[\)]/, '')
+  result = result.replace(/#+[ ].+/g, '')
+  result = result.replace(/`{3}[^`]*`{3}/, '')
+  return result
+}
+
 const userInfo: any = inject('userInfo')
 
 

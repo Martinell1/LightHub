@@ -1,17 +1,21 @@
 <template>
-  <div class="article_layout">
-    <main class="min-w-700">
+  <div class="article_layout mb-10">
+    <main class="w-700">
       <ArticleDetail :article="article" :commentList="comment_list"></ArticleDetail>
     </main>
+    <aside>
+      <CataLog></CataLog>
+    </aside>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { getArticleById } from '@/api/article';
 import { getCommentList } from '@/api/comment';
 import { useRoute } from 'vue-router';
 import ArticleDetail from '../components/ArticleComponents/ArticleDetail.vue';
+import CataLog from '@/components/ArticleComponents/CataLog.vue';
 const route = useRoute();
 const id = route.params.id;
 
@@ -28,6 +32,10 @@ let article = ref({
   _id: "",
   up_list: []
 })
+
+const catalogList: any = ref([])
+provide('catalogList', catalogList)
+
 const loadArticle = async () => {
   let { data: result } = await getArticleById(id);
   if (result.code === 200) {

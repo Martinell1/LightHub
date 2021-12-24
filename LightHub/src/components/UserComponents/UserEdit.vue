@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4 rounded relative shadow edit-wrap">
     <div class="w-40 h-40 bg-gray-50 rounded-lg ml-4 transform translate-y-3/4">
-      <img class="p-1 w-full h-full rounded-full" src="../../assets/images/login-bg.jpg" />
+      <img class="p-1 w-full h-full rounded-full object-cover" :src="userInfo.avater" />
     </div>
     <div class="flex flex-col px-8 ml-48">
       <div class="edit-item justshowy-between">
@@ -23,7 +23,7 @@
             </div>
           </div>
         </div>
-        <router-link :to="{ 'name': 'User' }" class="text-sm leading-8 text-orange-500">返回我的主页></router-link>
+        <router-link :to="{ 'name': 'User' }" class="text-sm leading-8 text-indigo-800">返回我的主页></router-link>
       </div>
       <div class="edit-item">
         <div class="form-label">性别</div>
@@ -195,15 +195,15 @@ const updateUserInfoSubmit = async () => {
 }
 
 .form-education-input {
-  @apply outline-none border-2 px-2 mr-2 rounded text-orange-500;
+  @apply outline-none border-2 px-2 mr-2 rounded text-indigo-800;
 }
 
 .form-education-option {
-  @apply text-orange-500 bg-orange-50 hover:bg-gray-200;
+  @apply text-indigo-800 bg-orange-50 hover:bg-gray-200;
 }
 
 .btn-change {
-  @apply cursor-pointer leading-8 mx-2 text-orange-500 w-8 opacity-0;
+  @apply cursor-pointer leading-8 mx-2 text-indigo-800 w-8 opacity-0;
 }
 
 .edit-item:hover .btn-change {
@@ -214,6 +214,6 @@ const updateUserInfoSubmit = async () => {
   @apply min-w-0 px-4 mr-4;
 }
 .btn-plain-mini {
-  @apply min-w-0 px-4 ring-1 ring-orange-500;
+  @apply min-w-0 px-4 ring-1 ring-indigo-800;
 }
 </style>

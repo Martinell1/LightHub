@@ -16,9 +16,12 @@
           <router-link :to="{ name: 'AnswerList', params: { 'id': id } }" active-class="item-act">
             <div class="item">回答</div>
           </router-link>
+          <router-link :to="{ name: 'FollowList', params: { 'id': id } }" active-class="item-act">
+            <div class="item">关注</div>
+          </router-link>
         </div>
       </nav>
-      <router-view></router-view>
+      <router-view class="w-700"></router-view>
     </div>
     <UserAside></UserAside>
   </div>
@@ -46,6 +49,6 @@ const id = route.params.id;
 }
 
 .item-act {
-  @apply text-orange-500 border-b-2 border-orange-500;
+  @apply text-indigo-800 border-b-2 border-indigo-800;
 }
 </style>

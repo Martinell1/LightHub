@@ -33,13 +33,12 @@ class Service{
     return this.model.deleteMany(obj);
   }
 
-  findAndUpdate(findObj,updateObj,status=1){
-    findObj.status = status
-    return this.model.findOneAndUpdate(findObj,updateObj)
+  findAndUpdate(findObj,updateObj){
+    return this.model.findOneAndUpdate(findObj,updateObj,{ runValidators: true })
   }
 
   update(obj){
-    return this.model.updateOne({_id:obj._id},obj)
+    return this.model.updateOne({_id:obj._id},obj,{ runValidators: true })
   }
 
   updates(oldObj,newObj){

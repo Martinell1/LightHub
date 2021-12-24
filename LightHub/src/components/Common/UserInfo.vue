@@ -3,7 +3,7 @@
     class="bg-gray-50 absolute p-4 pt-6 shadow-lg ring-2 ring-gray-200 w-80 z-10 m-4 ml-0 hover-block"
   >
     <div class="flex -mt-10">
-      <img class="w-16 h-16 rounded-md border-2" src="@/assets/images/login-bg.jpg" />
+      <img class="w-16 h-16 rounded-md border-2 object-cover" :src="currentUserInfo.avater" />
       <div class="flex flex-col text-sm transform ml-2 justify-end">
         <a
           :href="/user/ + currentUserInfo._id"

@@ -16,7 +16,7 @@
       </ul>
       <div class="flex w-100 overflow-hidden">
         <input
-          class="m-auto mx-2 w-48 h-8 bg-gray-100 text-sm rounded-sm outline-none pl-4 ring-1 ring-orange-500 flex-shrink-0"
+          class="m-auto mx-2 w-48 h-8 bg-gray-100 text-sm rounded-sm outline-none pl-4 ring-1 ring-indigo-800 flex-shrink-0"
           :class="{ 'input-focus': isSearch, 'input': !isSearch }"
           type="text"
           @focus="focusOnSearch()"
@@ -27,10 +27,7 @@
         <div class="btn-primary my-auto" :class="{ 'btn-focus': isSearch }" @click="topicModal()">提问</div>
       </div>
       <div @mouseenter="clickAvater = true" @mouseleave="clickAvater = false" class="relative">
-        <img
-          class="w-10 h-10 rounded-full m-3 cursor-pointer"
-          src="../../assets/images/login-bg.jpg"
-        />
+        <img class="w-10 h-10 rounded-full m-3 cursor-pointer object-cover" :src="userInfo.avater" />
         <ul
           v-show="clickAvater"
           class="absolute rounded bg-gray-50 -ml-24 text-gray-500 ring-2 ring-gray-200 text-sm z-50"
@@ -82,7 +79,7 @@ const exit = () => {
 </script>
 <style scoped>
 .nav-list-item {
-  @apply text-base leading-16 h-16 mx-2 cursor-pointer text-gray-500 hover:text-orange-500;
+  @apply text-base leading-16 h-16 mx-2 cursor-pointer text-gray-500 hover:text-indigo-800;
 }
 
 .input {

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-sm text-orange-500">
+  <div class="text-sm text-indigo-800">
     <div>
       <ul class="flex flex-wrap">
         <li
@@ -31,7 +31,7 @@
         <div v-show="isShow.input" class="relative mr-4 z-10">
           <input
             v-model="tagKey"
-            class="ring-1 outline-none ring-orange-500 rounded-full w-48 h-7 my-2 px-4"
+            class="ring-1 outline-none ring-indigo-800 rounded-full w-48 h-7 my-2 px-4"
           />
           <div
             v-show="openSelect"

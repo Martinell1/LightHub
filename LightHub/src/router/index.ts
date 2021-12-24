@@ -63,6 +63,11 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'AnswerList',
                 component: () => import('../components/UserComponents/ActionList/AnswerList.vue'),
               },
+              {
+                path: 'follow',
+                name: 'FollowList',
+                component: () => import('../components/UserComponents/ActionList/FollowList.vue'),
+              },
             ]
           },
           {

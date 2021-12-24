@@ -36,7 +36,7 @@ setTimeout(() => {
 }
 
 .success_msg {
-  @apply bg-orange-200 text-orange-500 border-orange-200;
+  @apply bg-orange-200 text-indigo-800 border-orange-200;
 }
 
 .fail_msg {

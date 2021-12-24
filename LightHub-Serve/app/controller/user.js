@@ -79,7 +79,10 @@ const list = async ctx => {
 const update = async ctx => {
   let body = ctx.request.body
   const uid = verify(ctx.header.token).id
-  body.education = JSON.parse(body.education)
+  if(body.education){
+    body.education = JSON.parse(body.education)
+  }
+
   //修改用户信息
   await userService.findAndUpdate({"_id":uid},body)
   let result = await userService.findOne({"_id":uid})
@@ -89,6 +92,24 @@ const update = async ctx => {
     ctx.body = ResultFactory.buildFailResult("更新失败");
   }
 }
+
+const follow_list = async ctx =>{
+  const uid = ctx.query.id;
+  const page = ctx.query.page;
+  let user = await userService.findOne({"_id":uid})
+  let user_list = user.follows;
+  let result = await userService.getFollowList(user_list,page)
+  const me = await userService.findOne({"_id":verify(ctx.header.token).id})
+  let my_follows = me.follows;
+  result.forEach(item => {
+    item.isFollow = my_follows.some(element => element.toString() === item._id.toString())
+  })
+  if(result){
+    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
+  }else{
+    ctx.body = ResultFactory.buildFailResult("更新失败");
+  }
+} 
 
 const follow_tag = async ctx => {
   const result = await follow_utils(ctx,'tag')
@@ -143,6 +164,7 @@ const action_list = async ctx => {
         delete item.article.up_list
       }
       if(item.field === 'topic'){
+        console.log(item.topic);
         item.topic.isUp = item.topic.up_list.some(element => element === id.toString())
         item.topic.isFollow = user.topic_list.some(element => item.topic._id.toString())
         delete item.topic.up_list
@@ -170,7 +192,6 @@ const getCreatorInfo = async ctx =>{
   if(article === undefined && topic === undefined){
     result = "暂时未有数据"
   }else{
-    console.log(draft);
     result = Object.assign(article,topic)
     result.fans_count = user.fans_count
     result.draft_count = draft[0].article_count
@@ -189,6 +210,7 @@ module.exports = {
   register,
   login,
   info,
+  follow_list,
   follow_tag,
   follow_user,
   follow_topic,

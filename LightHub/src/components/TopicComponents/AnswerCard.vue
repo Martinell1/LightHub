@@ -11,7 +11,7 @@
       </div>
 
       <div class="flex items-center" @mouseenter="hoverInfo(index, userInfo, answer.answerer)">
-        <img class="w-10 h-10 rounded-sm mr-4" src="@/assets/images/login-bg.jpg" />
+        <img class="w-10 h-10 rounded-sm mr-4 object-cover" :src="answer.answerer.avater" />
         <div class="text-sm font-semibold">{{ answer.answerer.nickname }}</div>
       </div>
 
@@ -20,12 +20,12 @@
       <div class="text-gray-500 text-sm">编辑于{{ answer.create_time }}</div>
       <div class="flex mt-2 mb-4">
         <div
-          class="mr-4 ring-1 ring-orange-500"
+          class="mr-4 ring-1 ring-indigo-800"
           :class="{ 'btn-primary': answer.isUp, 'btn-plain': !answer.isUp }"
           @click="upSubmit(answer._id, index)"
         >▲赞同{{ answer.up_count }}</div>
         <div
-          class="ring-1 ring-orange-500"
+          class="ring-1 ring-indigo-800"
           :class="{ 'btn-primary': answer.isStep, 'btn-plain': !answer.isStep }"
           @click="stepSubmit(answer._id, index)"
         >▼</div>

@@ -19,7 +19,14 @@
         <div class="flex flex-col">
           <router-link :to="{ name: 'Article', params: { id: article._id } }">
             <h1 class="text-xl text-gray-800 font-semibold">{{ article.title }}</h1>
-            <p class="text-sm text-gray-500 truncate my-2 max-w-md">{{ article.content }}</p>
+            <p
+              v-if="article.cover"
+              class="text-sm text-gray-500 truncate my-2 max-w-md"
+            >{{ article.introduce }}</p>
+            <p
+              v-if="!article.cover"
+              class="text-sm text-gray-500 truncate my-2 max-w-xl"
+            >{{ article.introduce }}</p>
           </router-link>
 
           <div class="flex items-center text-sm text-gray-500">
@@ -50,7 +57,7 @@
             <div
               class="flex mr-5 cursor-pointer"
               @click="upSubmit(article._id, index)"
-              :class="{ ' text-orange-500': article.isUp }"
+              :class="{ ' text-indigo-800': article.isUp }"
             >
               <svg
                 v-show="!article.isUp"
@@ -100,7 +107,8 @@
             </router-link>
           </div>
         </div>
-        <img class="w-32 h-20" src="@/assets/images/login-bg.jpg" />
+
+        <img v-if="article.cover" class="w-32 h-20 object-cover" :src="article.cover" />
       </div>
     </div>
   </div>

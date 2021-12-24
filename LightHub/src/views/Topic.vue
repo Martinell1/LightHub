@@ -2,11 +2,10 @@
   <TopicHeader :topic="topic" @useEdit="shiftEdit()"></TopicHeader>
 
   <div class="flex answer_layout mt-4">
-    <div class="w-700">
+    <div class="w-1000">
       <AnswerTopic v-if="isEdit" :topic_id="topic._id"></AnswerTopic>
       <AnswerList :answerList="answerList"></AnswerList>
     </div>
-    <div class="w-260"></div>
   </div>
 </template>
 

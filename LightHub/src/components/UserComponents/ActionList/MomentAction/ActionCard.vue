@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.action.opt === 'follow'" class="w-700 rounded bg-gray-50 mb-4 shadow">
     <div class="flex items-center text-sm px-5 py-4">
-      <img class="w-11 h-11 rounded-full mr-4" src="@/assets/images/login-bg.jpg" />
+      <img class="w-11 h-11 rounded-full mr-4 object-cover" :src="props.action.user.avater" />
       <div class="font-semibold mr-1">{{ props.action.user.nickname }}</div>
       <div class="text-gray-500 flex mr-1">
         关注了

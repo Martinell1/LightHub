@@ -7,8 +7,8 @@
     />
     <div class="flex items-center">
       <TagAdd></TagAdd>
-      <div class="btn-plain ring-1 ring-orange-600" @click="saveSubmit()">保存</div>
-      <div class="btn-plain ring-1 ring-orange-600 mx-4" @click="articleSubmit()">发布</div>
+      <div class="btn-plain ring-1 ring-orange-600" @click="articleSubmit(2)">保存</div>
+      <div class="btn-plain ring-1 ring-orange-600 mx-4" @click="articleSubmit(1)">发布</div>
       <img class="w-8 h-8 rounded-full my-4 ml-4" src="../../assets/images/login-bg.jpg" />
     </div>
   </div>
@@ -19,7 +19,7 @@ import { ref, inject, provide } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
-import { addArticle, saveArticle } from '@/api/article';
+import { addArticle } from '@/api/article';
 import TagAdd from '../TagComponents/TagAdd.vue';
 const store = useStore();
 const route = useRoute();
@@ -41,36 +41,25 @@ if (route.params.aid) {
   tag_list.value = store.state.editArticle.tag_list
 }
 
-const saveSubmit = async () => {
-  const params: any = new FormData();
-  params.append('status', 2);
-  params.append('title', title.value);
-  params.append('content', store.state.articleText);
-  params.append('tag_list', JSON.stringify(tag_list.value));
 
-  let { data: result } = await saveArticle(params);
-  if (result.code === 200) {
-    msg('success', '保存成功')
-    router.push({
-      name: 'CreatorHome',
-      params: { id: userInfo.value._id }
-    })
+const articleSubmit = async (status) => {
+  if (title.value === '') {
+    msg('fail', '标题不可为空')
+    return
   }
-}
-
-
-const articleSubmit = async () => {
   if (store.state.articleText === '') {
     msg('fail', '内容不可为空')
     return
+  }
+  if (title.value.length > 20) {
+    msg('fail', '标题过长')
+    return ''
   }
   const params: any = new FormData();
   if (_id.value) {
     params.append('_id', _id.value)
   }
-  console.log(title.value);
-
-  params.append('status', 1);
+  params.append('status', status);
   params.append('title', title.value);
   params.append('content', store.state.articleText);
   params.append('tag_list', JSON.stringify(tag_list.value));

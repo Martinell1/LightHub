@@ -4,7 +4,7 @@
       class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50 w-140 min-h-60 p-6 flex flex-col"
     >
       <div class="flex">
-        <img class="w-10 h-10 rounded-full mr-2" src="../../assets/images/login-bg.jpg" />
+        <img class="w-10 h-10 rounded-full mr-2" :src="userInfo.avater" />
         <input v-model="topic.title" class="w-full h-10 pl-2" placeholder="写下你的问题，准确描述问题更方便他人解答" />
       </div>
 
@@ -33,13 +33,18 @@
 <script setup lang="ts">
 import { addTopic } from '@/api/topic';
 import Editor from '@/components/Common/Editor.vue';
-import { ref, reactive, provide } from 'vue'
+import { ref, provide, reactive } from 'vue'
 import TagAdd from '../TagComponents/TagAdd.vue';
-
 const topic: any = ref({
   title: '',
   introduce: '',
   isUpdate: false,
+})
+
+const userInfo: any = reactive({
+  id: localStorage.getItem("id"),
+  nickname: localStorage.getItem("nickname"),
+  avater: localStorage.getItem("avater"),
 })
 
 const tag_list: any = ref([])

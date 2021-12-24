@@ -38,7 +38,7 @@
           <router-link to="/editor">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="item-icon bg-orange-200 text-orange-500"
+              class="item-icon bg-orange-200 text-indigo-800"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -76,13 +76,13 @@
       </div>
       <a
         :href="'/creator/' + userInfo._id + '/home'"
-        class="ring-1 ring-orange-500 text-center text-sm text-orange-500 p-1 cursor-pointer block"
+        class="ring-1 ring-indigo-800 text-center text-sm text-indigo-800 p-1 cursor-pointer block"
       >进入创作中心></a>
     </div>
 
     <div class="card px-5 py-2 mt-4">
       <ul class="text-sm leading-10">
-        <li class="sidebar-item">
+        <!-- <router-link :to="{ name: 'TopicList',params:{id:userInfo._id} }" class="sidebar-item">
           <div class="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -95,9 +95,9 @@
               />
             </svg> 我关注的问题
           </div>
-
           <div class="sidebar-item-count">{{ userInfo.star_list.length }}</div>
-        </li>
+        </router-link>-->
+
         <li class="sidebar-item">
           <div class="flex items-center">
             <svg
@@ -112,7 +112,7 @@
             </svg> 我关注的人
           </div>
 
-          <div class="sidebar-item-count">{{ userInfo.follows.length }}</div>
+          <div class="sidebar-item-count">{{ userInfo.follow_count }}</div>
         </li>
       </ul>
     </div>

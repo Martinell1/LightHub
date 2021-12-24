@@ -10,6 +10,7 @@ const historyService = new HistoryService();
 const ObjectId = require('../config/db').Types.ObjectId
 const {verify} = require('../utils/getToken')
 const {up_utils,step_utils} = require('../utils/thumbUtil');
+const channel = require('../config/channel')
 
 
 
@@ -24,8 +25,7 @@ const list = async ctx => {
     const tagList = userInfo.tag_list;
     result = await articleService.getArticleListByTag(tagList,page);
   }else {
-    const tagList = []
-    tagList.push(tag)
+    const tagList = channel.get(tag) || []
     result = await articleService.getArticleListByTag(tagList,page);
   }
   result.forEach(element=>{
@@ -78,18 +78,6 @@ const detail = async ctx => {
     ctx.body = ResultFactory.buildFailResult("请求发生错误")
   }
 }
-const save = async ctx => {
-  let body = ctx.request.body
-  const uid = verify(ctx.header.token).id
-  body.tag_list = JSON.parse(body.tag_list)
-  body.author_id = uid
-  let result = await articleService.add(body);
-  if(result){
-    ctx.body = ResultFactory.buildSuccessResult(undefined,result)
-  }else{
-    ctx.body =  ResultFactory.buildSuccessResult(undefined,"出现错误")
-  }
-}
 
 const add = async ctx => {
   let body = ctx.request.body
@@ -98,14 +86,18 @@ const add = async ctx => {
   body.author_id = uid
   let result = undefined;
   if(body._id){
+    let article = await articleService.findOne({"_id":body._id})
+    for(let i = 0,len = article.tag_list.length; i < len; i++){
+      await tagService.findAndUpdate({'name':article.tag_list[i]},{$inc:{'article_count':-1}})
+    }
     result = await articleService.findAndUpdate({"_id":body._id},body)
   }else{
     result = await articleService.add(body)
+    await userService.findAndUpdate({'_id':uid},{$inc:{'article_count':1}})
+    body.tag_list.forEach(async element => {
+      await tagService.findAndUpdate({'name':element},{$inc:{'article_count':1}})
+    });
   }
-  await userService.findAndUpdate({'_id':uid},{$inc:{'article_count':1}})
-  body.tag_list.forEach(async element => {
-    await tagService.findAndUpdate({'name':element},{$inc:{'article_count':1}})
-  });
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
@@ -179,7 +171,6 @@ module.exports = {
   list,
   listByAuthor,
   detail,
-  save,
   add,
   remove,
   up_article,

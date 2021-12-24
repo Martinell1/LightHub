@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-5" style="min-height:calc(100vh - 100px)">
     <div class="flex py-2 text-gray-500">
-      <div class="p-2 ml-5 cursor-pointer border-b-2 border-orange-500">评论列表</div>
+      <div class="p-2 ml-5 cursor-pointer border-b-2 border-indigo-800">评论列表</div>
     </div>
     <div
       v-for="(comment,index) in comment_list"
@@ -35,11 +35,11 @@
         <div class="py-4 rounded flex items-center">
           <input
             v-model="comment.content"
-            class="bg-gray-50 outline-none w-full px-3 py-2 rounded border-2 h-9 focus:border-orange-500"
+            class="bg-gray-50 outline-none w-full px-3 py-2 rounded border-2 h-9 focus:border-indigo-800"
             placeholder="输入评论"
           />
           <div
-            class="ml-4 my-auto w-24 text-center py-1 rounded text-gray-50 bg-orange-500 cursor-pointer"
+            class="ml-4 my-auto w-24 text-center py-1 rounded text-gray-50 bg-indigo-800 cursor-pointer"
             @click="editSubmit(comment)"
           >编辑</div>
         </div>

@@ -4,7 +4,7 @@
     <article class="py-6">
       <div class="flex justify-between items-center mb-6">
         <div class="flex items-center">
-          <img class="w-10 h-10 rounded-full mr-3" src="../../assets/images/login-bg.jpg" />
+          <img class="w-10 h-10 rounded-full mr-3 object-cover" :src="props.article.author.avater" />
           <div v-if="props.article.author" class="flex flex-col">
             <div class="font-semibold">{{ props.article.author.nickname }}</div>
             <div class="text-sm text-gray-500 flex">
@@ -15,7 +15,7 @@
         </div>
         <div v-if="!identify" @click="followSubmit()">
           <div v-if="props.article.isFollow" class="btn-primary-mini">已关注</div>
-          <div v-if="!props.article.isFollow" class="btn-plain-mini ring-1 ring-orange-500">关注</div>
+          <div v-if="!props.article.isFollow" class="btn-plain-mini ring-1 ring-indigo-800">关注</div>
         </div>
       </div>
 
@@ -23,13 +23,14 @@
         class="mb-6"
         v-model="props.article.content"
         previewOnly
+        :onGetCatalog="getCatalog"
         style=" background-color: #f9fafb;"
       ></editor>
 
       <div class="flex border-t-2">
         <div
           v-for="tag in props.article.tag_list"
-          class="mt-4 mr-4 bg-orange-500 px-2 py-1 rounded text-gray-50 text-sm text-center flex items-center"
+          class="mt-4 mr-4 bg-indigo-800 px-2 py-1 rounded text-gray-50 text-sm text-center flex items-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, computed } from 'vue'
+import { ref, inject, computed } from 'vue'
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { fmt4Time } from '../../util/fmt4Time.js'
@@ -84,7 +85,10 @@ const followSubmit = async () => {
   }
 }
 
-
+const catalogList: any = inject('catalogList')
+const getCatalog = (list) => {
+  catalogList.value = list
+}
 
 
 

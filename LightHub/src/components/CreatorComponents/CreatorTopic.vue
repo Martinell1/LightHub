@@ -1,7 +1,7 @@
 <template>
   <div class="card" style="min-height:calc(100vh - 100px)">
     <div class="flex py-2 text-gray-500">
-      <div class="p-2 ml-5 cursor-pointer border-b-2 border-orange-500">话题列表</div>
+      <div class="p-2 ml-5 cursor-pointer border-b-2 border-indigo-800">话题列表</div>
     </div>
     <div
       v-for="(topic,index) in topic_list"

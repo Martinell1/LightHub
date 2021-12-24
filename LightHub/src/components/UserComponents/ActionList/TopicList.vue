@@ -17,6 +17,7 @@ const loadTopicList = async () => {
     return
   }
   let { data: result } = await getTopicListByInitiator(route.params.id, ++page);
+
   if (result.code === 200) {
     if (result.data.length > 0) {
       topicList.value = [...topicList.value, ...result.data]

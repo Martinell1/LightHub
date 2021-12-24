@@ -9,7 +9,6 @@ router.prefix('/article')
       .get("/creator_draft_list",article.creator_draft_list)
       .get("/detail",article.detail)
       .post("/up_article",article.up_article)
-      .post("/save",article.save)
       .post("/add",article.add)
       .post("/remove",article.remove)
 

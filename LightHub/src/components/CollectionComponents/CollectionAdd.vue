@@ -19,7 +19,7 @@
         <div v-if="collection.article_list.indexOf(props.article_id) > -1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 text-orange-500 mr-1"
+            class="h-5 w-5 text-indigo-800 mr-1"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -35,7 +35,7 @@
     <div class="flex">
       <div
         v-if="!isAdd"
-        class="text-gray-500 text-sm hover:text-orange-500 my-3"
+        class="text-gray-500 text-sm hover:text-indigo-800 my-3"
         @click="isAdd = true"
       >新建收藏夹</div>
       <div v-if="isAdd" class="flex w-full justify-between my-2">

@@ -20,13 +20,17 @@
           <div v-if="props.data.field === 'article'">{{ props.data.article.introduce }}</div>
         </div>
       </div>
-      <img class="w-32 h-20 rounded" src="../../assets/images/login-bg.jpg" />
+      <img
+        v-if="props.data.field === 'article' && props.data.article.cover"
+        class="w-32 h-20 rounded object-cover"
+        :src="props.data.article.cover"
+      />
     </div>
 
     <div v-if="props.data.field === 'topic'" class="flex justify-between text-gray-500">
       <div
         class="moment-item"
-        :class="{ 'text-orange-500': props.data.topic.isUp }"
+        :class="{ 'text-indigo-800': props.data.topic.isUp }"
         @click="topicUpSubmit(props.data.topic._id)"
       >
         <svg
@@ -43,7 +47,7 @@
       </div>
       <div
         class="moment-item border-l-2 border-r-2"
-        :class="{ 'text-orange-500': props.data.topic.isFollow }"
+        :class="{ 'text-indigo-800': props.data.topic.isFollow }"
         @click="topicFollowSubmit(props.data.topic._id)"
       >
         <svg
@@ -79,7 +83,7 @@
     <div v-if="props.data.field === 'article'" class="flex justify-between text-gray-500">
       <div
         class="moment-item"
-        :class="{ 'text-orange-500': props.data.article.isUp }"
+        :class="{ 'text-indigo-800': props.data.article.isUp }"
         @click="articleUpSubmit(props.data.article._id)"
       >
         <svg
@@ -184,16 +188,6 @@ const articleUpSubmit = async (aid) => {
   } else {
     msg('fail', '出现错误' + result.code);
   }
-}
-const articleFollowSubmit = async (aid) => {
-  // const result = await followArticle(aid);
-  // if (result.code === 200) {
-  //   msg('success', result.message);
-  //   props.data.article.isFollow = !props.data.article.isFollow
-  //   props.data.article.follow_count += result.data
-  // } else {
-  //   msg('fail', '出现错误' + result.code);
-  // }
 }
 
 </script>

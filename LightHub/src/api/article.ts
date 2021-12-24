@@ -16,9 +16,6 @@ const addArticle: Function = async (article: Object) => {
   return await axios.post("article/add", article)
 }
 
-const saveArticle: Function = async (article: Object) => {
-  return await axios.post("article/save", article)
-}
 
 const upArticle: Function = async (params: Object) => {
   return await axios.post("article/up_article", params)
@@ -46,7 +43,6 @@ export {
   getArticleListByAuthor,
   getArticleById,
   addArticle,
-  saveArticle,
   upArticle,
   stepArticle,
   creator_article_list,

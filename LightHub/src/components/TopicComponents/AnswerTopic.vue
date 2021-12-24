@@ -4,7 +4,7 @@
       <h1 class="text-xl font-semibold mt-4 mb-3 text-gray-500">回答问题</h1>
     </div>
     <div class="flex items-center mt-2">
-      <img class="w-9 h-9 rounded-full mr-2" src="@/assets/images/login-bg.jpg" />
+      <img class="w-9 h-9 rounded-full mr-2 object-cover" :src="userInfo.avater" />
       <div class="flex text-sm text-gray-500">
         <div class="font-semibold">{{ userInfo.nickname }}</div>
         <div>{{ userInfo.introduce || '' }}</div>

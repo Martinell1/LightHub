@@ -12,6 +12,10 @@ const getOneByToken: Function = async (token: String) => {
   return await axios.get("user/info?token=" + token)
 }
 
+const getFollowList: Function = async (id: String, page: Number) => {
+  return await axios.get("user/follow_list?id=" + id + "&page=" + page)
+}
+
 const getOneById: Function = async (id: String) => {
   return await axios.get("user/info?id=" + id)
 }
@@ -44,6 +48,7 @@ export {
   register,
   login,
   getOneByToken,
+  getFollowList,
   getOneById,
   updateUserInfo,
   updateFollowTag,

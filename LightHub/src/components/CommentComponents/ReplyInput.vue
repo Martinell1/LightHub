@@ -2,13 +2,13 @@
   <div class="py-4 rounded">
     <input
       v-model="comment.content"
-      class="bg-gray-50 outline-none w-full px-3 py-2 rounded border-2 h-9 focus:border-orange-500"
+      class="bg-gray-50 outline-none w-full px-3 py-2 rounded border-2 h-9 focus:border-indigo-800"
       placeholder="输入评论"
     />
     <div class="flex justify-between items-center">
       <div class="text-gray-500 ml-14 opacity-0">按Enter键发送</div>
       <div
-        class="mt-4 w-24 text-center py-1 rounded text-gray-50 bg-orange-500 cursor-pointer"
+        class="mt-4 w-24 text-center py-1 rounded text-gray-50 bg-indigo-800 cursor-pointer"
         @click="commmentSubmit()"
       >
         <slot></slot>
