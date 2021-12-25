@@ -8,7 +8,7 @@ function buildToken(payload) {
 }
 
 function verify(token){
-  return jwt.verify(token,SECRET);
+  return jwt.verify(token.split(' ')[1],SECRET).id;
 }
 
 module.exports = {

@@ -8,8 +8,13 @@ const login: Function = async (user: Object) => {
   return await axios.post("user/login", user);
 }
 
-const getOneByToken: Function = async (token: String) => {
-  return await axios.get("user/info?token=" + token)
+const getOneByToken: Function = async () => {
+  const { data: result } = await axios.get("user/info");
+  if (result.code === 200) {
+    return result.data
+  } else {
+    return result
+  }
 }
 
 const getFollowList: Function = async (id: String, page: Number) => {
@@ -17,7 +22,12 @@ const getFollowList: Function = async (id: String, page: Number) => {
 }
 
 const getOneById: Function = async (id: String) => {
-  return await axios.get("user/info?id=" + id)
+  const { data: result } = await axios.get("user/info?id=" + id)
+  if (result.code === 200) {
+    return result.data
+  } else {
+    return '出现错误'
+  }
 }
 
 const updateUserInfo: Function = async (user: Object) => {
@@ -36,8 +46,8 @@ const updateFollowTopic: Function = async (params: Array<any>) => {
   return await axios.post("user/follow_topic", params)
 }
 
-const getActionList: Function = async (page: Number) => {
-  return await axios.get("user/action_list?page=" + page)
+const getActionList: Function = async (id: String, page: Number) => {
+  return await axios.get("user/action_list?id=" + id + "&page=" + page)
 }
 
 const getCreatorInfo: Function = async () => {

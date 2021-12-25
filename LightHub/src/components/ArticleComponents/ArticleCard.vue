@@ -1,5 +1,5 @@
 <template>
-  <div class="w-700 card px-5">
+  <div class="w-full card px-5 xl:w-700">
     <div v-for="(article,index) in props.articleList" :key="index" class="py-4 border-b-2 last">
       <div
         class="flex mb-2 text-sm text-gray-600 relative"
@@ -9,7 +9,7 @@
         <div class="border-r-2 pr-2">
           <div
             class="font-semibold"
-            @mouseenter="hoverInfo(index, userInfo, article.author)"
+            @mouseenter="hoverInfo(index, article.author_id, userInfo._id)"
           >{{ article.author.nickname }}</div>
         </div>
         <div class="border-r-2 px-2">{{ fmt4Time(article.create_time) }}</div>
@@ -21,11 +21,11 @@
             <h1 class="text-xl text-gray-800 font-semibold">{{ article.title }}</h1>
             <p
               v-if="article.cover"
-              class="text-sm text-gray-500 truncate my-2 max-w-md"
+              class="text-sm text-gray-500 truncate my-2 max-w-xs xl:max-w-md"
             >{{ article.introduce }}</p>
             <p
               v-if="!article.cover"
-              class="text-sm text-gray-500 truncate my-2 max-w-xl"
+              class="text-sm text-gray-500 truncate my-2 max-w-xs xl:max-w-xl"
             >{{ article.introduce }}</p>
           </router-link>
 
@@ -108,7 +108,7 @@
           </div>
         </div>
 
-        <img v-if="article.cover" class="w-32 h-20 object-cover" :src="article.cover" />
+        <img v-if="article.cover" class="object-cover xl:w-32 xl:h-20" :src="article.cover" />
       </div>
     </div>
   </div>
@@ -141,7 +141,7 @@ const upSubmit = async (aid, index) => {
     props.articleList[index].isUp = !props.articleList[index].isUp
     props.articleList[index].up_count += result.data
   } else {
-    msg('fail', '出现错误' + result.code);
+    msg('fail', result.message);
   }
 }
 

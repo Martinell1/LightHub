@@ -23,7 +23,7 @@
             />
           </svg>
           <div v-if="isShow[index]" class="absolute card w-12 text-center py-1">
-            <div class="px-2 py-1 text-sm" @click="topicModal(topic)">编辑</div>
+            <div class="px-2 py-1 text-sm" @click="topicModal(userInfo, topic)">编辑</div>
 
             <div class="px-2 py-1 cursor-pointer text-sm" @click="removeTopic(topic._id)">删除</div>
           </div>
@@ -39,6 +39,8 @@
 import { creator_topic_list, remove_topic } from '@/api/topic';
 import { ref, onMounted, inject, onBeforeUnmount } from 'vue'
 const topicModal: any = inject('TopicModal');
+
+const userInfo = inject('userInfo')
 
 const isShow: any = ref([])
 

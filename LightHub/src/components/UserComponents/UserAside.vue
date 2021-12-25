@@ -1,14 +1,14 @@
 <template>
-  <aside class="ml-20p w-280 flex-col">
+  <aside class="hidden ml-20p w-280 flex-col xl:block">
     <div class="bg-gray-50 shadow">
       <div class="flex justify-between">
         <div class="follow-item border-r-2">
           <div>关注了</div>
-          <div class="font-semibold">{{ userInfo.follows.length }}</div>
+          <div class="font-semibold">{{ userInfo.follow_count || 0 }}</div>
         </div>
         <div class="follow-item">
           <div>关注者</div>
-          <div class="font-semibold">{{ userInfo.fans.length }}</div>
+          <div class="font-semibold">{{ userInfo.fans_count || 0 }}</div>
         </div>
       </div>
     </div>
@@ -16,14 +16,10 @@
     <div class="mx-2 ml-2">
       <ul class="text-sm leading-10">
         <li class="sidebar-item">
-          收藏集
-          <div>{{ userInfo.collection_count }}</div>
-        </li>
-        <li class="sidebar-item">
           关注标签
-          <div>{{ userInfo.tag_list.length }}</div>
+          <div>{{ (userInfo.tag_list || []).length }}</div>
         </li>
-        <li class="sidebar-item">
+        <li v-if="userInfo" class="sidebar-item">
           加入于
           <div>{{ fmt4Time(userInfo.create_time) }}</div>
         </li>

@@ -8,7 +8,11 @@ class UserService extends Service{
   }
 
   async getInfoByToken(token){
-    return await this.model.findOne({"_id":verify(token).id})
+    return await this.model.findOne({"_id":verify(token)},{
+      'password':0,
+      'account':0,
+      'salt':0,
+      'statis':0})
   }
 
   async getFollowList(user_list,page){

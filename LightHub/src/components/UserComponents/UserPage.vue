@@ -1,8 +1,8 @@
 <template>
-  <ProfileHeader></ProfileHeader>
+  <ProfileHeader :currentUserInfo="currentUserInfo"></ProfileHeader>
   <div class="user_layout">
-    <div>
-      <nav class="w-700 bg-gray-50 shadow border-b-2 border-gray-100 h-12">
+    <div class="w-full">
+      <nav class="bg-gray-50 shadow border-b-2 border-gray-100 h-12 w-full">
         <div class="flex">
           <router-link :to="{ name: 'MonmentList', params: { 'id': id } }" active-class="item-act">
             <div class="item">动态</div>
@@ -21,9 +21,10 @@
           </router-link>
         </div>
       </nav>
-      <router-view class="w-700"></router-view>
+      <router-view class="w-full"></router-view>
     </div>
-    <UserAside></UserAside>
+
+    <UserAside :currentUserInfo="currentUserInfo"></UserAside>
   </div>
 </template>
 
@@ -31,21 +32,36 @@
 import { useRoute } from 'vue-router';
 import ProfileHeader from './ProfileHeader.vue';
 import UserAside from './UserAside.vue';
+import { getOneById } from '@/api/user';
+import { ref, onMounted, provide } from 'vue'
 
 const route = useRoute()
 
-const id = route.params.id;
+const id = route.params.id
 
+const currentUserInfo = ref({})
+const loadUserInfo = async () => {
+  const user = await getOneById(id);
+  currentUserInfo.value = user
+}
+
+provide('loadUserInfo', loadUserInfo)
+
+
+
+onMounted(async () => {
+  loadUserInfo()
+})
 
 </script>
 
 <style scoped>
 .user_layout {
-  @apply w-1000 m-auto mt-4 flex;
+  @apply w-full m-auto mt-4 flex xl:w-1000;
 }
 
 .item {
-  @apply w-20 h-12 flex items-center justify-center;
+  @apply flex items-center justify-between xl:justify-center w-14 h-12 xl:w-20;
 }
 
 .item-act {

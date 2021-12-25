@@ -1,6 +1,6 @@
 <template>
-  <nav class="bg-gray-50 h-12 shadow-sm">
-    <div v-if="props.type === 'tagList'" class="w-1000 m-auto flex justify-between overflow-hidden">
+  <nav class="bg-gray-50 h-12 shadow-sm overflow-scroll">
+    <div v-if="props.type === 'tagList'" class="m-auto flex justify-between w-1000">
       <div class="flex">
         <router-link
           :to="{ name: 'Home', params: { 'tag': '' } }"
@@ -34,15 +34,15 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { useStore } from 'vuex'
+import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 const props: any = defineProps({
   type: String,
 })
 
+const store = useStore()
+
 const tagList = reactive([
-  {
-    name: "关注",
-    tag: 'following'
-  },
   {
     name: "前端",
     tag: 'frontend'
@@ -68,6 +68,17 @@ const tagList = reactive([
     tag: 'freebie'
   },
 ])
+
+if (store.state.userInfo.id) {
+  tagList.unshift({
+    name: "关注",
+    tag: 'following'
+  })
+}
+
+
+
+
 
 </script>
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <div class="topic_layout">
-    <main class="min-w-700">
+    <main class="w-full xl:w-700">
       <div class="border-2">
         <SecondNav type="topic"></SecondNav>
         <TopicCard :topicList="topicList"></TopicCard>
@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
 </script>
 <style scoped>
 .topic_layout {
-  @apply w-1000 m-auto mt-4 flex;
+  @apply w-full m-auto mt-4 flex xl:w-1000;
 }
 </style>
 

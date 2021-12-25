@@ -75,6 +75,6 @@ onMounted(() => {
 </script>
 <style scoped>
 .data-card {
-  @apply bg-gray-200 p-4 flex flex-col  w-64 rounded-lg mb-5;
+  @apply w-36 bg-gray-200 p-4 flex flex-col rounded-lg mb-5 xl:w-64;
 }
 </style>

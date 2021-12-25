@@ -13,14 +13,20 @@ const {up_utils} = require('../utils/thumbUtil')
 
 const list = async ctx => {
   let page = ctx.query.page;
-  const user = await userService.getInfoByToken(ctx.header.token);
+  let user = undefined
+  if(ctx.header.authorization){
+    user = await userService.getInfoByToken(ctx.header.authorization);
+  }
   let result = await topicService.getTopicListWithUserInfo(page);
   result.forEach(element=>{
-    element.isUp = element.up_list.some(item => item === user._id.toString())
-    element.up_count = element.up_list.length
-    delete element.up_list
+    if(user){
+      element.isUp = element.up_list.some(item => item === user._id.toString())
+      element.isFollow = user.topic_list.some(item => item === element._id.toString())
+    }else{
+      element.isUp = false
+      element.isFollow = false
+    }
     element.initiator = element.initiator[0]
-    element.isFollow = user.topic_list.some(item => item === element._id.toString())
   })
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
@@ -32,14 +38,24 @@ const list = async ctx => {
 const listByInitiator = async ctx => {
   const id = ctx.query.id
   const page = ctx.query.page
-  const user = await userService.getInfoByToken(ctx.header.token);
+  let user = undefined
+  if(ctx.header.authorization){
+    user = await userService.getInfoByToken(ctx.header.authorization);
+  }
   let result = await topicService.getTopicListByInitiator(ObjectId(id),page);
   result.forEach(element=>{
-    element.isUp = element.up_list.some(item => item === user._id.toString())
+    if(user){
+      element.isUp = element.up_list.some(item => item === user._id.toString())
+      element.isFollow = user.topic_list.some(item => item === element._id.toString())
+    }else{
+      element.isUp = false
+      element.isFollow = false
+    }
+
     element.up_count = element.up_list.length
     delete element.up_list
     element.initiator = element.initiator[0]
-    element.isFollow = user.topic_list.some(item => item === element._id.toString())
+
   })
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)
@@ -49,15 +65,24 @@ const listByInitiator = async ctx => {
 }
 
 const detail = async ctx => {
-  const user = await userService.getInfoByToken(ctx.header.token);
   let id = ObjectId(ctx.query.id);
   let result = await topicService.getTopicWithAnswer(id)
+  let user = undefined;
+  if(ctx.header.authorization){
+    user = await userService.getInfoByToken(ctx.header.authorization);
+  }
   result = result[0]
   result.initiator = result.initiator[0]
-  result.isUp = result.up_list.some(item => item === verify(ctx.header.token).id)
+  if(ctx.header.authorization){
+    result.isUp = result.up_list.some(item => item === user._id.toString())
+    result.isFollow = user.topic_list.some(item => item === result._id.toString())
+  }else{
+    result.isUp = false
+    result.isFollow = false
+  }
   result.up_count = result.up_list.length
   delete result.up_list
-  result.isFollow = user.topic_list.some(item => item === result._id.toString())
+
   if(result){
      ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{
@@ -66,7 +91,7 @@ const detail = async ctx => {
 }
 
 const add = async ctx => {
-  const uid = verify(ctx.header.token).id
+  const uid = verify(ctx.header.authorization)
   let body = ctx.request.body
   body.tag_list = JSON.parse(body.tag_list)
   body.initiator_id = uid
@@ -92,7 +117,7 @@ const add = async ctx => {
 
 const remove = async ctx => {
   const tid = ctx.request.body.tid
-  const uid = verify(ctx.header.token).id;
+  const uid = verify(ctx.header.authorization);
   const topic = await topicService.findOne({"_id":tid},{"initiator_id":1})
   let result = undefined;
   if(uid === topic.initiator_id.toString()){
@@ -125,7 +150,7 @@ const up_topic = async ctx => {
 
 const creator_topic_list = async ctx => {
   const page = ctx.query.page
-  const id = verify(ctx.header.token).id;
+  const id = verify(ctx.header.authorization);
   let result = await topicService.find({"initiator_id":id},{'title':1,'introduce':1,'tag_list':1,'create_time':1})
                                  .skip((page-1)*10)
                                  .limit(10)

@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed -ml-28 top-64">
+  <div class="hidden fixed -ml-28 top-64 xl:block">
     <div
       class="side-act-item"
       :class="{ 'text-indigo-800': props.article.isUp, ' text-gray-500': !props.article.isUp }"
@@ -52,12 +52,11 @@
     class="fixed top-80 -ml-16 mt-10"
     v-if="isCollection"
     :article_id="props.article._id"
-    @useCollection="shiftCollection()"
   ></CollectionAdd>
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { ref, inject, provide } from 'vue'
 import { upArticle } from '@/util/useThumb'
 
 import CollectionAdd from '../CollectionComponents/CollectionAdd.vue';
@@ -83,6 +82,8 @@ const isCollection = ref(false)
 const shiftCollection = () => {
   isCollection.value = !isCollection.value
 }
+
+provide('shiftCollection', shiftCollection)
 
 
 

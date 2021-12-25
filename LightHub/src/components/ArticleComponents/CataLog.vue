@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed mx-5 card w-280 px-4 py-5">
+  <div class="hidden fixed mx-5 card w-280 px-4 py-5 xl:block">
     <div class="font-semibold">目录</div>
     <div v-for="catalog in catalogList">
       <a v-if="catalog.level < 2" :href="'#' + catalog.text">

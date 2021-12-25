@@ -7,14 +7,9 @@
 
 <script setup lang="ts">
 import { ref, provide, onMounted } from 'vue'
-import { useStore } from 'vuex';
-import { getOneById } from '@/api/user';
-//提供用户信息
-const store = useStore();
-const id: String = store.state.userInfo.id;
+import { getOneByToken } from '@/api/user';
 
 const userInfo: any = ref({
-  account: "",
   nickname: "",
   avater: "",
   introduce: "",
@@ -34,11 +29,8 @@ const userInfo: any = ref({
 provide('userInfo', userInfo)
 
 const loadUserInfo = async () => {
-  let { data: result } = await getOneById(id);
-  if (result.code === 200) {
-    userInfo.value = result.data
-    userInfo.value.id = userInfo.value._id;
-  }
+  const user = await getOneByToken();
+  userInfo.value = user
 }
 
 

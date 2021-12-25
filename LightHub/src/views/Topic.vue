@@ -2,7 +2,7 @@
   <TopicHeader :topic="topic" @useEdit="shiftEdit()"></TopicHeader>
 
   <div class="flex answer_layout mt-4">
-    <div class="w-1000">
+    <div class="w-full xl:w-1000">
       <AnswerTopic v-if="isEdit" :topic_id="topic._id"></AnswerTopic>
       <AnswerList :answerList="answerList"></AnswerList>
     </div>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, provide, onBeforeUnmount } from 'vue'
+import { ref, onMounted, provide, onBeforeUnmount, inject } from 'vue'
 import { getTopicById } from '@/api/topic';
 import { getAnswerListById } from '@/api/answer';
 import { useRoute } from 'vue-router';
@@ -20,10 +20,16 @@ import AnswerTopic from '@/components/TopicComponents/AnswerTopic.vue';
 const route = useRoute();
 const id = route.params.id;
 
+const userInfo: any = inject('userInfo')
+
 const isEdit = ref(false)
 
 const shiftEdit = () => {
-  isEdit.value = !isEdit.value
+  if (userInfo.value === '尚未登录') {
+    alert('请先登录')
+  } else {
+    isEdit.value = !isEdit.value
+  }
 }
 
 
@@ -59,6 +65,8 @@ const answerSuccess = () => {
 
 provide('refreshAnswer', answerSuccess)
 
+provide('shiftEdit', shiftEdit)
+
 onMounted(async () => {
   loadTopic()
   loadAnswerList()
@@ -77,6 +85,6 @@ onBeforeUnmount(() => {
 </script>
 <style  scoped>
 .answer_layout {
-  @apply w-1000 mx-auto;
+  @apply w-full mx-auto xl:w-1000;
 }
 </style>

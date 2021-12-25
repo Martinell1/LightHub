@@ -171,5 +171,25 @@ const router = createRouter({
   routes
 })
 
+const noAuthenticated: any = ['Home', 'Forum', 'Article', 'Topic', 'Login', 'MonmentList', 'ArticleList', 'TopicList', 'AnswerList', 'FollowList']
+
+const isAuthenticated = () => {
+  const token = localStorage.getItem("token");
+  if (token) return true
+  return false
+}
+
+router.beforeEach((to, from, next) => {
+  if (!noAuthenticated.includes(to.name) && !isAuthenticated()) {
+    const result = window.confirm("尚未登录，前往登录界面?")
+    if (result) {
+      next({ name: 'Login' })
+    }
+  }
+  else {
+    next()
+  }
+})
+
 
 export default router

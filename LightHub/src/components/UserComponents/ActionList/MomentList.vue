@@ -9,7 +9,9 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { getActionList } from '@/api/user';
+import { useRoute } from 'vue-router';
 import ActionCard from './MomentAction/ActionCard.vue';
+const route = useRoute()
 
 const action_list: any = ref([])
 let page = 0
@@ -17,7 +19,7 @@ const loadActionList = async () => {
   if (page === -1) {
     return
   }
-  let { data: result } = await getActionList(++page);
+  let { data: result } = await getActionList(route.params.id, ++page);
   if (result.code === 200) {
     if (result.data.length > 0) {
       action_list.value = [...action_list.value, ...result.data]

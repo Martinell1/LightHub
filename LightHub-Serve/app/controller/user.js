@@ -24,8 +24,9 @@ const login = async ctx => {
     return ctx.body = ResultFactory.buildFailResult("用户不存在")
   }
   let isEqual = await bcrypt.compare(body.password, user.password);
+  let authorization = buildToken({"id":user._id});
   if(isEqual){
-    return ctx.body = ResultFactory.buildSuccessResult(undefined,buildToken({"id":user._id}))
+    return ctx.body = ResultFactory.buildSuccessResult(undefined,authorization)
   }else{
     return ctx.body = ResultFactory.buildFailResult("密码错误")
   }
@@ -50,9 +51,10 @@ const register = async ctx => {
 }
 
 const info = async ctx => {
+  let result = undefined
   if(ctx.query.id){
     const id = ctx.query.id;
-    let result = await userService.findOne(
+    result = await userService.findOne(
       { "_id":id},
       { password:0,
         role:0,
@@ -63,8 +65,11 @@ const info = async ctx => {
       ctx.body = ResultFactory.buildSuccessResult(undefined,result);
     }
   }else{
-    const token = ctx.query.token;
-    let result = await userService.getInfoByToken(token);
+    if(ctx.header.authorization){
+      result = await userService.getInfoByToken(ctx.header.authorization);
+    }else{
+      result = '尚未登录'
+    }
     if(result){
       return ctx.body = ResultFactory.buildSuccessResult(undefined,result);
     }
@@ -78,7 +83,7 @@ const list = async ctx => {
 
 const update = async ctx => {
   let body = ctx.request.body
-  const uid = verify(ctx.header.token).id
+  const uid = verify(ctx.header.authorization)
   if(body.education){
     body.education = JSON.parse(body.education)
   }
@@ -99,10 +104,17 @@ const follow_list = async ctx =>{
   let user = await userService.findOne({"_id":uid})
   let user_list = user.follows;
   let result = await userService.getFollowList(user_list,page)
-  const me = await userService.findOne({"_id":verify(ctx.header.token).id})
-  let my_follows = me.follows;
+  let my_follows = undefined
+  if(ctx.header.authorization){
+    const me = await userService.findOne({"_id":verify(ctx.header.authorization)})
+    my_follows = me.follows;
+  }
   result.forEach(item => {
-    item.isFollow = my_follows.some(element => element.toString() === item._id.toString())
+    if(my_follows){
+      item.isFollow = my_follows.some(element => element.toString() === item._id.toString())
+    }else{
+      item.isFollow = false
+    }
   })
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);
@@ -121,11 +133,11 @@ const follow_tag = async ctx => {
 }
 
 const follow_user = async ctx => {
-  const result = await follow_utils(ctx,'user')
-  if(result === '出现错误'){
+  const {message,data} = await follow_utils(ctx,'user')
+  if(message === '出现错误'){
     ctx.body = ResultFactory.buildFailResult("修改失败");
   }else{
-    ctx.body = ResultFactory.buildSuccessResult(undefined,result);
+    ctx.body = ResultFactory.buildSuccessResult(message,data);
   }
 }
 
@@ -139,7 +151,7 @@ const follow_topic = async ctx => {
 }
 
 const remove = async ctx => {
-  const id = verify(ctx.header.token).id
+  const id = verify(ctx.header.authorization)
   let result = await userService.remove({"_id":id});
   if(result.modifiedCount === 0){
     ctx.body = ResultFactory.buildFailResult("删除失败")
@@ -150,7 +162,7 @@ const remove = async ctx => {
 
 const action_list = async ctx => {
   const page = ctx.query.page;
-  const id = ObjectId(verify(ctx.header.token).id)
+  const id = ctx.query.id;
   let result = await historyService.findDetail(id);
   const user = await userService.findOne({"_id":id});
   result.forEach(item => {
@@ -164,7 +176,6 @@ const action_list = async ctx => {
         delete item.article.up_list
       }
       if(item.field === 'topic'){
-        console.log(item.topic);
         item.topic.isUp = item.topic.up_list.some(element => element === id.toString())
         item.topic.isFollow = user.topic_list.some(element => item.topic._id.toString())
         delete item.topic.up_list
@@ -181,20 +192,20 @@ const action_list = async ctx => {
 }
 
 const getCreatorInfo = async ctx =>{
-  const id = ObjectId(verify(ctx.header.token).id)
+  const id = ObjectId(verify(ctx.header.authorization))
   let article = await articleService.getCreatorInfo(id);
   article = article[0];
   let draft = await articleService.getDraftArticle(id)
   let topic =  await topicService.getCreatorInfo(id);
   topic = topic[0];
-  const user = await userService.getInfoByToken(ctx.header.token);
+  const user = await userService.getInfoByToken(ctx.header.authorization);
   let result = undefined;
   if(article === undefined && topic === undefined){
     result = "暂时未有数据"
   }else{
     result = Object.assign(article,topic)
     result.fans_count = user.fans_count
-    result.draft_count = draft[0].article_count
+    result.draft_count = draft.length>9?draft[0].article_count:0
   }
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result);

@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import { useStore } from 'vuex';
 import { addCollection, getCollectionList, favArticle } from '@/api/collection';
 const props: any = defineProps({
@@ -63,6 +63,8 @@ const isAdd = ref(false)
 const collection_name = ref('')
 
 const store = useStore()
+
+const shiftCollection: any = inject('shiftCollection')
 
 const addCollectionSubmit = async () => {
   const params = new FormData();
@@ -96,10 +98,6 @@ const loadCollectionList = async () => {
   }
 }
 
-const emit = defineEmits(['useCollection'])
-const shiftCollection = () => {
-  emit('useCollection')
-}
 
 onMounted(async () => {
   loadCollectionList()

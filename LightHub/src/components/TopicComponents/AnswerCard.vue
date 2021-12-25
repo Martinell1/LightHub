@@ -10,7 +10,10 @@
         <slot :id="answer.topic._id" :title="answer.topic.title"></slot>
       </div>
 
-      <div class="flex items-center" @mouseenter="hoverInfo(index, userInfo, answer.answerer)">
+      <div
+        class="flex items-center"
+        @mouseenter="hoverInfo(index, answer.answerer_id, userInfo._id)"
+      >
         <img class="w-10 h-10 rounded-sm mr-4 object-cover" :src="answer.answerer.avater" />
         <div class="text-sm font-semibold">{{ answer.answerer.nickname }}</div>
       </div>

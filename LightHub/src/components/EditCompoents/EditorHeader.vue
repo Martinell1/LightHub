@@ -8,8 +8,25 @@
     <div class="flex items-center">
       <TagAdd></TagAdd>
       <div class="btn-plain ring-1 ring-orange-600" @click="articleSubmit(2)">保存</div>
-      <div class="btn-plain ring-1 ring-orange-600 mx-4" @click="articleSubmit(1)">发布</div>
-      <img class="w-8 h-8 rounded-full my-4 ml-4" src="../../assets/images/login-bg.jpg" />
+      <AvaterOpt>
+        <li class="user-opt-item">
+          <router-link :to="{ name: 'Home' }">
+            <div class="flex">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="user-opt-item-icon"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+                />
+              </svg>
+              首页
+            </div>
+          </router-link>
+        </li>
+      </AvaterOpt>
     </div>
   </div>
 </template>
@@ -21,12 +38,12 @@ import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { addArticle } from '@/api/article';
 import TagAdd from '../TagComponents/TagAdd.vue';
+import AvaterOpt from '../Common/AvaterOpt.vue';
 const store = useStore();
 const route = useRoute();
 const router = useRouter()
 
 const msg: any = inject('Message')
-const userInfo: any = inject('userInfo')
 
 const _id = ref('')
 
@@ -76,4 +93,11 @@ const articleSubmit = async (status) => {
 
 </script>
 <style scoped>
+.user-opt-item {
+  @apply w-36 px-4 py-2 right-40 cursor-pointer;
+}
+
+.user-opt-item-icon {
+  @apply w-5 h-5 mr-1;
+}
 </style>

@@ -14,7 +14,6 @@
           <div>
             <input v-model="userInfo.nickname" type="text" class="outline-none border-2 w-100" />
             <div class="flex mt-4">
-              s
               <div
                 class="btn-primary-mini"
                 @click="showFormItem.nickname = false; updateUserInfoSubmit()"
@@ -171,7 +170,10 @@ const updateUserInfoSubmit = async () => {
   params.append('education', JSON.stringify(userInfo.value.education))
 
   let { data: result } = await updateUserInfo(params);
+  console.log(result);
   if (result.code === 200) {
+
+
     userInfo.value = result.data;
     msg('success', '更新成功')
   }

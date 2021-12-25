@@ -2,8 +2,12 @@
   <div v-for="(comment,index) in props.commentList">
     <div v-if="!comment.target_id" class="flex border-b-2 py-4 last">
       <img class="w-9 h-9 rounded-full mr-2" :src="comment.commenter.avater" />
-      <div class="flex flex-col w-full">
-        <div class="font-semibold mr-4">{{ comment.commenter.nickname }}</div>
+      <div class="flex flex-col w-full" @mouseleave="removeHoverInfo(index)">
+        <div
+          class="font-semibold mr-4 relative"
+          :class="'item-' + index"
+          @mouseenter="hoverInfo(index, comment.commenter_id, userInfo._id)"
+        >{{ comment.commenter.nickname }}</div>
         <div class="flex items-center">
           <div class="text-xs">{{ comment.create_time }}</div>
         </div>
@@ -94,6 +98,11 @@ const props: any = defineProps({
 })
 
 const isShow: any = ref([])
+
+const userInfo: any = inject('userInfo')
+
+const hoverInfo: any = inject('hoverInfo')
+const removeHoverInfo: any = inject('removeHoverInfo')
 
 
 const msg: any = inject('Message')

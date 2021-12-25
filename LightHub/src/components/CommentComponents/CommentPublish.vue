@@ -1,7 +1,10 @@
 <template>
   <div class="pb-4 border-b-2">
     <div class="flex">
-      <img class="w-9 h-9 rounded-full mr-4" :src="userInfo.avater" />
+      <img
+        class="w-9 h-9 rounded-full mr-4"
+        :src="userInfo.avater || 'http://qiniu.kaijinx.top/FsWQdI4CVQUv7RtdUyq2cRMqLP8s'"
+      />
       <textarea
         v-model="comment_content"
         class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-indigo-800"
@@ -37,15 +40,15 @@ const commmentSubmit = async () => {
     return
   }
 
-
   const params = new FormData()
 
   params.append("article_id", props.article_id)
-  params.append("commenter_id", userInfo.value._id)
   params.append("content", comment_content.value)
   let { data: result } = await addComment(params);
   if (result.code === 200) {
     msg('success', '发布成功')
+  } else if (result.code === 400) {
+    msg('fail', result.message)
   }
 }
 

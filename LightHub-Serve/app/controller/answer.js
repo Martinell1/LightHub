@@ -13,7 +13,7 @@ const topicService = new TopicService()
 
 const saveOrUpdate = async ctx => {
   let body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
+  const uid = verify(ctx.header.authorization)
   let temp = await answerService.findOne({"topic_id":body.topic_id,"answerer_id":uid})
   let result = undefined;
   if(temp){
@@ -34,8 +34,12 @@ const list = async ctx => {
   let result = await answerService.getAnswerListByTopicId(id)
   result.forEach(element => {
     element.answerer = element.answerer[0]
-    element.isUp = element.up_list.some(item => item === verify(ctx.header.token).id)
-    element.isStep = element.step_list.some(item => item === verify(ctx.header.token).id)
+    if(ctx.header.authorization){
+      element.isUp = element.up_list.some(item => item === verify(ctx.header.authorization))
+      element.isStep = element.step_list.some(item => item === verify(ctx.header.authorization))
+    }
+    element.isUp = false;
+    element.isStep = false;
     element.up_count = element.up_list.length - element.step_list.length;
   });
   if(result){
@@ -49,11 +53,20 @@ const listByAnswerer = async ctx => {
   const id = ObjectId(ctx.query.id);
   const page = ctx.query.page
   let result = await answerService.getAnswerListByAnswerer(id,page)
+  let uid = undefined
+  if(ctx.header.authorization){
+    uid = verify(ctx.header.authorization);
+  }
   result.forEach(element => {
     element.answerer = element.answerer[0]
     element.topic = element.topic[0]
-    element.isUp = element.up_list.some(item => item === verify(ctx.header.token).id)
-    element.isStep = element.step_list.some(item => item === verify(ctx.header.token).id)
+    if(uid){
+      element.isUp = element.up_list.some(item => item === uid)
+      element.isStep = element.step_list.some(item => item === uid)
+    }else{
+      element.isUp = false
+      element.isStep = false
+    }
     element.up_count = element.up_list.length - element.step_list.length;
   });
   if(result){

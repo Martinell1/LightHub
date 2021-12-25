@@ -18,7 +18,7 @@ const {verify} = require('./getToken')
 
 const up_utils = async(ctx,field) => {
   const body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
+  const uid = verify(ctx.header.authorization)
   let result = undefined
   let isUp = undefined
   let isStep = undefined
@@ -95,7 +95,7 @@ const up_utils = async(ctx,field) => {
 
 const step_utils = async(ctx,field) => {
   const body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
+  const uid = verify(ctx.header.authorization)
   let isStep = undefined
   let isUp = undefined
   if(field === 'comment'){

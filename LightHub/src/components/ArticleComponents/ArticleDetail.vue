@@ -1,5 +1,4 @@
 <template>
-  <ArticleSideAction :article="props.article"></ArticleSideAction>
   <div class="card px-5">
     <article class="py-6">
       <div class="flex justify-between items-center mb-6">
@@ -8,7 +7,7 @@
           <div v-if="props.article.author" class="flex flex-col">
             <div class="font-semibold">{{ props.article.author.nickname }}</div>
             <div class="text-sm text-gray-500 flex">
-              <div class="mr-4">{{ fmt4Time(props.article.update_time) }}</div>
+              <div class="mr-4">{{ fmt4Time(props.article.create_time) }}</div>
               <div>阅读{{ props.article.view_count }}</div>
             </div>
           </div>
@@ -50,6 +49,7 @@
         </div>
       </div>
     </article>
+    <ArticleSideAction :article="props.article"></ArticleSideAction>
     <CommentPublish :article_id="props.article._id" id="comment"></CommentPublish>
     <CommentList :commentList="props.commentList" ref="child"></CommentList>
   </div>
@@ -78,10 +78,12 @@ const identify = computed(() => {
 const msg: any = inject('Message')
 const followSubmit = async () => {
   const result = await followUser(props.article.author_id);
+  console.log(result);
+
   if (result.code === 200) {
     msg('success', result.data);
   } else {
-    msg('fail', '出现错误' + result.code);
+    msg('fail', result.message);
   }
 }
 

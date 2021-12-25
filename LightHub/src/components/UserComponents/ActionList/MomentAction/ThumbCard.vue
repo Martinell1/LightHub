@@ -115,7 +115,6 @@
         v-if="isCollection"
         :article_id="props.data.article._id"
         class="absolute ml-100"
-        @useCollection="shiftCollection()"
       ></CollectionAdd>
       <div class="moment-item">
         <router-link
@@ -146,7 +145,7 @@
 import CollectionAdd from '@/components/CollectionComponents/CollectionAdd.vue';
 import { upArticle, upTopic } from '@/util/useThumb';
 import { followTopic } from '@/util/useFollow';
-import { ref, inject } from 'vue'
+import { ref, inject, provide } from 'vue'
 
 const props: any = defineProps({
   data: Object
@@ -157,6 +156,8 @@ const isCollection = ref(false)
 const shiftCollection = () => {
   isCollection.value = !isCollection.value
 }
+
+provide('shiftCollection', shiftCollection)
 
 const msg: any = inject('Message')
 const topicUpSubmit = async (tid) => {

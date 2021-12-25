@@ -15,7 +15,7 @@ const ObjectId = require('../config/db').Types.ObjectId
 
 const follow_utils = async(ctx,field) => {
   const body = ctx.request.body;
-  const user = await userService.getInfoByToken(ctx.header.token)
+  const user = await userService.getInfoByToken(ctx.header.authorization)
   let isFollow = undefined;
   let count = 0;
   let result1 = undefined;

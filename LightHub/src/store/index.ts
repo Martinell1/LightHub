@@ -28,6 +28,10 @@ export default createStore({
         nickname: "",
         avater: '',
       }
+      localStorage.setItem("id", '')
+      localStorage.setItem("nickname", '')
+      localStorage.setItem("avater", '')
+      localStorage.setItem("token", '')
     },
 
     updateArticleText(state, articleText) {

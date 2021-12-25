@@ -9,7 +9,7 @@ const ArticleService = require("../service/article");
 const articleService = new ArticleService()
 
 const list = async ctx => {
-  const id = verify(ctx.header.token).id;
+  const id = verify(ctx.header.authorization);
   const page = ctx.query.page
   let result = await collectionService.find({"holder_id":id})
                                       .skip((page-1)*10)
@@ -36,7 +36,7 @@ const detail = async ctx => {
 
 const add = async ctx => {
   let body = ctx.request.body;
-  const uid = verify(ctx.header.token).id
+  const uid = verify(ctx.header.authorization)
   let article_list = [];
   article_list.push(body.aid)
   let user = await userService.findAndUpdate({'_id':uid},{$inc:{'collection_list':1}})

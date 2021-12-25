@@ -1,5 +1,5 @@
 <template>
-  <div class="card px-5 w-260 mr-5" style="min-height:calc(100vh - 100px)">
+  <div class="hidden card px-5 w-260 mr-5 xl:block" style="min-height:calc(100vh - 100px)">
     <div class="my-6">
       <div class="flex items-center">
         <img class="w-12 h-12 rounded-full mr-2 object-cover" :src="userInfo.avater" />

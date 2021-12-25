@@ -1,6 +1,6 @@
 <template>
   <div class="article_layout mb-10">
-    <main class="w-700">
+    <main class="w-full xl:w-700">
       <ArticleDetail :article="article" :commentList="comment_list"></ArticleDetail>
     </main>
     <aside>
@@ -35,12 +35,10 @@ let article = ref({
 
 const catalogList: any = ref([])
 provide('catalogList', catalogList)
-
 const loadArticle = async () => {
   let { data: result } = await getArticleById(id);
   if (result.code === 200) {
     article.value = result.data
-
   }
 }
 
@@ -60,6 +58,6 @@ onMounted(async () => {
 </script>
 <style  scoped>
 .article_layout {
-  @apply w-1000 m-auto mt-4 flex;
+  @apply w-full m-auto mt-4 flex xl:w-1000;
 }
 </style>

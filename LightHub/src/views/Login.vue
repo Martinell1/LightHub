@@ -78,22 +78,17 @@ const loginSubmit = async () => {
   if (result.code === 200) {
     const token = result.data;
     localStorage.setItem("token", token);
-    let { data: res } = await getOneByToken(token);
-    if (res.code === 200) {
-      let userInfo = res.data;
-      localStorage.setItem("id", userInfo._id);
-      localStorage.setItem("nickname", userInfo.nickname);
-      localStorage.setItem("avater", userInfo.avater);
-      store.commit('updateUserInfo', { "id": userInfo._id, "nickname": userInfo.nickname, "avater": userInfo.avater })
-      // store.commit('updateUserInfo', { userInfo })
-      msg('success', '登录成功')
-      router.push({
-        name: 'Home',
-        params: { 'tag': '' },
-      })
+    let res = await getOneByToken(token);
+    localStorage.setItem("id", res._id);
+    localStorage.setItem("nickname", res.nickname);
+    localStorage.setItem("avater", res.avater);
+    store.commit('updateUserInfo', { "id": res._id, "nickname": res.nickname, "avater": res.avater })
+    msg('success', '登录成功')
+    router.push({
+      name: 'Home',
+      params: { 'tag': '' },
+    })
 
-
-    }
   } else {
     msg('fail', '登录失败')
   }

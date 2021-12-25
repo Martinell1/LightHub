@@ -4,7 +4,7 @@
       <div
         class="flex items-center relative"
         :class="'item-' + index"
-        @mouseenter="hoverInfo(index, userInfo, topic.initiator)"
+        @mouseenter="hoverInfo(index, topic.initiator_id, userInfo._id,)"
         @mouseleave="removeHoverInfo(index)"
       >
         <img class="w-6 h-6 rounded-full mr-2 object-cover" :src="topic.initiator.avater" />
@@ -112,10 +112,11 @@ const fmtIntroduce = (introduce) => {
 }
 
 const userInfo: any = inject('userInfo')
-
-
 const hoverInfo: any = inject('hoverInfo')
 const removeHoverInfo: any = inject('removeHoverInfo')
+
+
+
 
 
 const msg: any = inject("Message")
@@ -126,7 +127,7 @@ const upSubmit = async (tid, index) => {
     props.topicList[index].isUp = !props.topicList[index].isUp
     props.topicList[index].up_count += result.data
   } else {
-    msg('fail', '出现错误' + result.code);
+    msg('fail', result.message);
   }
 }
 
@@ -137,7 +138,7 @@ const followSubmit = async (tid, index) => {
     props.topicList[index].isFollow = !props.topicList[index].isFollow
     props.topicList[index].follow_count += result.data
   } else {
-    msg('fail', '出现错误' + result.code);
+    msg('fail', result.message);
   }
 }
 

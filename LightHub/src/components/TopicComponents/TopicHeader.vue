@@ -1,7 +1,7 @@
 <template>
   <div class="flex pt-4 bg-gray-50 shadow">
-    <div class="w-1000 mx-auto flex mb-6">
-      <div class="w-700 px-4">
+    <div class="w-full mx-auto flex flex-col mb-6 xl:flex-row xl:w-1000">
+      <div class="w-full px-4 xl:w-700">
         <div class="flex flex-col">
           <div class="flex">
             <div
@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div class="w-260 flex justify-center h-12">
+      <div class="mt-4 flex justify-center xl:w-260 xl:h-12">
         <div class="flex flex-col items-center px-4">
           <div class="text-sm text-gray-500">点赞数</div>
           <div class="font-semibold text-lg">{{ props.topic.up_count }}</div>
@@ -86,10 +86,7 @@ const props: any = defineProps({
 })
 
 
-const emit = defineEmits(['useEdit'])
-const shiftEdit = () => {
-  emit('useEdit')
-}
+const shiftEdit: any = inject('shiftEdit')
 
 const msg: any = inject('Message')
 const followSubmit = async (tid) => {
@@ -99,7 +96,7 @@ const followSubmit = async (tid) => {
     props.topic.isFollow = !props.topic.isFollow
     props.topic.follow_count += result.data
   } else {
-    msg('fail', '出现错误' + result.code);
+    msg('fail', result.message);
   }
 }
 

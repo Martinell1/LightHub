@@ -23,7 +23,7 @@ const list = async ctx => {
 
 const listByUser = async ctx => {
   const page = ctx.query.page;
-  const uid = ObjectId(verify(ctx.header.token).id)
+  const uid = ObjectId(verify(ctx.header.authorization))
   let result = await commentService.getCommentListByUser(uid);
   result.forEach(element => {
     element.article = element.article[0]
@@ -38,7 +38,7 @@ const listByUser = async ctx => {
 
 const add = async ctx => {
   let body = ctx.request.body
-  body.commenter_id = verify(ctx.header.token).id
+  body.commenter_id = verify(ctx.header.authorization)
   let result = await commentService.add(body)
   await articleService.update({"_id":body.article_id},{$inc:{'comment_count':1}})
   if(result){

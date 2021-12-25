@@ -8,4 +8,8 @@
 </script>
 
 <style>
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
 </style>
