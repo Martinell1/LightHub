@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <router-link :to="{ 'name': 'User' }" class="text-sm leading-8 text-indigo-800">返回我的主页></router-link>
+        <router-link :to="{ 'name': 'User' }" class="text-sm leading-8 text-cyan-primary">返回我的主页></router-link>
       </div>
       <div class="edit-item">
         <div class="form-label">性别</div>
@@ -186,7 +186,7 @@ const updateUserInfoSubmit = async () => {
 <style scoped>
 .edit-wrap::before {
   content: "";
-  @apply absolute w-full h-40 bg-gray-300 rounded-t;
+  @apply absolute w-full h-40 bg-gradient-to-r from-cyan-dark to-cyan-primary  rounded-t;
 }
 .edit-item {
   @apply flex  leading-8  py-8 border-b-2;
@@ -197,25 +197,18 @@ const updateUserInfoSubmit = async () => {
 }
 
 .form-education-input {
-  @apply outline-none border-2 px-2 mr-2 rounded text-indigo-800;
+  @apply outline-none border-2 px-2 mr-2 rounded  text-cyan-dark;
 }
 
 .form-education-option {
-  @apply text-indigo-800 bg-orange-50 hover:bg-gray-200;
+  @apply text-cyan-primary bg-orange-50 hover:bg-gray-200;
 }
 
 .btn-change {
-  @apply cursor-pointer leading-8 mx-2 text-indigo-800 w-8 opacity-0;
+  @apply cursor-pointer leading-8 mx-2 text-cyan-primary w-8 opacity-0;
 }
 
 .edit-item:hover .btn-change {
   @apply opacity-100 transition-all duration-500 ease-out;
-}
-
-.btn-primary-mini {
-  @apply min-w-0 px-4 mr-4;
-}
-.btn-plain-mini {
-  @apply min-w-0 px-4 ring-1 ring-indigo-800;
 }
 </style>

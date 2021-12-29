@@ -1,14 +1,14 @@
 <template>
   <aside class="hidden ml-20p w-280 flex-col xl:block">
-    <div class="bg-gray-50 shadow">
+    <div class="shadow">
       <div class="flex justify-between">
         <div class="follow-item border-r-2">
-          <div>关注了</div>
-          <div class="font-semibold">{{ userInfo.follow_count || 0 }}</div>
+          <div class="text-second">关注了</div>
+          <div class="font-semibold text-first">{{ userInfo.follow_count || 0 }}</div>
         </div>
         <div class="follow-item">
-          <div>关注者</div>
-          <div class="font-semibold">{{ userInfo.fans_count || 0 }}</div>
+          <div class="text-second">关注者</div>
+          <div class="font-semibold text-first">{{ userInfo.fans_count || 0 }}</div>
         </div>
       </div>
     </div>
@@ -40,6 +40,6 @@ const userInfo: any = inject('userInfo');
 }
 
 .sidebar-item {
-  @apply flex justify-between border-b-2 py-1;
+  @apply flex justify-between border-b-2 py-1 text-second;
 }
 </style>

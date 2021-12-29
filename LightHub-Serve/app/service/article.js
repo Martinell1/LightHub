@@ -46,11 +46,13 @@ class ArticleService extends Service{
     ])
   }
 
-  async getArticleListWithUserInfo(page){
+  async getArticleListWithUserInfo(page,title=''){
+    title = new RegExp(title)
     let skip = (page - 1)*this.count
     return this.model.aggregate([
       {
         $match:{
+          title:title,
           status:1
         }
       },

@@ -1,8 +1,8 @@
 <template>
   <div v-if="currentUserInfo" class="mt-4 w-full shadow xl:w-1000">
-    <div class="h-32 bg-gray-300 rounded-t-md"></div>
-    <div class="h-32 bg-gray-50 rounded-b-md flex flex-col relative xl:flex-row">
-      <div class="w-20 h-20 bg-gray-50 rounded-lg absolute -top-14 ml-4 xl:w-40 xl:h-40">
+    <div class="h-32 bg-gradient-to-r from-cyan-dark to-cyan-primary rounded-t-md"></div>
+    <div class="h-32 rounded-b-md flex flex-col relative xl:flex-row">
+      <div class="w-20 h-20 rounded-lg absolute -top-14 ml-4 xl:w-40 xl:h-40">
         <div v-if="identify">
           <label for="upload" class="w-full h-full absolute block"></label>
           <input
@@ -21,7 +21,7 @@
       <div class="flex flex-col mt-4 ml-4 xl:mt-0 xl:ml-48">
         <div class="flex mt-2">
           <h1 class="font-bold tracking-wide text-md xl:text-2xl">{{ currentUserInfo.nickname }}</h1>
-          <span class="m-auto ml-4 text-sm xl:text-md">{{ currentUserInfo.introduce }}</span>
+          <span class="m-auto ml-4 text-sm text-second xl:text-md">{{ currentUserInfo.introduce }}</span>
         </div>
         <div v-if="currentUserInfo.education" class="flex min-h-36px">
           <div class="user-edu-item">{{ currentUserInfo.education.school }}</div>
@@ -34,10 +34,10 @@
         <router-link
           v-if="identify"
           :to="{ 'name': 'Edit' }"
-          class="cursor-pointer px-4 ring-2 ring-indigo-800 text-center text-sm text-indigo-800 p-1 w-32"
+          class="cursor-pointer px-4 ring-2 ring-cyan-primary text-cyan-primary text-center text-sm p-1 w-32"
         >编辑个人信息</router-link>
         <div
-          class="cursor-pointer px-4 ring-2 ring-indigo-800 text-center text-sm text-indigo-800 p-1"
+          class="cursor-pointer px-4 ring-2 ring-cyan-primary text-cyan-primary text-center text-sm p-1 w-28"
           v-if="!identify"
           @click="Submit()"
         >
@@ -64,9 +64,6 @@ const props: any = defineProps({
 
 //是否是本人
 const identify = computed(() => {
-  setTimeout(() => {
-
-  }, 2000);
   if (props.currentUserInfo._id === userInfo.value._id) {
     return true;
   }
@@ -75,12 +72,9 @@ const identify = computed(() => {
 
 // //是否关注
 const isFollow = computed(() => {
-  setTimeout(() => {
-
-  }, 2000);
   if (!identify.value)
 
-    return props.currentUserInfo.follows.some(item => item === userInfo.value._id)
+    return props.currentUserInfo.follows?.some(item => item === userInfo.value._id)
 })
 
 
@@ -118,7 +112,7 @@ const handFile = async () => {
     if (result2.code === 200) {
       userInfo.value = result2.data;
       msg('success', '更新成功')
-      loadUserInfo()
+      loadUserInfo(userInfo.value._id)
     }
 
   }

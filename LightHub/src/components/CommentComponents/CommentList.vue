@@ -13,8 +13,8 @@
         </div>
         <div class="py-2 text-sm">{{ comment.content }}</div>
         <div class="flex">
-          <div class="text-xs text-gray-500 mr-4 cursor-pointer" @click="upSubmit(comment, index)">
-            <div class="flex" :class="{ 'text-indigo-800': false }">
+          <div class="text-xs text-second mr-4 cursor-pointer" @click="upSubmit(comment, index)">
+            <div class="flex" :class="{ 'text-cyan-primary': false }">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4 mr-1"
@@ -34,7 +34,7 @@
           </div>
           <div
             v-show="!isShow[index]"
-            class="text-xs text-gray-500 cursor-pointer"
+            class="text-xs text-second cursor-pointer"
             @click="isShow[index] = true"
           >
             <div class="flex">
@@ -56,7 +56,7 @@
           </div>
           <div
             v-show="isShow[index]"
-            class="text-xs text-gray-500 cursor-pointer"
+            class="text-xs text-second cursor-pointer"
             @click="isShow[index] = false"
           >
             <div class="flex">

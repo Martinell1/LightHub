@@ -160,7 +160,16 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../components/CreatorComponents/CreatorCollection.vue'),
           },
         ]
+      },
+      {
+        path: 'search/:query',
+        name: 'Search',
+        components: {
+          default: () => import('../views/Search.vue'),
+          header: () => import('../components/Common/MainHeader.vue')
+        }
       }
+
     ]
   },
 ]

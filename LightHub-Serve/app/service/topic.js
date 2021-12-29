@@ -40,15 +40,14 @@ class TopicService extends Service{
     ])
   }
 
-  async getTopicListWithUserInfo(page){
+  async getTopicListWithUserInfo(page,title=''){
+    title = new RegExp(title)
     let skip = (page - 1) * this.count
     return this.model.aggregate([
       {
-        $lookup:{
-          from: "users",
-          localField: "initiator_id",
-          foreignField: "_id",
-          as: "initiator",
+        $match:{
+          title:title,
+          status:1
         }
       },
       {
@@ -56,6 +55,14 @@ class TopicService extends Service{
       },
       {
         $limit:this.count
+      },
+      {
+        $lookup:{
+          from: "users",
+          localField: "initiator_id",
+          foreignField: "_id",
+          as: "initiator",
+        }
       },
       {
         $project:{

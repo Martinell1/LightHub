@@ -1,9 +1,9 @@
 <template>
-  <div class="text-sm text-indigo-800">
+  <div class="text-sm text-cyan-primary">
     <div>
       <ul class="flex flex-wrap">
         <li
-          class="mr-2 my-1 py-2 px-4 rounded-full bg-orange-100 text-orange-600 cursor-pointer flex items-center"
+          class="mr-2 my-1 py-2 px-4 rounded-full bg-cyan-light text-cyan-dark cursor-pointer flex items-center"
           v-for="tag in tag_list"
         >
           <svg
@@ -26,12 +26,12 @@
         <div
           v-show="isShow.message"
           @click="isShow.message = false; isShow.input = true"
-          class="font-semibold text-orange-600 text-sm cursor-pointer my-auto mr-4 py-2"
+          class="font-semibold text-cyan-primary text-sm cursor-pointer my-auto mr-4 py-2"
         >+添加话题{{ tag_list.length }}/5</div>
         <div v-show="isShow.input" class="relative mr-4 z-10">
           <input
             v-model="tagKey"
-            class="ring-1 outline-none ring-indigo-800 rounded-full w-48 h-7 my-2 px-4"
+            class="ring-1 outline-none ring-cyan-primary rounded-full w-48 h-7 my-2 px-4"
           />
           <div
             v-show="openSelect"
@@ -40,7 +40,7 @@
             <li
               v-for="tag in tagList"
               @click="appendList(tag)"
-              class="py-2 px-4 bg-gray-50 text-gray-800 w-40 hover:bg-gray-200"
+              class="py-2 px-4 bg-white text-first w-40 hover:bg-bg"
             >{{ tag }}</li>
           </div>
         </div>

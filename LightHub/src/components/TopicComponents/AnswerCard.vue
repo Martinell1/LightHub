@@ -2,7 +2,7 @@
   <div class="flex flex-col mb-4 card px-5">
     <div
       v-for="(answer,index) in props.answerList"
-      class="border-b-2 mt-4 border-gray-100 relative"
+      class="border-b-2 mt-4 relative"
       :class="'item-' + index"
       @mouseleave="removeHoverInfo(index)"
     >
@@ -20,15 +20,14 @@
 
       <editor v-model="answer.content" :preview-only="true"></editor>
 
-      <div class="text-gray-500 text-sm">编辑于{{ answer.create_time }}</div>
+      <div class="text-second text-sm">编辑于{{ answer.create_time }}</div>
       <div class="flex mt-2 mb-4">
         <div
-          class="mr-4 ring-1 ring-indigo-800"
+          class="mr-4"
           :class="{ 'btn-primary': answer.isUp, 'btn-plain': !answer.isUp }"
           @click="upSubmit(answer._id, index)"
         >▲赞同{{ answer.up_count }}</div>
         <div
-          class="ring-1 ring-indigo-800"
           :class="{ 'btn-primary': answer.isStep, 'btn-plain': !answer.isStep }"
           @click="stepSubmit(answer._id, index)"
         >▼</div>

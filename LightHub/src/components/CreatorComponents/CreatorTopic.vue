@@ -1,7 +1,7 @@
 <template>
   <div class="card" style="min-height:calc(100vh - 100px)">
     <div class="flex py-2 text-gray-500">
-      <div class="p-2 ml-5 cursor-pointer border-b-2 border-indigo-800">话题列表</div>
+      <div class="p-2 ml-5 cursor-pointer border-b-2 border-cyan-primary">话题列表</div>
     </div>
     <div
       v-for="(topic,index) in topic_list"
@@ -30,12 +30,13 @@
         </div>
       </div>
 
-      <div class="text-gray-500 text-sm">{{ topic.create_time }}</div>
+      <div class="text-gray-500 text-sm">{{ fmt4Time(topic.create_time) }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { fmt4Time } from '@/util/fmt4Time.js'
 import { creator_topic_list, remove_topic } from '@/api/topic';
 import { ref, onMounted, inject, onBeforeUnmount } from 'vue'
 const topicModal: any = inject('TopicModal');

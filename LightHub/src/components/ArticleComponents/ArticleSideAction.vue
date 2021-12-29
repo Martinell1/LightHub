@@ -2,11 +2,11 @@
   <div class="hidden fixed -ml-28 top-64 xl:block">
     <div
       class="side-act-item"
-      :class="{ 'text-indigo-800': props.article.isUp, ' text-gray-500': !props.article.isUp }"
+      :class="{ ' text-cyan-primary': props.article.isUp, ' text-second': !props.article.isUp }"
       @click="upSubmit()"
     >
       <div
-        class="absolute top-0 -right-2 bg-gray-500 text-gray-50 leading-3 text-xs rounded-full w-5 h-3 text-center"
+        class="absolute top-0 -right-2 bg-second text-white leading-3 text-xs rounded-full w-5 h-3 text-center"
       >{{ props.article.up_count }}</div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +23,7 @@
       <a href="#comment">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5 text-gray-500"
+          class="h-5 w-5 text-second"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -38,7 +38,7 @@
     <div class="side-act-item" @click="shiftCollection()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5 text-gray-500"
+        class="h-5 w-5 text-second"
         viewBox="0 0 20 20"
         fill="currentColor"
       >
@@ -91,6 +91,6 @@ provide('shiftCollection', shiftCollection)
 </script>
 <style  scoped>
 .side-act-item {
-  @apply w-10 h-10 rounded-full bg-gray-50 shadow flex justify-center items-center mb-4 cursor-pointer relative;
+  @apply w-10 h-10 rounded-full shadow flex justify-center items-center mb-4 cursor-pointer relative;
 }
 </style>

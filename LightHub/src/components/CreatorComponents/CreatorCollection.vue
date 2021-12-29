@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-5" style="min-height:calc(100vh - 100px)">
     <div class="flex py-2 text-gray-500">
-      <div class="p-2 ml-5 cursor-pointer border-b-2 border-indigo-800">收藏夹</div>
+      <div class="p-2 ml-5 cursor-pointer border-b-2 border-cyan-primary">收藏夹</div>
     </div>
     <div
       v-for="(collection,index) in collection_list"

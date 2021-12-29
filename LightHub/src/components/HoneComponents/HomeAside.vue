@@ -2,7 +2,7 @@
   <aside class="hidden ml-20p w-280 flex-col xl:block">
     <div class="card px-5 p-4">
       <div class="flex justify-between">
-        <div class="flex items-center text-sm">
+        <div class="flex items-center text-sm text-first">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5 mr-1"
@@ -14,13 +14,13 @@
             />
           </svg>创作中心
         </div>
-        <span class="text-gray-400 text-sm my-auto">草稿箱</span>
+        <span class="text-second text-sm my-auto">草稿箱</span>
       </div>
-      <div class="flex my-4 justify-between text-sm">
+      <div class="flex my-4 justify-between text-sm text-second">
         <div class="item" @click="topicModal(userInfo)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="item-icon bg-yellow-200 text-yellow-500"
+            class="item-icon bg-orange-200 text-orange-500"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -71,7 +71,7 @@
       </div>
       <div
         @click="route('creator')"
-        class="ring-1 ring-indigo-800 text-center text-sm text-indigo-800 p-1 cursor-pointer block"
+        class="ring-1 ring-cyan-dark text-center rounded text-sm text-cyan-primary p-1 cursor-pointer block"
       >进入创作中心></div>
     </div>
 

@@ -2,7 +2,7 @@
   <div class="w-full card px-5 xl:w-700">
     <div v-for="(article,index) in props.articleList" :key="index" class="py-4 border-b-2 last">
       <div
-        class="flex mb-2 text-sm text-gray-600 relative"
+        class="flex mb-2 text-sm text-second relative"
         :class="'item-' + index"
         @mouseleave="removeHoverInfo(index)"
       >
@@ -18,18 +18,18 @@
       <div class="flex justify-between">
         <div class="flex flex-col">
           <router-link :to="{ name: 'Article', params: { id: article._id } }">
-            <h1 class="text-xl text-gray-800 font-semibold">{{ article.title }}</h1>
+            <h1 class="text-xl text-first font-semibold">{{ article.title }}</h1>
             <p
               v-if="article.cover"
-              class="text-sm text-gray-500 truncate my-2 max-w-xs xl:max-w-md"
+              class="text-sm text-second truncate my-2 max-w-xs xl:max-w-md"
             >{{ article.introduce }}</p>
             <p
               v-if="!article.cover"
-              class="text-sm text-gray-500 truncate my-2 max-w-xs xl:max-w-xl"
+              class="text-sm text-second truncate my-2 max-w-xs xl:max-w-xl"
             >{{ article.introduce }}</p>
           </router-link>
 
-          <div class="flex items-center text-sm text-gray-500">
+          <div class="flex items-center text-sm text-second">
             <router-link :to="{ name: 'Article', params: { id: article._id } }" class="flex mr-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@
             <div
               class="flex mr-5 cursor-pointer"
               @click="upSubmit(article._id, index)"
-              :class="{ ' text-indigo-800': article.isUp }"
+              :class="{ 'text-cyan-accent': article.isUp }"
             >
               <svg
                 v-show="!article.isUp"

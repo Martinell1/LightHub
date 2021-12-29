@@ -7,9 +7,9 @@
       <div class="flex flex-col text-sm transform ml-2 justify-end">
         <a
           :href="/user/ + userInfo._id"
-          class="mr-4 text-orange-600 font-semibold"
+          class="mr-4 text-cyan-dark font-semibold"
         >{{ userInfo.nickname }}</a>
-        <div class="text-sm text-gray-500">{{ userInfo.introduce }}</div>
+        <div class="text-sm text-second">{{ userInfo.introduce }}</div>
       </div>
     </div>
     <div class="flex justify-around my-4">
@@ -66,10 +66,10 @@ const Submit = async () => {
 }
 
 .item-text {
-  @apply text-sm text-gray-500;
+  @apply text-sm text-second;
 }
 
 .item-count {
-  @apply font-semibold text-lg text-gray-700;
+  @apply font-semibold text-lg text-first;
 }
 </style>

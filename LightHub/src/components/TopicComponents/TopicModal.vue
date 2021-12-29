@@ -1,7 +1,7 @@
 <template>
   <div v-if="isShow" class="bg-cover flex">
     <div
-      class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50 w-140 min-h-60 p-6 flex flex-col"
+      class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-140 min-h-60 p-6 flex flex-col"
     >
       <div class="flex">
         <img class="w-10 h-10 rounded-full mr-2" :src="userInfo.avater" />
@@ -17,10 +17,7 @@
       ></editor>
       <TagAdd></TagAdd>
       <div class="flex justify-end">
-        <div
-          class="w-24 h-8 bg-orange-600 leading-8 text-center text-sm text-gray-50 rounded cursor-pointer"
-          @click="publishTopicSubmit()"
-        >发布问题</div>
+        <div class="btn-primary" @click="publishTopicSubmit()">发布问题</div>
       </div>
     </div>
     <div

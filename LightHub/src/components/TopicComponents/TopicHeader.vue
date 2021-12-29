@@ -1,13 +1,10 @@
 <template>
-  <div class="flex pt-4 bg-gray-50 shadow">
+  <div class="flex pt-4 bg-white shadow">
     <div class="w-full mx-auto flex flex-col mb-6 xl:flex-row xl:w-1000">
       <div class="w-full px-4 xl:w-700">
         <div class="flex flex-col">
           <div class="flex">
-            <div
-              v-for="tag in props.tag_list"
-              class="btn-plain-mini ring-1 ring-indigo-800"
-            >{{ tag }}</div>
+            <div v-for="tag in props.tag_list" class="btn-plain-mini">{{ tag }}</div>
           </div>
 
           <div class="my-2">
@@ -18,12 +15,12 @@
             class="mb-6"
             v-model="props.topic.introduce"
             previewOnly
-            style=" background-color: #f9fafb;"
+            style=" background-color: white;"
           ></editor>
 
           <div class="flex">
             <div
-              class="flex mr-4 ring-1 ring-indigo-800"
+              class="flex mr-4"
               :class="{ 'btn-primary': props.topic.isFollow, 'btn-plain': !props.topic.isFollow }"
               @click="followSubmit(props.topic._id)"
             >
@@ -60,16 +57,16 @@
       </div>
       <div class="mt-4 flex justify-center xl:w-260 xl:h-12">
         <div class="flex flex-col items-center px-4">
-          <div class="text-sm text-gray-500">点赞数</div>
-          <div class="font-semibold text-lg">{{ props.topic.up_count }}</div>
+          <div class="text-sm text-second">点赞数</div>
+          <div class="font-semibold text-lg text-first">{{ props.topic.up_count }}</div>
         </div>
         <div class="flex flex-col items-center px-4 border-l-2">
-          <div class="text-sm text-gray-500">浏览量</div>
-          <div class="font-semibold text-lg">{{ props.topic.view_count }}</div>
+          <div class="text-sm text-second">浏览量</div>
+          <div class="font-semibold text-lg text-first">{{ props.topic.view_count }}</div>
         </div>
         <div class="flex flex-col items-center px-4 border-l-2">
-          <div class="text-sm text-gray-500">关注数</div>
-          <div class="font-semibold text-lg">{{ props.topic.follow_count }}</div>
+          <div class="text-sm text-second">关注数</div>
+          <div class="font-semibold text-lg text-first">{{ props.topic.follow_count }}</div>
         </div>
       </div>
     </div>

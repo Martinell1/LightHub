@@ -6,7 +6,7 @@
           <img class="w-10 h-10 rounded-full mr-3 object-cover" :src="props.article.author.avater" />
           <div v-if="props.article.author" class="flex flex-col">
             <div class="font-semibold">{{ props.article.author.nickname }}</div>
-            <div class="text-sm text-gray-500 flex">
+            <div class="text-sm text-second flex">
               <div class="mr-4">{{ fmt4Time(props.article.create_time) }}</div>
               <div>阅读{{ props.article.view_count }}</div>
             </div>
@@ -14,7 +14,7 @@
         </div>
         <div v-if="!identify" @click="followSubmit()">
           <div v-if="props.article.isFollow" class="btn-primary-mini">已关注</div>
-          <div v-if="!props.article.isFollow" class="btn-plain-mini ring-1 ring-indigo-800">关注</div>
+          <div v-if="!props.article.isFollow" class="btn-plain-mini ring-1 ring-cyan-dark">关注</div>
         </div>
       </div>
 
@@ -23,13 +23,13 @@
         v-model="props.article.content"
         previewOnly
         :onGetCatalog="getCatalog"
-        style=" background-color: #f9fafb;"
+        style=" background-color: white;"
       ></editor>
 
       <div class="flex border-t-2">
         <div
           v-for="tag in props.article.tag_list"
-          class="mt-4 mr-4 bg-indigo-800 px-2 py-1 rounded text-gray-50 text-sm text-center flex items-center"
+          class="mt-4 mr-4 bg-cyan-primary text-white px-2 py-1 rounded text-sm text-center flex items-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

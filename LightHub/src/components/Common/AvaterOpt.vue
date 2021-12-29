@@ -7,7 +7,7 @@
       />
       <ul
         v-show="clickAvater"
-        class="absolute rounded bg-gray-50 -ml-24 text-gray-500 ring-2 ring-gray-200 text-sm z-50"
+        class="absolute rounded bg-white -ml-24 text-second ring-2 ring-gray-200 text-sm z-50"
       >
         <slot></slot>
 

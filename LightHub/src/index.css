@@ -4,23 +4,23 @@
 @tailwind utilities;
 
 .btn-primary{
-  @apply px-2 py-1 bg-indigo-800 cursor-pointer rounded text-gray-50 text-center text-xs min-w-20 h-7 leading-5;
+  @apply px-2 py-1 bg-cyan-primary  cursor-pointer rounded text-gray-50 text-center text-xs min-w-20 h-7 leading-5;
 }
 
 .btn-primary-mini{
-  @apply px-2 py-1 bg-indigo-800 cursor-pointer rounded text-gray-50 text-center text-xs h-5 leading-3;
+  @apply px-2 py-1 bg-cyan-primary  cursor-pointer rounded text-gray-50 text-center text-xs h-5 leading-3;
 }
 
 .btn-plain{
-  @apply px-2 py-1 text-indigo-800 cursor-pointer rounded bg-orange-50 text-center text-xs min-w-20 h-7 leading-5;
+  @apply px-2 py-1  text-cyan-primary ring-1 ring-cyan-dark cursor-pointer rounded bg-orange-50 text-center text-xs min-w-20 h-7 leading-5;
 }
 
 .btn-plain-mini{
-  @apply px-2 py-1 text-indigo-800 cursor-pointer rounded bg-orange-50 text-center text-xs h-5 leading-3;
+  @apply px-2 py-1 text-cyan-primary ring-1 ring-cyan-dark cursor-pointer rounded bg-orange-50 text-center text-xs h-5 leading-3 ;
 }
 
 .card{
-  @apply  bg-gray-50 rounded shadow;
+  @apply bg-white rounded shadow;
 }
 
 .last:nth-last-child(1) {

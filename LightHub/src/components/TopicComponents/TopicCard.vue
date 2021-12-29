@@ -9,18 +9,18 @@
       >
         <img class="w-6 h-6 rounded-full mr-2 object-cover" :src="topic.initiator.avater" />
 
-        <div class="font-semibold mr-4">{{ topic.initiator.nickname }}</div>
-        <div class="text-sm text-gray-500">{{ topic.initiator.introduce }}</div>
+        <div class="font-semibold mr-4 text-first">{{ topic.initiator.nickname }}</div>
+        <div class="text-sm text-second">{{ topic.initiator.introduce }}</div>
       </div>
       <router-link :to="{ 'name': 'Topic', params: { 'id': topic._id } }">
-        <div class="text-xl font-semibold my-2">{{ topic.title }}</div>
+        <div class="text-xl font-semibold my-2 text-first">{{ topic.title }}</div>
       </router-link>
 
-      <div class="h-12">{{ fmtIntroduce(topic.introduce) }}</div>
-      <div class="flex text-sm text-gray-500">
+      <div class="h-12 text-second">{{ fmtIntroduce(topic.introduce) }}</div>
+      <div class="flex text-sm text-second">
         <div class="flex">
           <div
-            class="flex mr-4 ring-1 ring-indigo-800"
+            class="flex mr-4 ring-1"
             :class="{ 'btn-primary': topic.isUp, 'btn-plain': !topic.isUp }"
             @click="upSubmit(topic._id, index)"
           >
@@ -40,7 +40,7 @@
 
         <div
           class="flex mr-5 items-center cursor-pointer"
-          :class="{ ' text-indigo-800': topic.isFollow }"
+          :class="{ ' text-cyan-primary': topic.isFollow }"
           @click="followSubmit(topic._id, index)"
         >
           <svg

@@ -7,14 +7,14 @@
       />
       <textarea
         v-model="comment_content"
-        class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-indigo-800"
+        class="bg-gray-200 outline-none w-full px-3 py-2 rounded border-2 focus:border-cyan-primary"
         placeholder="输入评论"
       ></textarea>
     </div>
     <div class="flex justify-between items-center">
       <div class="text-gray-500 ml-14 opacity-0">按Enter键发送</div>
       <div
-        class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-indigo-800 cursor-pointer"
+        class="my-4 w-24 text-center py-1 rounded text-gray-50 bg-cyan-primary cursor-pointer"
         @click="commmentSubmit()"
       >发表评论</div>
     </div>

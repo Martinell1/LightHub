@@ -2,7 +2,7 @@
   <ProfileHeader :currentUserInfo="currentUserInfo"></ProfileHeader>
   <div class="user_layout">
     <div class="w-full">
-      <nav class="bg-gray-50 shadow border-b-2 border-gray-100 h-12 w-full">
+      <nav class="shadow border-b-2 h-12 w-full">
         <div class="flex">
           <router-link :to="{ name: 'MonmentList', params: { 'id': id } }" active-class="item-act">
             <div class="item">动态</div>
@@ -29,20 +29,26 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import ProfileHeader from './ProfileHeader.vue';
 import UserAside from './UserAside.vue';
 import { getOneById } from '@/api/user';
 import { ref, onMounted, provide } from 'vue'
+
+onBeforeRouteUpdate(async (to, from) => {
+  //仅当 id 更改时才获取用户，例如仅 query 或 hash 值已更改
+  if (to.params.id !== from.params.id) {
+    loadUserInfo(to.params.id);
+  }
+})
 
 const route = useRoute()
 
 const id = route.params.id
 
 const currentUserInfo = ref({})
-const loadUserInfo = async () => {
-  const user = await getOneById(id);
-  currentUserInfo.value = user
+const loadUserInfo = async (uid) => {
+  currentUserInfo.value = await getOneById(uid);
 }
 
 provide('loadUserInfo', loadUserInfo)
@@ -50,8 +56,10 @@ provide('loadUserInfo', loadUserInfo)
 
 
 onMounted(async () => {
-  loadUserInfo()
+  loadUserInfo(id)
 })
+
+
 
 </script>
 
@@ -65,6 +73,6 @@ onMounted(async () => {
 }
 
 .item-act {
-  @apply text-indigo-800 border-b-2 border-indigo-800;
+  @apply text-cyan-primary border-b-2  border-cyan-primary;
 }
 </style>

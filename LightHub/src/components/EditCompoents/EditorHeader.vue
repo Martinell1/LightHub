@@ -7,7 +7,8 @@
     />
     <div class="flex items-center">
       <TagAdd></TagAdd>
-      <div class="btn-plain ring-1 ring-orange-600" @click="articleSubmit(2)">保存</div>
+      <div class="btn-plain mr-4" @click="articleSubmit(2)">保存</div>
+      <div class="btn-plain" @click="articleSubmit(1)">发布</div>
       <AvaterOpt>
         <li class="user-opt-item">
           <router-link :to="{ name: 'Home' }">

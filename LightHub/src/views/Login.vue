@@ -2,7 +2,7 @@
   <div class="relative w-screen h-screen overflow-hidden">
     <div class="invisible xl:visible">
       <div
-        class="absolute bottom-1/4 w-2000 h-2000 rounded-full bg-orange-500 z-10"
+        class="absolute bottom-1/4 w-2000 h-2000 rounded-full bg-cyan-primary z-10"
         :class="{ 'bg-login': isLogin, 'bg-register': !isLogin }"
       ></div>
       <img
@@ -28,7 +28,7 @@
           <input class="input" type="password" v-model="userInfo.password" />
           <input class="input" type="password" v-model="userInfo.password" />
           <div class="btn-primary" @click="registerSubmit()">注册</div>
-          <div class="mt-4 btn-plain ring-1 ring-orange-500" @click="toLogin()">已有账号？请登录</div>
+          <div class="mt-4 btn-plain" @click="toLogin()">已有账号？请登录</div>
         </form>
       </div>
     </div>
@@ -42,8 +42,8 @@
         <form class="form">
           <input class="input" placeholder="请输入用户名" v-model="userInfo.account" />
           <input class="input" type="password" v-model="userInfo.password" />
-          <div class="btn-primary ring-1 ring-orange-100" @click="loginSubmit()">登录</div>
-          <div class="mt-4 btn-plain ring-1 ring-orange-500" @click="toRegister()">尚未拥有账号？请注册</div>
+          <div class="btn-primary ring-1" @click="loginSubmit()">登录</div>
+          <div class="mt-4 btn-plain ring-1 ring-cyan-primary" @click="toRegister()">尚未拥有账号？请注册</div>
         </form>
       </div>
     </div>
@@ -139,7 +139,7 @@ const registerSubmit = async () => {
 }
 
 .form-title {
-  @apply text-orange-700 font-bold transform -translate-y-1/2 top-1/5 absolute;
+  @apply text-cyan-primary font-bold transform -translate-y-1/2 top-1/5 absolute;
 }
 
 .form-wrap {
@@ -159,7 +159,7 @@ const registerSubmit = async () => {
 }
 
 .input {
-  @apply mb-3 w-full h-10 leading-6 rounded-full border-2 bg-orange-800 text-orange-50;
+  @apply mb-3 w-full h-10 leading-6 rounded-full border-2 bg-cyan-light ring-1 ring-cyan-primary outline-none;
   text-indent: 1rem;
 }
 </style>

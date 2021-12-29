@@ -12,7 +12,18 @@ module.exports = {
       yellow:colors.yellow,
       indigo:colors.indigo,
       green:colors.green,
-      orange:colors.orange
+      orange:colors.orange,
+      cyan:{
+        dark:'#0097A7',
+        light:'#B2EBF2',
+        primary:'#00BCD4',
+        accent:'#00BCD4'
+      },
+      divider:'#BDBDBD',
+      first:'#212121',
+      second:'#757575',
+      bg:'#f4f5f5',
+      white:'#FFFFFF'
     },
     fontFamily: {
       sans: ['sans-serif'],

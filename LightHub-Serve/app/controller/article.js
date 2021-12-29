@@ -87,7 +87,7 @@ const detail = async ctx => {
 
 const add = async ctx => {
   let body = ctx.request.body
-  const uid = verify(ctx.header.authorization).id
+  const uid = verify(ctx.header.authorization)
   body.tag_list = JSON.parse(body.tag_list)
   body.author_id = uid
   let result = undefined;

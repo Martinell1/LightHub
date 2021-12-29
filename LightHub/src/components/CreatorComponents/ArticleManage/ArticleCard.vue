@@ -27,11 +27,12 @@
       </div>
     </div>
 
-    <div class="text-gray-500 text-sm">{{ article.create_time }}</div>
+    <div class="text-gray-500 text-sm">{{ fmt4Time(article.create_time) }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { fmt4Time } from '@/util/fmt4Time.js'
 import { remove_article } from '@/api/article'
 import { ref } from 'vue'
 import { useStore } from 'vuex'

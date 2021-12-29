@@ -32,15 +32,15 @@ setTimeout(() => {
 </script>
 <style scoped>
 .msg {
-  @apply w-80 h-12  rounded shadow text-center leading-12 text-sm border-2 z-50;
+  @apply w-80 h-12  rounded shadow text-center leading-12 text-sm  z-50;
 }
 
 .success_msg {
-  @apply bg-orange-200 text-indigo-800 border-orange-200;
+  @apply bg-cyan-light  text-cyan-primary;
 }
 
 .fail_msg {
-  @apply bg-red-200 text-red-500 border-red-200;
+  @apply bg-cyan-light text-red-500;
 }
 
 .hide {

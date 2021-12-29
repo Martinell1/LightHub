@@ -12,7 +12,7 @@
     <div>
       <router-link
         class="side-item"
-        active-class="bg-orange-100 text-orange-600"
+        active-class="bg-cyan-light text-cyan-dark"
         :to="{ name: 'CreatorHome' }"
       >
         <svg
@@ -29,7 +29,7 @@
       </router-link>
       <router-link
         class="side-item"
-        active-class="bg-orange-100 text-orange-600"
+        active-class="bg-cyan-light text-cyan-dark"
         :to="{ name: 'CreatorArticle' }"
       >
         <svg
@@ -48,7 +48,7 @@
       </router-link>
       <router-link
         class="side-item"
-        active-class="bg-orange-100 text-orange-600"
+        active-class="bg-cyan-light text-cyan-dark"
         :to="{ name: 'CreatorTopic' }"
       >
         <svg
@@ -65,7 +65,7 @@
       </router-link>
       <router-link
         class="side-item"
-        active-class="bg-orange-100 text-orange-600"
+        active-class="bg-cyan-light text-cyan-dark"
         :to="{ name: 'CreatorComment' }"
       >
         <svg
@@ -84,7 +84,7 @@
       </router-link>
       <router-link
         class="side-item"
-        active-class="bg-orange-100 text-orange-600"
+        active-class="bg-cyan-light text-cyan-dark"
         :to="{ name: 'CreatorCollection' }"
       >
         <svg
@@ -111,10 +111,10 @@ const userInfo: any = inject('userInfo')
 </script>
 <style scoped>
 .side-item {
-  @apply flex py-3 px-2 text-gray-500;
+  @apply flex py-3 px-2 text-second;
 }
 
 .side-item:hover {
-  @apply bg-orange-100 text-orange-600;
+  @apply bg-cyan-light text-cyan-dark;
 }
 </style>
