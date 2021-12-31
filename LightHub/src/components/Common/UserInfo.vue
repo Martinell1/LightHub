@@ -6,7 +6,7 @@
       <img class="w-16 h-16 rounded-md border-2 object-cover" :src="userInfo.avater" />
       <div class="flex flex-col text-sm transform ml-2 justify-end">
         <a
-          :href="/user/ + userInfo._id"
+          :href="'/#/user/' + userInfo._id"
           class="mr-4 text-cyan-dark font-semibold"
         >{{ userInfo.nickname }}</a>
         <div class="text-sm text-second">{{ userInfo.introduce }}</div>
@@ -15,15 +15,15 @@
     <div class="flex justify-around my-4">
       <div class="item">
         <div class="item-text">文章数</div>
-        <div class="item-count">{{ userInfo.article_count }}</div>
+        <div class="item-count">{{ userInfo.article_count || 0 }}</div>
       </div>
       <div class="item">
         <div class="item-text">回答数</div>
-        <div class="item-count">{{ userInfo.answer_count }}</div>
+        <div class="item-count">{{ userInfo.answer_count || 0 }}</div>
       </div>
       <div class="item">
         <div class="item-text">关注者</div>
-        <div class="item-count">{{ userInfo.fans_count }}</div>
+        <div class="item-count">{{ userInfo.fans_count || 0 }}</div>
       </div>
     </div>
     <div v-if="!userInfo.identify">

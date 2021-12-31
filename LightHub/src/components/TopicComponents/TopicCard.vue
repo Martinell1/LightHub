@@ -1,22 +1,27 @@
 <template>
+  <div v-show="!props.topicList" class="shadow rounded-md px-5 py-4 w-full">
+    <div class="animate-pulse flex flex-col">
+      <div class="h-4 mb-2 bg-cyan-light rounded w-1/2"></div>
+      <div class="h-6 bg-cyan-light rounded w-1/4"></div>
+      <div class="h-4 my-2 bg-cyan-light rounded w-5/6"></div>
+      <div class="h-4 bg-cyan-light rounded w-1/3"></div>
+    </div>
+  </div>
   <div class="card px-5">
     <div v-for="(topic,index) in props.topicList" class="py-4 border-b-2 last">
-      <div
-        class="flex items-center relative"
-        :class="'item-' + index"
-        @mouseenter="hoverInfo(index, topic.initiator_id, userInfo._id,)"
-        @mouseleave="removeHoverInfo(index)"
-      >
-        <img class="w-6 h-6 rounded-full mr-2 object-cover" :src="topic.initiator.avater" />
-
-        <div class="font-semibold mr-4 text-first">{{ topic.initiator.nickname }}</div>
-        <div class="text-sm text-second">{{ topic.initiator.introduce }}</div>
-      </div>
+      <AuthorInfo
+        :index="index"
+        :author="topic.initiator"
+        :create_time="topic.create_time"
+        :tag_list="topic.tag_list"
+      ></AuthorInfo>
       <router-link :to="{ 'name': 'Topic', params: { 'id': topic._id } }">
-        <div class="text-xl font-semibold my-2 text-first">{{ topic.title }}</div>
+        <div class="text-xl font-semibold text-first">{{ topic.title }}</div>
       </router-link>
 
-      <div class="h-12 text-second">{{ fmtIntroduce(topic.introduce) }}</div>
+      <div
+        class="text-sm max-w-xl h-5 text-second truncate my-2"
+      >{{ fmtIntroduce(topic.introduce) }}</div>
       <div class="flex text-sm text-second">
         <div class="flex">
           <div
@@ -99,15 +104,15 @@
 import { inject } from 'vue'
 import { upTopic } from '@/util/useThumb';
 import { followTopic } from '@/util/useFollow';
-
+import AuthorInfo from '../Common/AuthorInfo.vue'
 const props: any = defineProps({
   topicList: Array
 })
 
 const fmtIntroduce = (introduce) => {
-  let result = introduce.replace(/[![].+\][\(]http\:\/\/qiniu\.kaijinx\.top\/.+[\)]/, '')
-  result = result.replace(/#+[ ].+/g, '')
-  result = result.replace(/`{3}[^`]*`{3}/, '')
+  let result = introduce.replace(/[![].+\][\(]http\:\/\/qiniu\.kaijinx\.top\/.+[\)]/, '') //处理图片
+  result = result.replace(/#+[ ].+/g, '')      //处理目录
+  result = result.replace(/`{3}[^`]*`{3}/, '') //处理代码块
   return result
 }
 

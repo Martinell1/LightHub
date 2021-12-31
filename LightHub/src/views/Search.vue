@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mx-auto mt-4 xl:w-1000">
+  <div class="w-full mx-auto mt-4 xl:w-700">
     <nav class="bg-gray-50 shadow border-b-2 border-gray-100 h-12">
       <div class="flex">
         <div class="item" @click="type = 'article'; page = 0">文章</div>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { search } from '@/api/common';
 import ArticleCard from '@/components/ArticleComponents/ArticleCard.vue';
@@ -24,7 +24,7 @@ import TopicCard from '@/components/TopicComponents/TopicCard.vue';
 import UserCard from '../components/UserComponents/UserCard.vue';
 
 const route = useRoute()
-const query = route.params.query
+const query: any = ref(route.params.query)
 
 const type = ref('article')
 
@@ -38,13 +38,10 @@ const loadSearchInfo = async () => {
   if (page === -1) {
     return
   }
-  let { data: result } = await search(query, ++page);
-  console.log(result);
+  let { data: result } = await search(query.value, ++page);
   if (result.code === 200) {
     if (result.data) {
       searchList.value.articleList = [...searchList.value.articleList, ...result.data.article]
-      console.log(searchList.value.articleList.length);
-
       searchList.value.topicList = [...searchList.value.topicList, ...result.data.topic]
       searchList.value.userList = [...searchList.value.userList, ...result.data.user]
     } else {
@@ -52,6 +49,19 @@ const loadSearchInfo = async () => {
     }
   }
 }
+
+onBeforeRouteUpdate(async (to, from) => {
+  //仅当 id 更改时才获取用户，例如仅 query 或 hash 值已更改
+  if (to.params.query !== from.params.query) {
+    query.value = to.params.query
+    page = 0
+    type.value = 'article'
+    searchList.value.articleList = []
+    searchList.value.topicList = []
+    searchList.value.userList = []
+    loadSearchInfo()
+  }
+})
 
 
 onMounted(async () => {

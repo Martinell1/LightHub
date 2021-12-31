@@ -5,7 +5,7 @@ export default {
   install: (app) => {
 
     const topic = (userInfo,topicInfo)=>{
-      if(userInfo.id ==='' || !userInfo._id){
+      if(userInfo.id ==='' || !userInfo._id === ''){
         const result = window.confirm("尚未登录，前往登录界面?")
         if(result){
           window.location.href = '/login';

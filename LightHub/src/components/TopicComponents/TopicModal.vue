@@ -79,6 +79,16 @@ const toolBars: any = [
 //发表问题提交
 
 const publishTopicSubmit = async () => {
+  if (topic.value.title === '') {
+    return
+  }
+  if (topic.value.introduce === '') {
+    return
+  }
+  if (tag_list.length === 0) {
+    return
+  }
+
   const params = new FormData();
   if (topic.value._id) {
     params.append('_id', topic.value._id);

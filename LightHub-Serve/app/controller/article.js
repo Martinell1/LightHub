@@ -73,11 +73,15 @@ const listByAuthor = async ctx => {
 const detail = async ctx => {
   const id = ObjectId(ctx.query.id);
   let result = await articleService.getArticleWithUserInfo(id)
+  await articleService.findAndUpdate({"_id":id},{$inc:{"view_count":1}})
   result = result[0]
   result.author = result.author[0]
   if(ctx.header.authorization){
-    result.isUp = result.up_list.some(item => item === verify(ctx.header.authorization))
+    const uid = verify(ctx.header.authorization)
+    result.isUp = result.up_list.some(item => item === uid)
+    result.author.isFollow = result.author.fans.some(item => item.toString() === uid)
   }
+ 
   if(result){
      ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{

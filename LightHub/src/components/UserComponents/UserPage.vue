@@ -34,17 +34,20 @@ import ProfileHeader from './ProfileHeader.vue';
 import UserAside from './UserAside.vue';
 import { getOneById } from '@/api/user';
 import { ref, onMounted, provide } from 'vue'
+const route = useRoute()
+
+const id: any = ref(route.params.id)
 
 onBeforeRouteUpdate(async (to, from) => {
   //仅当 id 更改时才获取用户，例如仅 query 或 hash 值已更改
   if (to.params.id !== from.params.id) {
-    loadUserInfo(to.params.id);
+
+    id.value = to.params.id
+    loadUserInfo(id.value);
   }
 })
 
-const route = useRoute()
 
-const id = route.params.id
 
 const currentUserInfo = ref({})
 const loadUserInfo = async (uid) => {
@@ -56,7 +59,7 @@ provide('loadUserInfo', loadUserInfo)
 
 
 onMounted(async () => {
-  loadUserInfo(id)
+  loadUserInfo(id.value)
 })
 
 

@@ -161,9 +161,8 @@ const remove = async ctx => {
 }
 
 const action_list = async ctx => {
-  const page = ctx.query.page;
-  const id = ctx.query.id;
-  let result = await historyService.findDetail(id);
+  const {id,page} = ctx.query;
+  let result = await historyService.findDetail(ObjectId(id));
   const user = await userService.findOne({"_id":id});
   result.forEach(item => {
     item.user = item.user[0]

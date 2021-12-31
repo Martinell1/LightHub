@@ -12,6 +12,7 @@ const topicService = new TopicService()
 
 
 const saveOrUpdate = async ctx => {
+  console.log('接受');
   let body = ctx.request.body;
   const uid = verify(ctx.header.authorization)
   let temp = await answerService.findOne({"topic_id":body.topic_id,"answerer_id":uid})

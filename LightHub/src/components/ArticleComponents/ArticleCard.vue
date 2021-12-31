@@ -1,20 +1,20 @@
 <template>
+  <div v-show="props.articleList.length === 0" class="shadow rounded-md px-5 py-4 w-full">
+    <div class="animate-pulse flex flex-col">
+      <div class="h-4 mb-2 bg-cyan-light rounded w-3/4"></div>
+      <div class="h-6 bg-cyan-light rounded"></div>
+      <div class="h-4 my-2 bg-cyan-light rounded w-5/6"></div>
+      <div class="h-4 bg-cyan-light rounded w-5/6"></div>
+    </div>
+  </div>
   <div class="w-full card px-5 xl:w-700">
     <div v-for="(article,index) in props.articleList" :key="index" class="py-4 border-b-2 last">
-      <div
-        class="flex mb-2 text-sm text-second relative"
-        :class="'item-' + index"
-        @mouseleave="removeHoverInfo(index)"
-      >
-        <div class="border-r-2 pr-2">
-          <div
-            class="font-semibold"
-            @mouseenter="hoverInfo(index, article.author_id, userInfo._id)"
-          >{{ article.author.nickname }}</div>
-        </div>
-        <div class="border-r-2 px-2">{{ fmt4Time(article.create_time) }}</div>
-        <div class="tag-list" v-for="tag in article.tag_list">{{ tag }}</div>
-      </div>
+      <AuthorInfo
+        :index="index"
+        :author="article.author"
+        :create_time="article.create_time"
+        :tag_list="article.tag_list"
+      ></AuthorInfo>
       <div class="flex justify-between">
         <div class="flex flex-col">
           <router-link :to="{ name: 'Article', params: { id: article._id } }">
@@ -117,21 +117,10 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
 import { upArticle } from '@/util/useThumb'
+import AuthorInfo from '../Common/AuthorInfo.vue'
 const props: any = defineProps({
   articleList: Array
 })
-
-const userInfo: any = inject('userInfo')
-
-const hoverInfo: any = inject('hoverInfo')
-const removeHoverInfo: any = inject('removeHoverInfo')
-
-const fmt4Time = (create_time) => {
-  const articleTime = Date.parse(create_time);
-  const hours = Math.floor((Date.now() - articleTime) / (1000 * 60 * 60));
-  return hours > 24 ? Math.floor(hours / 24) + "天前" : '1天内'
-}
-
 
 const msg: any = inject('Message')
 const upSubmit = async (aid, index) => {
@@ -148,10 +137,6 @@ const upSubmit = async (aid, index) => {
 
 </script>
 <style scoped>
-.tag-list {
-  @apply mx-2;
-}
-
 .svg-icon {
   @apply h-4 w-4 my-auto mr-1;
 }

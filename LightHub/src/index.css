@@ -12,11 +12,11 @@
 }
 
 .btn-plain{
-  @apply px-2 py-1  text-cyan-primary ring-1 ring-cyan-dark cursor-pointer rounded bg-orange-50 text-center text-xs min-w-20 h-7 leading-5;
+  @apply px-2 py-1  text-cyan-dark ring-1 ring-cyan-dark cursor-pointer rounded bg-cyan-light text-center text-xs min-w-20 h-7 leading-5;
 }
 
 .btn-plain-mini{
-  @apply px-2 py-1 text-cyan-primary ring-1 ring-cyan-dark cursor-pointer rounded bg-orange-50 text-center text-xs h-5 leading-3 ;
+  @apply px-2 py-1 text-cyan-dark ring-1 ring-cyan-dark cursor-pointer rounded bg-cyan-light text-center text-xs h-5 leading-3 ;
 }
 
 .card{

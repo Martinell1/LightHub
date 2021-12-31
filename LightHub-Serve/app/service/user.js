@@ -47,6 +47,38 @@ class UserService extends Service{
     ])
   }
 
+  async getUserListOnSearch(page,query){
+    query = new RegExp(query)
+    let skip = (page - 1) * 10
+    return this.model.aggregate([
+      {
+        $match:{
+          nickname:query,
+          status:1
+        }
+      },
+      {
+        $skip:skip
+      },
+      {
+        $limit:10
+      },
+      {
+        $project:{
+          account:0,
+          password:0,
+          salt:0,
+          role:0,
+          tag_list:0,
+          gender:0,
+          phone:0,
+          email:0,
+          education:0,
+        }
+      }
+    ])
+  }
+
 }
 
 module.exports = UserService;

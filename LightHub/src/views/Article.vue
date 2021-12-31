@@ -35,6 +35,8 @@ let article = ref({
 
 const catalogList: any = ref([])
 provide('catalogList', catalogList)
+
+
 const loadArticle = async () => {
   let { data: result } = await getArticleById(id);
   if (result.code === 200) {
@@ -49,6 +51,8 @@ const loadCommentList = async () => {
     comment_list.value = result.data
   }
 }
+
+provide('loadCommentList', loadCommentList)
 
 onMounted(async () => {
   loadArticle()

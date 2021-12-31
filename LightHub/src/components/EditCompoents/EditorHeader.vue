@@ -73,6 +73,11 @@ const articleSubmit = async (status) => {
     msg('fail', '标题过长')
     return ''
   }
+  if (tag_list.length === 0) {
+    msg('fail', '至少添加一个标签')
+    return ''
+  }
+
   const params: any = new FormData();
   if (_id.value) {
     params.append('_id', _id.value)

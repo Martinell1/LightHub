@@ -9,7 +9,7 @@
           @mouseenter="hoverInfo(index, comment.commenter_id, userInfo._id)"
         >{{ comment.commenter.nickname }}</div>
         <div class="flex items-center">
-          <div class="text-xs">{{ comment.create_time }}</div>
+          <div class="text-xs">{{ fmt4Time(comment.create_time) }}</div>
         </div>
         <div class="py-2 text-sm">{{ comment.content }}</div>
         <div class="flex">
@@ -88,6 +88,7 @@
 </template>
 
 <script setup lang="ts">
+import { fmt4Time } from '../../util/fmt4Time.js'
 import ReplyInput from './ReplyInput.vue';
 import ReplyItem from './ReplyItem.vue';
 import { upComment } from '@/util/useThumb'

@@ -55,6 +55,7 @@ import { upload, toQiNiu } from '@/api/common'
 import { ref, inject, computed, nextTick } from 'vue'
 
 import { followUser } from '@/util/useFollow'
+import { useStore } from 'vuex';
 const userInfo: any = inject('userInfo')
 
 //加载用户信息
@@ -89,7 +90,7 @@ const Submit = async () => {
   }
 }
 
-
+const store = useStore()
 const loadUserInfo: any = inject('loadUserInfo')
 const input_value = ref()
 const handFile = async () => {
@@ -111,8 +112,11 @@ const handFile = async () => {
     let { data: result2 } = await updateUserInfo(params);
     if (result2.code === 200) {
       userInfo.value = result2.data;
+
       msg('success', '更新成功')
       loadUserInfo(userInfo.value._id)
+      localStorage.setItem("avater", userInfo.value.avater)
+      store.commit('updateUserInfo', { "id": userInfo.value._id, "nickname": userInfo.value.nickname, "avater": userInfo.value.avater })
     }
 
   }

@@ -32,7 +32,7 @@ const props: any = defineProps({
 const userInfo: any = inject('userInfo')
 const comment_content = ref("");
 
-
+const loadCommentList: any = inject('loadCommentList')
 const msg: any = inject('Message')
 const commmentSubmit = async () => {
   if (comment_content.value === '') {
@@ -47,6 +47,7 @@ const commmentSubmit = async () => {
   let { data: result } = await addComment(params);
   if (result.code === 200) {
     msg('success', '发布成功')
+    loadCommentList()
   } else if (result.code === 400) {
     msg('fail', result.message)
   }

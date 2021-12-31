@@ -26,17 +26,39 @@ const search = async ctx => {
   const {value,page} = ctx.query
   let result = {}
   let article = await articleService.getArticleListWithUserInfo(page,value)
+  let currentUser = undefined;
+  if(ctx.header.authorization){
+    currentUser = await userService.getInfoByToken(ctx.header.authorization);
+  }
   article.forEach(element => {
+    if(currentUser){
+      element.isUp = element.up_list.some(item => item === currentUser._id.toString())
+    }else{
+      element.isUp = false
+    }
     element.author = element.author[0]
   });  
   let topic = await topicService.getTopicListWithUserInfo(page,value)
   topic.forEach(element => {
+    if(currentUser){
+      element.isUp = element.up_list.some(item => item === currentUser._id.toString())
+      element.isFollow = currentUser.topic_list.some(item => item === element._id.toString())
+    }else{
+      element.isUp = false
+      element.isFollow = false
+    }
     element.initiator = element.initiator[0]
   });
-  let user = await userService.find({"nickname":new RegExp(value)}) 
-
+  let user = await userService.getUserListOnSearch(page,value)
+  user.forEach(element => {
+    if(currentUser){
+      element.isFollow = element.fans.some(item => item.toString() === currentUser._id.toString())
+    }else{
+      element.isFollow = false
+    }
+  });
   result.article = article
-  result.topic = topic;
+  result.topic = topic
   result.user = user
   if(result){
     ctx.body = ResultFactory.buildSuccessResult(undefined,result)

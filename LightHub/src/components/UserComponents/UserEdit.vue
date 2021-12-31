@@ -170,11 +170,11 @@ const updateUserInfoSubmit = async () => {
   params.append('education', JSON.stringify(userInfo.value.education))
 
   let { data: result } = await updateUserInfo(params);
-  console.log(result);
   if (result.code === 200) {
 
-
     userInfo.value = result.data;
+
+
     msg('success', '更新成功')
   }
 }

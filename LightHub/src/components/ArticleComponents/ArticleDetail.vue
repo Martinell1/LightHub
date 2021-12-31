@@ -13,8 +13,8 @@
           </div>
         </div>
         <div v-if="!identify" @click="followSubmit()">
-          <div v-if="props.article.isFollow" class="btn-primary-mini">已关注</div>
-          <div v-if="!props.article.isFollow" class="btn-plain-mini ring-1 ring-cyan-dark">关注</div>
+          <div v-if="props.article.author.isFollow" class="btn-primary-mini">已关注</div>
+          <div v-if="!props.article.author.isFollow" class="btn-plain-mini ring-1 ring-cyan-dark">关注</div>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue'
+import { inject, computed } from 'vue'
 import Editor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { fmt4Time } from '../../util/fmt4Time.js'
@@ -74,14 +74,18 @@ const identify = computed(() => {
   return userInfo.value._id === props.article.author_id
 })
 
+setTimeout(() => {
+  console.log(props.article);
+}, 2000);
+
+
 //关注
 const msg: any = inject('Message')
 const followSubmit = async () => {
   const result = await followUser(props.article.author_id);
-  console.log(result);
-
   if (result.code === 200) {
-    msg('success', result.data);
+    msg('success', result.message);
+    props.article.author.isFollow = !props.article.author.isFollow;
   } else {
     msg('fail', result.message);
   }

@@ -25,6 +25,7 @@ const loadTopicList = async () => {
   let { data: result } = await getTopicList(++page);
   if (result.code === 200) {
     if (result.data.length > 0) {
+
       topicList.value = [...topicList.value, ...result.data]
     }
     else {
@@ -39,7 +40,6 @@ onMounted(async () => {
 
   window.onscroll = function () {
     if (document.documentElement.clientHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
-      console.log('到底');
       loadTopicList()
     }
   }

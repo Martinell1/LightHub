@@ -4,7 +4,7 @@ const fs = require('fs')
 const dirname = resolve();
 
 function autoReadFiles(fileName){
-  const path = dirname + '\\app\\' + fileName;
+  const path = dirname + '/app/' + fileName;
   let files = fs.readdirSync(path);
   let result = [];
   for(let file of files){
