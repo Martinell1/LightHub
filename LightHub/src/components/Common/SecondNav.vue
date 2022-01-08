@@ -35,7 +35,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 const props: any = defineProps({
   type: String,
 })

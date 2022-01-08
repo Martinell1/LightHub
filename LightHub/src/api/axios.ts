@@ -1,11 +1,14 @@
 import axios from 'axios'
 // axios.defaults.baseURL = "/api"
+console.log(axios.defaults);
+
 axios.defaults.baseURL = "http://localhost:3001/api"
 
 // 添加请求拦截器
 axios.interceptors.request.use(function (config: any) {
   // config.headers.token = localStorage.getItem("token")
   const token = localStorage.getItem("token");
+
   if (token) {
     config.headers.Authorization = 'Bearer ' + token
   }

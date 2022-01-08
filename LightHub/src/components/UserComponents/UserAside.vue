@@ -21,7 +21,7 @@
         </li>
         <li v-if="userInfo" class="sidebar-item">
           加入于
-          <div>{{ fmt4Time(userInfo.create_time) }}</div>
+          <div>{{ fmt4Time(userInfo.create_time) || '' }}</div>
         </li>
       </ul>
     </div>

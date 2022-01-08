@@ -73,7 +73,20 @@ const listByAuthor = async ctx => {
 const detail = async ctx => {
   const id = ObjectId(ctx.query.id);
   let result = await articleService.getArticleWithUserInfo(id)
-  await articleService.findAndUpdate({"_id":id},{$inc:{"view_count":1}})
+  let view_id = ctx.cookies.get(id.toString());
+  if(!view_id){
+    await articleService.findAndUpdate({"_id":id},{$inc:{"view_count":1}})
+      ctx.cookies.set(id, id, {
+          maxAge: 2 * 60 * 1000,     //cookie有效时长，单位：毫秒数
+          path:"/",         //cookie保存路径, 默认是'/，（是/的情况下所有路由都可以访问）set时更改，get时同时修改，不然会保存不上，服务同时也获取不到
+          domain:"localhost",       //cookie可用域名，“.”开头支持顶级域名下的所有子域名,（默认情况下就是当前域名）
+          secure:false,       //默认false，设置成true表示只有https可以访问
+          httpOnly:"true",    //true，客户端不可读取
+          overwrite:"true"    //一个布尔值，表示是否覆盖以前设置的同名的 cookie (默认是 false). 如果是 true,                  
+                              //在同一个请求中设置相同名称的所有 Cookie（不管路径或域）是否在设置此Cookie 时从 Set-Cookie 标头中过滤掉。
+       }  
+      ) 
+  }
   result = result[0]
   result.author = result.author[0]
   if(ctx.header.authorization){
@@ -81,7 +94,8 @@ const detail = async ctx => {
     result.isUp = result.up_list.some(item => item === uid)
     result.author.isFollow = result.author.fans.some(item => item.toString() === uid)
   }
- 
+  
+
   if(result){
      ctx.body = ResultFactory.buildSuccessResult(undefined,result)
   }else{

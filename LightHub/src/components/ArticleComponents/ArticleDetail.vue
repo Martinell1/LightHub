@@ -74,9 +74,6 @@ const identify = computed(() => {
   return userInfo.value._id === props.article.author_id
 })
 
-setTimeout(() => {
-  console.log(props.article);
-}, 2000);
 
 
 //关注

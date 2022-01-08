@@ -9,6 +9,7 @@ const getArticleListByAuthor: Function = async (id: String, page: Number) => {
 }
 
 const getArticleById: Function = async (id: String) => {
+  axios.defaults.withCredentials = true
   return await axios.get("article/detail?id=" + id)
 }
 

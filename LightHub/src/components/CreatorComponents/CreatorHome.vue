@@ -6,51 +6,51 @@
     <div class="flex flex-wrap justify-between">
       <div class="data-card">
         <div class="text-sm">关注数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.fans_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.fans_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">文章</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.article_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.article_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">草稿箱</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.draft_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.draft_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">文章阅读数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.article_view_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.article_view_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">文章点赞数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.article_up_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.article_up_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">文章评论数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.article_comment_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.article_comment_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">文章收藏数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.article_fav_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.article_fav_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">讨论数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.topic_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.topic_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">讨论阅读数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.topic_view_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.topic_view_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">讨论回复数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.topic_up_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.topic_up_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">讨论点赞数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.topic_answer_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.topic_answer_count || 0 }}</div>
       </div>
       <div class="data-card">
         <div class="text-sm">讨论收藏数</div>
-        <div class="text-4xl font-semibold">{{ creatorInfo.topic_follow_count }}</div>
+        <div class="text-4xl font-semibold">{{ creatorInfo.topic_follow_count || 0}}</div>
       </div>
     </div>
   </div>
