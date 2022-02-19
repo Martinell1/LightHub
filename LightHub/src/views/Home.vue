@@ -15,7 +15,8 @@ import ArticleCard from '../components/ArticleComponents/ArticleCard.vue';
 import { useRoute } from 'vue-router';
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { getArticleList } from '@/api/article'
-let articleList: any = ref([])
+import { IArticle } from '@/model/article'
+let articleList = ref([] as IArticle[])
 let page = 0;
 
 let loadArticleList = async () => {
